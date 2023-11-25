@@ -1,0 +1,3 @@
+dist
+server/database/migrations
+server/database/seeders
