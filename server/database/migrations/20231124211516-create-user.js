@@ -14,6 +14,7 @@ module.exports = {
             },
             email: {
                 type: Sequelize.DataTypes.STRING(320),
+                allowNull: false,
                 unique: true,
             },
             firstname: {
@@ -23,7 +24,7 @@ module.exports = {
                 type: Sequelize.DataTypes.STRING(32),
             },
             password: {
-                type: Sequelize.DataTypes.STRING(32),
+                type: Sequelize.DataTypes.STRING(72),
                 allowNull: false,
             },
             username: {

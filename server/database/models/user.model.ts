@@ -18,6 +18,7 @@ class User extends Model {
 
     @Column({
         type: DataType.STRING(320),
+        allowNull: false,
         unique: true,
     })
     email!: string;
@@ -25,7 +26,7 @@ class User extends Model {
     @Column({
         type: DataType.STRING(32),
     })
-    firstame!: string;
+    firstname!: string;
 
     @Column({
         type: DataType.STRING(32),
@@ -33,7 +34,7 @@ class User extends Model {
     lastname!: string;
 
     @Column({
-        type: DataType.STRING(32),
+        type: DataType.STRING(72),
         allowNull: false,
     })
     password!: string;
