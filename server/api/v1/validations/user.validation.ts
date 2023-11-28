@@ -13,6 +13,9 @@ const validations = {
             .notEmpty().withMessage("Password is required")
             .isString().withMessage("Password must be a string")
             .isLength({ min: 8 }).withMessage("Password must be minimum of 8 characters"),
+        body("passwordRetype")
+            .notEmpty().withMessage("Retype password is required")
+            .custom((value, { req }) => value === req.body.password).withMessage("The passwords do not match"),
     ],
 };
 
