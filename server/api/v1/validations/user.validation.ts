@@ -17,6 +17,14 @@ const validations = {
             .notEmpty().withMessage("Retype password is required")
             .custom((value, { req }) => value === req.body.password).withMessage("The passwords do not match"),
     ],
+    signinRules: [
+        body("email")
+            .notEmpty().withMessage("Email is required")
+            .isEmail().withMessage("Email is not valid"),
+        body("password")
+            .notEmpty().withMessage("Password is required")
+            .isString().withMessage("Password must be a string"),
+    ],
 };
 
 export default validations;

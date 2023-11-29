@@ -1,0 +1,90 @@
+import { Request } from "express";
+import session, { SessionData } from "express-session";
+import Session  from "../../../database/models/session.model";
+import db from "../../../database";
+import { SessionUserData } from "../interfaces/types/express-session";
+
+const helpers = {
+    save: (req: Request, data: SessionUserData) => {
+        req.session.user = data;
+        req.session.save((error) => {
+            if (error) {
+                throw error;
+            }
+        });
+    },
+    destroy: (req: Request) => {
+        req.session.user = null;
+        req.session.destroy((error) => {
+            if (error) {
+                console.log(error);
+                throw error;
+            }
+        });
+    },
+};
+
+export class SequelizeSessionStore extends session.Store {
+    options: any;
+    constructor(options?: any) {
+        super(options);
+        this.options = { db, ...options || {} };
+    }
+
+    get(sid: string, callback: (err: any, session?: SessionData | null) => void): void {
+        try {
+            Session
+                .findOne({where: { id: sid }})
+                .then((session) => {
+                    if (!session) {
+                        return callback(null, null);
+                    }
+                    callback(null, session.data);
+                });    
+        } catch (error) {
+            console.log(`Error getting session: ${error}`);
+        }
+    }
+
+    set(sid: string, session: session.SessionData, callback?: ((err?: any) => void) | undefined): void {   
+        try {
+            const defaults = { id: sid, data: session };
+            Session
+                .findOrCreate({ where: { id: sid }, defaults })
+                .then(([session, created]) => {
+                    if (!created) {
+                        session.data = defaults.data;
+                        session.save().then(() => { return session });
+                    }
+                    return session;
+                })
+                .catch((error) => {
+                    if (callback) {
+                        callback(error);
+                    }
+                });
+        } catch (error) {
+            console.log(`Error setting session: ${error}`);
+        }
+    }
+
+    destroy(sid: string, callback?: ((err?: any) => void) | undefined): void {
+        try {
+            Session
+                .destroy({ where: { id: sid }})
+                .then((result) => {
+                    return;
+                })
+                .catch((error) => {
+                    if (callback) {
+                        callback(error);
+                    }
+                });
+            return;
+        } catch (error) {
+            console.log(`Error destroying session: ${error}`);
+        }
+    }
+}    
+
+export default helpers;
