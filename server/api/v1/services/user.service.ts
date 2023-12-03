@@ -34,6 +34,11 @@ const services = {
         }
         return sessionUserData;  
     }),
+    getUser: (async(sessionData: SessionUserData) => {
+        const user = await User.findOne({ where: { email: sessionData.email }});
+        const { id, password, verificationCode, ...userTrimmed } = user!.dataValues;
+        return userTrimmed;
+    }),
 };
 
 export default services;

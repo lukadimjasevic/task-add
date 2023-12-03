@@ -9,7 +9,7 @@ const router = Router();
 router.post("/signup", validations.signupRules, validate, controllers.signupUser);
 router.post("/signin", validations.signinRules, validate, controllers.signinUser);
 router.post("/signout", isAuthenticated, controllers.signoutUser);
-router.get("/", controllers.getUser);
+router.get("/", isAuthenticated, controllers.getUser);
 router.put("/", controllers.updateUser);
 router.delete("/", controllers.deleteUser);
 

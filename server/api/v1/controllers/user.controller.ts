@@ -32,8 +32,13 @@ const controllers = {
         }
     }),
     
-    getUser: ((req: Request, res: Response) => {
-        return res.send("Get User");
+    getUser: (async(req: Request, res: Response) => {
+        try {
+            const user = await services.getUser(req.session.user!);
+            return res.status(200).json({ status: 200, message: "Successfully fetched user data", user });
+        } catch (error: any) {
+            return res.status(400).json({ status: 400,  message: error.message });
+        }
     }),
     
     updateUser: ((req: Request, res: Response) => {
