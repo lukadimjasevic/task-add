@@ -5,7 +5,7 @@ import { SessionUserData } from "../interfaces/types/express-session";
 import helpers from "../helpers";
 
 const services = {
-    signupUser: (async(data: UserSignup) => {
+    async signupUser(data: UserSignup) {
         const hash = await helpers.hash.createHash(data.password);
         const [user, created] = await User.findOrCreate({
             where: {
@@ -21,8 +21,9 @@ const services = {
             // User already exists
             throw Error("User already exists");
         }
-    }),
-    signinUser: (async(data: UserSignin) => {
+    },
+
+    async signinUser(data: UserSignin) {
         const user = await User.findOne({ where: { email: data.email }});
         if (!user || !(await helpers.hash.compareHashes(data.password, user.password))) {
             // Email or password is incorrect
@@ -33,12 +34,13 @@ const services = {
             username: user.username,
         }
         return sessionUserData;  
-    }),
-    getUser: (async(sessionData: SessionUserData) => {
+    },
+    
+    async getUser(sessionData: SessionUserData) {
         const user = await User.findOne({ where: { email: sessionData.email }});
         const { id, password, verificationCode, ...userTrimmed } = user!.dataValues;
         return userTrimmed;
-    }),
+    },
 };
 
 export default services;

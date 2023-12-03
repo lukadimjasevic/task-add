@@ -3,7 +3,7 @@ import services from "../services/user.service";
 import helpers from "../helpers";
 
 const controllers = {
-    signupUser: (async(req: Request, res: Response) => {
+    async signupUser(req: Request, res: Response) {
         const data = req.body;
         try {
             await services.signupUser(data);
@@ -11,9 +11,9 @@ const controllers = {
         } catch (error: any) {
             return res.status(400).json({ status: 400, message: error.message });
         }
-    }),
+    },
     
-    signinUser: (async(req: Request, res: Response) => {
+    async signinUser(req: Request, res: Response) {
         try {
             const sessionUserData = await services.signinUser(req.body);
             helpers.session.save(req, sessionUserData);
@@ -21,33 +21,33 @@ const controllers = {
         } catch (error: any) {
             return res.status(400).json({ status: 400,  message: error.message });
         }
-    }),
+    },
 
-    signoutUser: ((req: Request, res: Response) => {
+    signoutUser(req: Request, res: Response) {
         try {
             helpers.session.destroy(req);
             return res.status(200).json({ status: 200, message: "Successfully signed out" });
         } catch (error: any) {
             return res.status(400).json({ status: 400,  message: error.message });
         }
-    }),
+    },
     
-    getUser: (async(req: Request, res: Response) => {
+    async getUser(req: Request, res: Response) {
         try {
             const user = await services.getUser(req.session.user!);
             return res.status(200).json({ status: 200, message: "Successfully fetched user data", user });
         } catch (error: any) {
             return res.status(400).json({ status: 400,  message: error.message });
         }
-    }),
+    },
     
-    updateUser: ((req: Request, res: Response) => {
+    updateUser(req: Request, res: Response) {
         return res.send("Update User");
-    }),
+    },
     
-    deleteUser: ((req: Request, res: Response) => {
+    deleteUser(req: Request, res: Response) {
         return res.send("Delete User");
-    }),    
+    },    
 };
 
 export default controllers;
