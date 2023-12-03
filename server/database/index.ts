@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { Sequelize } from "sequelize-typescript";
+import { Sequelize, SequelizeOptions } from "sequelize-typescript";
 import configurations from "./config/config.json";
 import { Configurations } from "./interfaces/Configurations.interface";
 
@@ -8,7 +8,7 @@ dotenv.config();
 const env = process.env.NODE_ENV || "development";
 const config = configurations[env as keyof Configurations];
 
-const sequelize = new Sequelize(config.url, {
+const defaultSequelizeOptions: SequelizeOptions = {
     storage: ":memory:",
     models: [__dirname + "/models"],
     modelMatch: (filename, member) => {
@@ -17,6 +17,13 @@ const sequelize = new Sequelize(config.url, {
     define: {
         "underscored": true,
     },
-});
+    logging: false,
+}
 
-export default sequelize;
+class Database extends Sequelize {
+    constructor(uri: string=config.url, options: SequelizeOptions=defaultSequelizeOptions) {
+        super(uri, options);
+    }
+}
+
+export default Database;
