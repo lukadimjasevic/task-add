@@ -3,6 +3,7 @@ import session, { SessionData } from "express-session";
 import Session  from "../../../database/models/session.model";
 import db from "../../../database";
 import { SessionUserData } from "../interfaces/types/express-session";
+import { HttpErrorInternalServerError } from "./error";
 
 const helpers = {
     save(req: Request, data: SessionUserData) {
@@ -10,7 +11,7 @@ const helpers = {
         req.session.save((error) => {
             if (error) {
                 console.log(error);
-                throw error;
+                throw new HttpErrorInternalServerError();
             }
         });
     },
@@ -19,7 +20,7 @@ const helpers = {
         req.session.destroy((error) => {
             if (error) {
                 console.log(error);
-                throw error;
+                throw new HttpErrorInternalServerError();
             }
         });
     },

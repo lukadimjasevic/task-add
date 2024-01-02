@@ -4,6 +4,7 @@ import session from "express-session";
 import Database from "./database";
 import { SequelizeSessionStore } from "./api/v1/helpers/session.helper";
 import userRouter from "./api/v1/routes/user.route";
+import { errorHandler } from "./api/v1/middlewares/error.middleware";
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ class Server {
             name: "task_add_session_id",
         }));
         this._loadRoutes();
+        this.app.use(errorHandler);
         
         this.app.listen(this.port, () => {
             console.log(`Server started at http://localhost:${this.port}`);
