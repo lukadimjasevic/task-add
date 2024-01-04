@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from "express";
+import { HttpErrorUnauthorized } from "../helpers/error";
 
 export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
     if (req.session.user) {
-        next();
+        return next();
     } else {
-        res.status(401).json({status: 401, message: "Unauthorized access" });
+        return next(new HttpErrorUnauthorized("Unauthorized access"));
     }
 }

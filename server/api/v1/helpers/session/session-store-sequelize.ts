@@ -1,31 +1,9 @@
-import { Request } from "express";
 import session, { SessionData } from "express-session";
-import Session  from "../../../database/models/session.model";
-import db from "../../../database";
-import { SessionUserData } from "../interfaces/types/express-session";
+import Session  from "../../../../database/models/session.model";
+import db from "../../../../database";
 
-const helpers = {
-    save(req: Request, data: SessionUserData) {
-        req.session.user = data;
-        req.session.save((error) => {
-            if (error) {
-                console.log(error);
-                throw error;
-            }
-        });
-    },
-    destroy(req: Request) {
-        req.session.user = null;
-        req.session.destroy((error) => {
-            if (error) {
-                console.log(error);
-                throw error;
-            }
-        });
-    },
-};
 
-export class SequelizeSessionStore extends session.Store {
+export class SessionStoreSequelize extends session.Store {
     options: any;
     constructor(options?: any) {
         super(options);
@@ -79,6 +57,4 @@ export class SequelizeSessionStore extends session.Store {
             });
         return;
     }
-}    
-
-export default helpers;
+}

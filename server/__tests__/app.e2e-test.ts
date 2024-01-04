@@ -98,11 +98,11 @@ describe("App e2e-test", () => {
                     .withJson(newUser)
                     .expectStatus(200);
             });
-            it("should return status code 400 if the user is already signed up", () => {
+            it("should return status code 409 if the user is already signed up", () => {
                 return spec()
                     .post("/api/v1/user/signup")
                     .withJson(newUser)
-                    .expectStatus(400);
+                    .expectStatus(409);
             });
         });
 
@@ -122,6 +122,32 @@ describe("App e2e-test", () => {
                         email: newUser.email,
                     })
                     .expectStatus(400);
+            });
+            it("should return status code 404 if the email is incorrect", async() => {
+                newUser.cookie = await spec()
+                    .post(routes.signin)
+                    .withJson({
+                        email: "wrong_email@gmail.com",
+                        password: newUser.password,
+                    })
+                    .returns((ctx) => {
+                        return ctx.res.headers["set-cookie"];
+                    })
+                    .expectStatus(404);
+                return;
+            });
+            it("should return status code 401 if the password is incorrect", async() => {
+                newUser.cookie = await spec()
+                    .post(routes.signin)
+                    .withJson({
+                        email: newUser.email,
+                        password: "wrong_password",
+                    })
+                    .returns((ctx) => {
+                        return ctx.res.headers["set-cookie"];
+                    })
+                    .expectStatus(401);
+                return;
             });
             it("should return status code 200 if the user is signed in", async() => {
                 newUser.cookie = await spec()

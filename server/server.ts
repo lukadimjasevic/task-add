@@ -2,8 +2,9 @@ import dotenv from "dotenv";
 import express, { Application } from "express";
 import session from "express-session";
 import Database from "./database";
-import { SequelizeSessionStore } from "./api/v1/helpers/session.helper";
+import { SessionStoreSequelize } from "./api/v1/helpers/session";
 import userRouter from "./api/v1/routes/user.route";
+import { errorHandler } from "./api/v1/middlewares/error.middleware";
 
 dotenv.config();
 
@@ -23,12 +24,13 @@ class Server {
         this.app.use(session({
             cookie: { httpOnly: false, maxAge: 1000 * 60 * 60 * 24 },
             secret: process.env.SESSION_SECRET!,
-            store: new SequelizeSessionStore(),
+            store: new SessionStoreSequelize(),
             resave: false,
             saveUninitialized: false,
             name: "task_add_session_id",
         }));
         this._loadRoutes();
+        this.app.use(errorHandler);
         
         this.app.listen(this.port, () => {
             console.log(`Server started at http://localhost:${this.port}`);
