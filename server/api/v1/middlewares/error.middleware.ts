@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { HttpError } from "../helpers/error/http-error";
+import { HttpError, HttpErrorInternalServerError } from "../helpers/error";
 
 interface ErrorHandlerResponse {
     errorName: string;
@@ -8,7 +8,15 @@ interface ErrorHandlerResponse {
     errors?: Object;
 };
 
-export const errorHandler = (error: HttpError, req: Request, res: Response, next: NextFunction) => {
+export const errorHandler = (error: any, req: Request, res: Response, next: NextFunction) => {
+    if (!(error instanceof HttpError)) {
+        next(error);
+        const internalError = new HttpErrorInternalServerError();
+        return res.status(internalError.statusCode).json({
+            errorName: internalError.name,
+            message: internalError.message,
+        });
+    }
     const response: ErrorHandlerResponse = {
         errorName: error.name,
         statusCode: error.statusCode,

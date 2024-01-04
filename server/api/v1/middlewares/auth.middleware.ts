@@ -3,8 +3,8 @@ import { HttpErrorUnauthorized } from "../helpers/error";
 
 export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
     if (req.session.user) {
-        next();
+        return next();
     } else {
-        next(new HttpErrorUnauthorized("Unauthorized access"));
+        return next(new HttpErrorUnauthorized("Unauthorized access"));
     }
 }
