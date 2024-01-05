@@ -38,6 +38,7 @@ describe("App e2e-test", () => {
             signup: "/api/v1/user/signup",
             signin: "/api/v1/user/signin",
             getUser: "/api/v1/user",
+            signout: "/api/v1/user/signout",
         }
 
         describe(`POST ${routes.signup} -> SIGNUP USER`, () => {
@@ -168,6 +169,15 @@ describe("App e2e-test", () => {
             it("should return status code 200 if the user data is fetched", () => {
                 return spec()
                     .get(routes.getUser)
+                    .withCookies(newUser.cookie![0])
+                    .expectStatus(200);
+            });
+        });
+
+        describe(`POST ${routes.signout} -> SIGNOUT USER`, () => {
+            it("should return status code 200 if the user is signed out", () => {
+                return spec()
+                    .post(routes.signout)
                     .withCookies(newUser.cookie![0])
                     .expectStatus(200);
             });
