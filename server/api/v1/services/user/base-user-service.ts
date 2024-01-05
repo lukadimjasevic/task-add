@@ -1,17 +1,27 @@
 import { Hash } from "../../helpers/hash";
 import User from "../../../../database/models/user.model";
 import { UserSignup } from "../../interfaces/user.interface";
+import { SessionUser } from "../../helpers/session";
+import { Request, Response, NextFunction } from "express";
 
 
-interface TrimObjectData {
+export interface TrimObjectData {
     [key: string]: any;
 };
 
 
 export class BaseUserService {
+    req: Request;
+    res: Response;
+    next: NextFunction;
     hash: Hash = new Hash();
+    sessionUser: SessionUser = new SessionUser();
 
-    constructor() {}
+    constructor(req: Request, res: Response, next: NextFunction) {
+        this.req = req;
+        this.res = res;
+        this.next = next;
+    }
 
     /*---------------------------- Check Methods -----------------------------*/
     

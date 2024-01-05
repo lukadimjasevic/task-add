@@ -2,11 +2,12 @@ import { BaseUserService } from "./base-user-service";
 import { UserSignin } from "../../interfaces/user.interface";
 import { SessionUserData } from "../../interfaces/types/express-session";
 import { HttpErrorNotFound, HttpErrorUnauthorized } from "../../helpers/error";
+import { Request, Response, NextFunction } from "express";
 
 
 export class UserServiceSignin extends BaseUserService {
-    constructor() {
-        super();
+    constructor(req: Request, res: Response, next: NextFunction ) {
+        super(req, res, next);
     }
 
     async signinUser(data: UserSignin): Promise<SessionUserData> {
@@ -23,6 +24,7 @@ export class UserServiceSignin extends BaseUserService {
             email: user.email,
             username: user.username,
         }
+        this.sessionUser.save(this.req, sessionUserData);
         return sessionUserData;  
     }
 }

@@ -3,11 +3,11 @@ import { BaseUserController } from "./base-user-controller";
 
 
 export class UserControllerDelete extends BaseUserController {
-    constructor() {
-        super();
+    constructor(req: Request, res: Response, next: NextFunction) {
+        super(req, res, next);
     }
 
-    async deleteUser(req: Request, res: Response, next: NextFunction) {
-        return res.send("Delete User");
+    async deleteUser() {
+        return this.res.send("Delete User");
     }
 }

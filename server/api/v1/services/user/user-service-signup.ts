@@ -2,11 +2,12 @@ import { BaseUserService } from "./base-user-service";
 import User from "../../../../database/models/user.model";
 import { UserSignup } from "../../interfaces/user.interface";
 import { HttpErrorConflict } from "../../helpers/error";
+import { Request, Response, NextFunction } from "express";
 
 
 export class UserServiceSignup extends BaseUserService {
-    constructor() {
-        super();
+    constructor(req: Request, res: Response, next: NextFunction) {
+        super(req, res, next);
     }
 
     async signupUser(data: UserSignup): Promise<User> {

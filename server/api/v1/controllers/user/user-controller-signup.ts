@@ -4,19 +4,20 @@ import { UserServiceSignup } from "../../services/user";
 
 
 export class UserControllerSignup extends BaseUserController {
-    services: UserServiceSignup = new UserServiceSignup();
+    services: UserServiceSignup;
 
-    constructor() {
-        super();
+    constructor(req: Request, res: Response, next: NextFunction) {
+        super(req, res, next);
+        this.services = new UserServiceSignup(req, res, next);
     }
 
-    async signupUser(req: Request, res: Response, next: NextFunction) {
-        const data = req.body;
+    async signupUser() {
         try {
+            const data = this.req.body;
             await this.services.signupUser(data);
-            return res.status(200).json({ status: 200, message: "Successfully created a new account" });
+            return this.responseCreated("Successfully created a new account");
         } catch (error: any) {
-            return next(error);
+            return this.next(error);
         }
     }
 }

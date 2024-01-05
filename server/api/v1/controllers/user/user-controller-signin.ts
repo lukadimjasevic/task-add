@@ -4,19 +4,20 @@ import { UserServiceSignin } from "../../services/user";
 
 
 export class UserControllerSignin extends BaseUserController {
-    services: UserServiceSignin = new UserServiceSignin();
+    services: UserServiceSignin;
 
-    constructor() {
-        super();
+    constructor(req: Request, res: Response, next: NextFunction) {
+        super(req, res, next);
+        this.services = new UserServiceSignin(req, res, next);
     }
 
-    async signinUser(req: Request, res: Response, next: NextFunction) {
+    async signinUser() {
         try {
-            const sessionUserData = await this.services.signinUser(req.body);
-            this.sessionUser.save(req, sessionUserData);
-            return res.status(200).json({ status: 200, message: "Successfully signed in" });
+            const data = this.req.body;
+            await this.services.signinUser(data);
+            return this.responseOK("Successfully signed in");
         } catch (error: any) {
-            return next(error);
+            return this.next(error);
         }
     }
 }
