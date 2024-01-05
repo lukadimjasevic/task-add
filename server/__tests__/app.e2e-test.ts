@@ -93,11 +93,11 @@ describe("App e2e-test", () => {
                 })
                 .expectStatus(400);
             });
-            it("should return status code 200 if the user is signed up", () => {
+            it("should return status code 201 if the user is signed up", () => {
                 return spec()
                     .post("/api/v1/user/signup")
                     .withJson(newUser)
-                    .expectStatus(200);
+                    .expectStatus(201);
             });
             it("should return status code 409 if the user is already signed up", () => {
                 return spec()
@@ -175,11 +175,11 @@ describe("App e2e-test", () => {
         });
 
         describe(`POST ${routes.signout} -> SIGNOUT USER`, () => {
-            it("should return status code 200 if the user is signed out", () => {
+            it("should return status code 204 if the user is signed out", () => {
                 return spec()
                     .post(routes.signout)
                     .withCookies(newUser.cookie![0])
-                    .expectStatus(200);
+                    .expectStatus(204);
             });
         });
     });
