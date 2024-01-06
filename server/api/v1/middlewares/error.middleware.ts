@@ -5,8 +5,8 @@ interface ErrorHandlerResponse {
     errorName: string;
     statusCode: number;
     message: string;
-    errors?: Object;
-};
+    errors?: object;
+}
 
 export const errorHandler = (error: any, req: Request, res: Response, next: NextFunction) => {
     if (!(error instanceof HttpError)) {
@@ -21,7 +21,7 @@ export const errorHandler = (error: any, req: Request, res: Response, next: Next
         errorName: error.name,
         statusCode: error.statusCode,
         message: error.message,
-    }
+    };
     error.errors ? response.errors = error.errors : null;
     return res.status(error.statusCode).json(response);
-}
+};

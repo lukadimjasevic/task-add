@@ -33,7 +33,7 @@ export class SessionStoreSequelize extends session.Store {
             .then(([session, created]) => {
                 if (!created) {
                     session.data = defaults.data;
-                    session.save().then(() => { return session });
+                    session.save().then(() => { return session; });
                 }
                 return session;
             })
@@ -47,7 +47,7 @@ export class SessionStoreSequelize extends session.Store {
     destroy(sid: string, callback?: ((err?: any) => void) | undefined): void {
         Session
             .destroy({ where: { id: sid }})
-            .then((result) => {
+            .then(() => {
                 return;
             })
             .catch((error) => {

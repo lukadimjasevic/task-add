@@ -13,6 +13,6 @@ export class BaseSuccessfulResponses {
             status,
             message,
             ...customFields,
-        }
+        };
     }
 }

@@ -7,7 +7,7 @@ import { Request, Response, NextFunction } from "express";
 
 export interface TrimObjectData {
     [key: string]: any;
-};
+}
 
 
 export class BaseUserService {
@@ -60,7 +60,7 @@ export class BaseUserService {
             console.log(new Error(error.message));
             return null;
         }
-    };
+    }
 
     /**
      * Method finds a User model record.
@@ -72,14 +72,14 @@ export class BaseUserService {
      */
     async find(field: string, value: string): Promise<User | null> {
         if (!this.checkFieldInAttributes(field)) {
-            console.log(new Error(`Field User.${field} does not exist.`))
+            console.log(new Error(`Field User.${field} does not exist.`));
             return null;
         }
         const user = await User.findOne({
             where: { [field]: value }
         });
         return user;
-    };
+    }
 
     /*--------------------------- Business Methods ---------------------------*/
 

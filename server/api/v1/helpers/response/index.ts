@@ -4,4 +4,4 @@ import { SuccessfulResponses } from "./successful-responses";
 export {
     BaseSuccessfulResponses,
     SuccessfulResponses,
-}
+};

@@ -15,7 +15,7 @@ describe("App e2e-test", () => {
                 .catch((error) => {
                     console.log(error);
                     done();
-                })
+                });
         });
     });
 
@@ -39,7 +39,7 @@ describe("App e2e-test", () => {
             signin: "/api/v1/user/signin",
             getUser: "/api/v1/user",
             signout: "/api/v1/user/signout",
-        }
+        };
 
         describe(`POST ${routes.signup} -> SIGNUP USER`, () => {
             it("should return status code 400 if the email field is missing", () => {

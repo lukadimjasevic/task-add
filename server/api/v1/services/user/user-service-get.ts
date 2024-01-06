@@ -1,7 +1,6 @@
-import { BaseUserService } from "./base-user-service";
+import { BaseUserService, TrimObjectData } from "./base-user-service";
 import { HttpErrorInternalServerError } from "../../helpers/error";
 import { Request, Response, NextFunction } from "express";
-import { TrimObjectData } from "./base-user-service";
 
 
 export class UserServiceGet extends BaseUserService {

@@ -13,7 +13,7 @@ export class UserServiceSignin extends BaseUserService {
     async signinUser(data: UserSignin): Promise<SessionUserData> {
         const user = await this.find("email", data.email);
         if (!user) {
-            throw new HttpErrorNotFound("User doesn't exist. Please provide valid credentials.")
+            throw new HttpErrorNotFound("User doesn't exist. Please provide valid credentials.");
         }
         const hashMatch = await this.hash.compare(data.password, user.password);
         if (!hashMatch) {
@@ -23,7 +23,7 @@ export class UserServiceSignin extends BaseUserService {
         const sessionUserData: SessionUserData =  {
             email: user.email,
             username: user.username,
-        }
+        };
         this.sessionUser.save(this.req, sessionUserData);
         return sessionUserData;  
     }

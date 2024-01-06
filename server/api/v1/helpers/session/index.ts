@@ -4,4 +4,4 @@ import { SessionUser } from "./session-user";
 export {
     SessionStoreSequelize,
     SessionUser,
-}
+};
