@@ -1,21 +1,25 @@
 import { Request, Response, NextFunction } from "express";
 import { BaseUserController } from "./base-user-controller";
 import { UserServiceGet } from "../../services/user";
+import { SuccessfulResponses } from "../../helpers/response";
 
 
 export class UserControllerGet extends BaseUserController {
-    services: UserServiceGet = new UserServiceGet();
+    services: UserServiceGet;
+    responses: SuccessfulResponses;
 
-    constructor() {
-        super();
+    constructor(req: Request, res: Response, next: NextFunction) {
+        super(req, res, next);
+        this.services = new UserServiceGet(req, res, next);
+        this.responses = new SuccessfulResponses(res);
     }
 
-    async getUser(req: Request, res: Response, next: NextFunction) {
+    async getUser() {
         try {
-            const user = await this.services.getUser(req.session.user!);
-            return res.status(200).json({ status: 200, message: "Successfully fetched user data", user });
+            const user = await this.services.getUser();
+            return this.responses.responseOK("Successfully fetched user data", { user });
         } catch (error: any) {
-            return next(error);
+            return this.next(error);
         }
     }
 }

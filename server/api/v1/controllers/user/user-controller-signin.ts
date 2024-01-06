@@ -1,22 +1,26 @@
 import { Request, Response, NextFunction } from "express";
 import { BaseUserController } from "./base-user-controller";
 import { UserServiceSignin } from "../../services/user";
+import { SuccessfulResponses } from "../../helpers/response";
 
 
 export class UserControllerSignin extends BaseUserController {
-    services: UserServiceSignin = new UserServiceSignin();
+    services: UserServiceSignin;
+    responses: SuccessfulResponses;
 
-    constructor() {
-        super();
+    constructor(req: Request, res: Response, next: NextFunction) {
+        super(req, res, next);
+        this.services = new UserServiceSignin(req, res, next);
+        this.responses = new SuccessfulResponses(res);
     }
 
-    async signinUser(req: Request, res: Response, next: NextFunction) {
+    async signinUser() {
         try {
-            const sessionUserData = await this.services.signinUser(req.body);
-            this.sessionUser.save(req, sessionUserData);
-            return res.status(200).json({ status: 200, message: "Successfully signed in" });
+            const data = this.req.body;
+            await this.services.signinUser(data);
+            return this.responses.responseOK("Successfully signed in");
         } catch (error: any) {
-            return next(error);
+            return this.next(error);
         }
     }
 }

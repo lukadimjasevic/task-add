@@ -1,10 +1,16 @@
-import { SessionUser } from "../../helpers/session";
+import { Request, Response, NextFunction } from "express";
 
 
 export class BaseUserController {
-    sessionUser: SessionUser = new SessionUser();
+    req: Request;
+    res: Response;
+    next: NextFunction;
 
-    constructor() {}
+    constructor(req: Request, res: Response, next: NextFunction) {
+        this.req = req;
+        this.res = res;
+        this.next = next;
+    }
     
     // Implement common validation methods, error handling, etc.
 }

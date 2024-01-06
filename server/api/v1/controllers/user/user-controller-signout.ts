@@ -1,18 +1,25 @@
 import { Request, Response, NextFunction } from "express";
 import { BaseUserController } from "./base-user-controller";
+import { UserServiceSignout } from "../../services/user";
+import { SuccessfulResponses } from "../../helpers/response";
 
 
 export class UserControllerSignout extends BaseUserController {
-    constructor() {
-        super();
+    services: UserServiceSignout;
+    responses: SuccessfulResponses;
+
+    constructor(req: Request, res: Response, next: NextFunction) {
+        super(req, res, next);
+        this.services = new UserServiceSignout(req, res, next);
+        this.responses = new SuccessfulResponses(res);
     }
 
-    async signoutUser(req: Request, res: Response, next: NextFunction) {
+    async signoutUser() {
         try {
-            this.sessionUser.destroy(req);
-            return res.status(200).json({ status: 200, message: "Successfully signed out" });
+            this.services.signoutUser();
+            return this.responses.responseNoContent("Successfully signed out");
         } catch (error: any) {
-            return next(error);
+            return this.next(error);
         }
     }
 }

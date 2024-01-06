@@ -14,4 +14,4 @@ export {
     UserControllerSignout,
     UserControllerSignup,
     UserControllerUpdate,
-}
+};

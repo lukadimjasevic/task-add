@@ -3,8 +3,6 @@ import bcrypt from "bcrypt";
 
 export class Hash {
     #saltRounds: number = 10;
-    #plaintext: string;
-    #hashValue: string;
 
     constructor() {}
 
@@ -16,30 +14,11 @@ export class Hash {
         this.#saltRounds = value;
     }
 
-    get plaintext() {
-        return this.#plaintext;
+    async create(plaintext: string): Promise<string> {
+        return await bcrypt.hash(plaintext, this.#saltRounds);
     }
 
-    set plaintext(value: string) {
-        if (!this.#plaintext) {
-            this.#plaintext = value;
-        }
-    }
-
-    get hashValue() {
-        return this.#hashValue;
-    }
-
-    set hashValue(value: string) {
-        this.#hashValue = value;
-    }
-
-    async create(): Promise<void> {
-        this.#hashValue = await bcrypt.hash(this.#plaintext, this.#saltRounds);
-    }
-
-    async compare(plaintext: string): Promise<boolean> {
-        if (!this.#hashValue) await this.create();
-        return await bcrypt.compare(plaintext, this.#hashValue);
+    async compare(plaintext: string, hashValue: string): Promise<boolean> {
+        return await bcrypt.compare(plaintext, hashValue);
     }
 }

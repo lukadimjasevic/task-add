@@ -1,20 +1,19 @@
-import { BaseUserService } from "./base-user-service";
-import User from "../../../../database/models/user.model";
-import { SessionUserData } from "../../interfaces/types/express-session";
+import { BaseUserService, TrimObjectData } from "./base-user-service";
 import { HttpErrorInternalServerError } from "../../helpers/error";
+import { Request, Response, NextFunction } from "express";
 
 
 export class UserServiceGet extends BaseUserService {
-    constructor() {
-        super();
+    constructor(req: Request, res: Response, next: NextFunction) {
+        super(req, res, next);
     }
 
-    async getUser(sessionData: SessionUserData) {
-        const user = await User.findOne({ where: { email: sessionData.email }});
+    async getUser(): Promise<TrimObjectData> {
+        const email = this.req.session.user!.email;
+        const user = await this.find("email", email);
         if (!user) {
             throw new HttpErrorInternalServerError();
         }
-        const { id, password, verificationCode, ...userTrimmed } = user!.dataValues;
-        return userTrimmed;
+        return this.trimObject(user.dataValues);
     }
 }

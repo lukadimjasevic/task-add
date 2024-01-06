@@ -7,4 +7,4 @@ export const isAuthenticated = (req: Request, res: Response, next: NextFunction)
     } else {
         return next(new HttpErrorUnauthorized("Unauthorized access"));
     }
-}
+};

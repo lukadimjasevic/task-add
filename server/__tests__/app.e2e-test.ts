@@ -15,7 +15,7 @@ describe("App e2e-test", () => {
                 .catch((error) => {
                     console.log(error);
                     done();
-                })
+                });
         });
     });
 
@@ -38,7 +38,8 @@ describe("App e2e-test", () => {
             signup: "/api/v1/user/signup",
             signin: "/api/v1/user/signin",
             getUser: "/api/v1/user",
-        }
+            signout: "/api/v1/user/signout",
+        };
 
         describe(`POST ${routes.signup} -> SIGNUP USER`, () => {
             it("should return status code 400 if the email field is missing", () => {
@@ -92,11 +93,11 @@ describe("App e2e-test", () => {
                 })
                 .expectStatus(400);
             });
-            it("should return status code 200 if the user is signed up", () => {
+            it("should return status code 201 if the user is signed up", () => {
                 return spec()
                     .post("/api/v1/user/signup")
                     .withJson(newUser)
-                    .expectStatus(200);
+                    .expectStatus(201);
             });
             it("should return status code 409 if the user is already signed up", () => {
                 return spec()
@@ -170,6 +171,15 @@ describe("App e2e-test", () => {
                     .get(routes.getUser)
                     .withCookies(newUser.cookie![0])
                     .expectStatus(200);
+            });
+        });
+
+        describe(`POST ${routes.signout} -> SIGNOUT USER`, () => {
+            it("should return status code 204 if the user is signed out", () => {
+                return spec()
+                    .post(routes.signout)
+                    .withCookies(newUser.cookie![0])
+                    .expectStatus(204);
             });
         });
     });

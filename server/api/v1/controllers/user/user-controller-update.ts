@@ -3,11 +3,11 @@ import { BaseUserController } from "./base-user-controller";
 
 
 export class UserControllerUpdate extends BaseUserController {
-    constructor() {
-        super();
+    constructor(req: Request, res: Response, next: NextFunction) {
+        super(req, res, next);
     }
 
-    async updateUser(req: Request, res: Response, next: NextFunction) {
-        return res.send("Update User");
+    async updateUser() {
+        return this.res.send("Update User");
     }
 }

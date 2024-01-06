@@ -18,7 +18,7 @@ const defaultSequelizeOptions: SequelizeOptions = {
         "underscored": true,
     },
     logging: false,
-}
+};
 
 class Database extends Sequelize {
     constructor(uri: string=config.url, options: SequelizeOptions=defaultSequelizeOptions) {
