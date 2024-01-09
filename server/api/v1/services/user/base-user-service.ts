@@ -3,7 +3,7 @@ import User from "../../../../database/models/user.model";
 import { UserSignup } from "../../interfaces/user.interface";
 import { SessionUser } from "../../helpers/session";
 import { Request, Response, NextFunction } from "express";
-import { HttpErrorConflict, HttpErrorInternalServerError, HttpErrorNotFound } from "../../helpers/error";
+import { HttpErrorBadRequest, HttpErrorConflict, HttpErrorInternalServerError, HttpErrorNotFound } from "../../helpers/error";
 import { Op } from "sequelize";
 
 
@@ -61,16 +61,12 @@ export class BaseUserService {
         if (users.length) {
             throw new HttpErrorConflict("User already exists. Please provide valid credentials.");
         }
-        try {
-            const user = await User.create({
-                email: data.email,
-                username: data.username,
-                password: await this.hash.create(data.password),
-            });
-            return user;
-        } catch (error: any) {
-            throw error;
-        }
+        const user = await User.create({
+            email: data.email,
+            username: data.username,
+            password: await this.hash.create(data.password),
+        });
+        return user;
     }
 
     /**
@@ -81,17 +77,13 @@ export class BaseUserService {
      */
     async findOne(field: string, value: any): Promise<User> {
         this.checkFieldInAttributes(field);
-        try {
-            const user = await User.findOne({
-                where: { [field]: value }
-            });
-            if (!user) {
-                throw new HttpErrorNotFound("User doesn't exist. Please provide valid credentials.");
-            }
-            return user;
-        } catch (error: any) {
-            throw error;
+        const user = await User.findOne({
+            where: { [field]: value }
+        });
+        if (!user) {
+            throw new HttpErrorNotFound("User doesn't exist. Please provide valid credentials.");
         }
+        return user;
     }
 
     /**
@@ -110,6 +102,9 @@ export class BaseUserService {
             }
             return affectedCount;
         } catch (error: any) {
+            if (error.name === "SequelizeUniqueConstraintError") {
+                throw new HttpErrorBadRequest(`Field ${field} must be unique`);
+            }
             throw error;
         }
     }

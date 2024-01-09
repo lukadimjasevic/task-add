@@ -4,4 +4,4 @@ import { UserValidations } from "./user-validations";
 export {
     UserRules,
     UserValidations,
-}
+};
