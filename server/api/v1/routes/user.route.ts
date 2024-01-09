@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from "express";
-import validations from "../validations/user.validation";
+import { UserValidations } from "../validations/user";
 import { validate } from "../middlewares/validate.middleware";
 import { isAuthenticated } from "../middlewares/auth.middleware";
 import { 
@@ -13,11 +13,11 @@ import {
 
 const router = Router();
 
-router.post("/signup", validations.signupRules, validate, (req: Request, res: Response, next: NextFunction) => {
+router.post("/signup", UserValidations.setSignupRules(), validate, (req: Request, res: Response, next: NextFunction) => {
     const controllerSignup = new UserControllerSignup(req, res, next);
     controllerSignup.signupUser();
 });
-router.post("/signin", validations.signinRules, validate, (req: Request, res: Response, next: NextFunction) => {
+router.post("/signin", UserValidations.setSigninRules(), validate, (req: Request, res: Response, next: NextFunction) => {
     const controllerSignin = new UserControllerSignin(req, res, next);
     controllerSignin.signinUser();
 });
@@ -29,7 +29,7 @@ router.get("/", isAuthenticated, (req: Request, res: Response, next: NextFunctio
     const controllerGet = new UserControllerGet(req, res, next);
     controllerGet.getUser();
 });
-router.put("/", validations.updateRules, validate, isAuthenticated, (req: Request, res: Response, next: NextFunction) => {
+router.put("/", UserValidations.setUpdateRules(), validate, isAuthenticated, (req: Request, res: Response, next: NextFunction) => {
     const controllerUpdate = new UserControllerUpdate(req, res, next);
     controllerUpdate.updateUser();
 });
