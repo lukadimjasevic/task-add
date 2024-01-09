@@ -29,7 +29,7 @@ router.get("/", isAuthenticated, (req: Request, res: Response, next: NextFunctio
     const controllerGet = new UserControllerGet(req, res, next);
     controllerGet.getUser();
 });
-router.put("/", (req: Request, res: Response, next: NextFunction) => {
+router.put("/", validations.updateRules, validate, isAuthenticated, (req: Request, res: Response, next: NextFunction) => {
     const controllerUpdate = new UserControllerUpdate(req, res, next);
     controllerUpdate.updateUser();
 });

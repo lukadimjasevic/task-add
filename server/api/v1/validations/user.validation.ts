@@ -25,6 +25,17 @@ const validations = {
             .notEmpty().withMessage("Password is required")
             .isString().withMessage("Password must be a string"),
     ],
+    updateRules: [
+        body("avatar"),
+        body("firstname")
+            .isString().withMessage("Firstname must be a string")
+            .isLength({ max: 32 }).withMessage("Firstname must be a maximum of 32 characters")
+            .optional({ nullable: true }),
+        body("lastname")
+            .isString().withMessage("Lastname must be a string")
+            .isLength({ max: 32 }).withMessage("Lastname must be a maximum of 32 characters")
+            .optional({ nullable: true }),
+    ],
 };
 
 export default validations;

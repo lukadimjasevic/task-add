@@ -3,6 +3,7 @@ import { UserServiceGet } from "./user-service-get";
 import { UserServiceSignin } from "./user-service-signin";
 import { UserServiceSignout } from "./user-service-signout";
 import { UserServiceSignup } from "./user-service-signup";
+import { UserServiceUpdate } from "./user-service-update";
 
 export {
     BaseUserService,
@@ -10,4 +11,5 @@ export {
     UserServiceSignin,
     UserServiceSignout,
     UserServiceSignup,
+    UserServiceUpdate,
 };
