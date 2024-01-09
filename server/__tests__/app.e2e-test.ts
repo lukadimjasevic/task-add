@@ -32,6 +32,8 @@ describe("App e2e-test", () => {
             username: "test",
             password: "strongPassword",
             passwordRetype: "strongPassword",
+            firstname: "Test",
+            lastname: "User",
             cookie: null,
         };
         const routes = {
@@ -39,6 +41,7 @@ describe("App e2e-test", () => {
             signin: "/api/v1/user/signin",
             getUser: "/api/v1/user",
             signout: "/api/v1/user/signout",
+            update: "/api/v1/user",
         };
 
         describe(`POST ${routes.signup} -> SIGNUP USER`, () => {
@@ -170,6 +173,19 @@ describe("App e2e-test", () => {
                 return spec()
                     .get(routes.getUser)
                     .withCookies(newUser.cookie![0])
+                    .expectStatus(200);
+            });
+        });
+
+        describe(`PUT ${routes.getUser} -> UPDATE USER`, () => {
+            it("should return status code 200 if the user data is updated", () => {
+                return spec()
+                    .put(routes.update)
+                    .withCookies(newUser.cookie![0])
+                    .withJson({
+                        firstname: newUser.firstname,
+                        lastname: newUser.lastname,
+                    })
                     .expectStatus(200);
             });
         });
