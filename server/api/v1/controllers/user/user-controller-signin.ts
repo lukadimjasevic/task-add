@@ -16,8 +16,7 @@ export class UserControllerSignin extends BaseUserController {
 
     async signinUser() {
         try {
-            const data = this.req.body;
-            await this.services.signinUser(data);
+            await this.services.signinUser();
             return this.responses.responseOK("Successfully signed in");
         } catch (error: any) {
             return this.next(error);

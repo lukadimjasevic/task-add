@@ -16,8 +16,7 @@ export class UserControllerSignup extends BaseUserController {
 
     async signupUser() {
         try {
-            const data = this.req.body;
-            await this.services.signupUser(data);
+            await this.services.signupUser();
             return this.responses.responseCreated("Successfully created a new account");
         } catch (error: any) {
             return this.next(error);
