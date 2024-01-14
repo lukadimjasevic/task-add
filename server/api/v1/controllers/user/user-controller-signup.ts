@@ -1,17 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 import { BaseUserController } from "./base-user-controller";
 import { UserServiceSignup } from "../../services/user";
-import { SuccessfulResponses } from "../../helpers/response";
 
 
 export class UserControllerSignup extends BaseUserController {
     services: UserServiceSignup;
-    responses: SuccessfulResponses;
 
     constructor(req: Request, res: Response, next: NextFunction) {
         super(req, res, next);
         this.services = new UserServiceSignup(req, res, next);
-        this.responses = new SuccessfulResponses(res);
     }
 
     async signupUser() {

@@ -10,7 +10,11 @@ export class UserServiceUpdate extends BaseUserService {
     }
 
     async updateUser(): Promise<TrimObjectData> {
-        const data: UserUpdate = this.req.body;
+        const rawData = this.req.body;
+        const data: UserUpdate = {};
+        rawData.avatar !== undefined ? data.avatar = rawData.avatar : null;
+        rawData.firstname !== undefined ? data.firstname = rawData.firstname : null;
+        rawData.lastname !== undefined ? data.lastname = rawData.lastname : null;
         const userSession: SessionUserData = this.req.session.user!;
         const fields = Object.keys(data);
         fields.forEach(async(field) => {

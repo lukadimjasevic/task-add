@@ -33,7 +33,7 @@ router.put("/", UserValidations.setUpdateRules(), validate, isAuthenticated, (re
     const controllerUpdate = new UserControllerUpdate(req, res, next);
     controllerUpdate.updateUser();
 });
-router.delete("/", (req: Request, res: Response, next: NextFunction) => {
+router.delete("/", isAuthenticated, (req: Request, res: Response, next: NextFunction) => {
     const controllerDelete = new UserControllerDelete(req, res, next);
     controllerDelete.deleteUser();
 });

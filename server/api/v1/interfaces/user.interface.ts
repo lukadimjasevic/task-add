@@ -10,7 +10,7 @@ export interface UserSignin {
 }
 
 export interface UserUpdate { 
-    avatar: Blob;
-    firstname: string;
-    lastname: string;
+    avatar?: Blob;
+    firstname?: string;
+    lastname?: string;
 }

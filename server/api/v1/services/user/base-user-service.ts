@@ -3,7 +3,7 @@ import User from "../../../../database/models/user.model";
 import { UserSignup } from "../../interfaces/user.interface";
 import { SessionUser } from "../../helpers/session";
 import { Request, Response, NextFunction } from "express";
-import { HttpErrorBadRequest, HttpErrorConflict, HttpErrorInternalServerError, HttpErrorNotFound } from "../../helpers/error";
+import { HttpErrorBadRequest, HttpErrorConflict, HttpErrorNotFound } from "../../helpers/error";
 import { Op } from "sequelize";
 
 
@@ -76,7 +76,7 @@ export class BaseUserService {
      * @returns Returns an instance of User model.
      */
     async findOne(field: string, value: any): Promise<User> {
-        this.checkFieldInAttributes(field);
+        this.checkFieldInAttributes(field)
         const user = await User.findOne({
             where: { [field]: value }
         });
@@ -91,22 +91,26 @@ export class BaseUserService {
      * @param {string} field field name associated with User's model attributes 
      * @param {any} value value of the param field
      * @param {number} id indicates which record to update
-     * @returns Returns an affected row count, in this case, it's always 1
      */
-    async updateOne(field: string, value: any, id: number): Promise<[affectedCount: number]> {
+    async updateOne(field: string, value: any, id: number): Promise<void> {
         this.checkFieldInAttributes(field);
         try {
-            const affectedCount = await User.update({ [field]: value }, { where: { id }});
-            if (!affectedCount) {
-                throw new HttpErrorInternalServerError();
-            }
-            return affectedCount;
+            await User.update({ [field]: value }, { where: { id }});
         } catch (error: any) {
             if (error.name === "SequelizeUniqueConstraintError") {
                 throw new HttpErrorBadRequest(`Field ${field} must be unique`);
             }
             throw error;
         }
+    }
+
+    /**
+     * Wrapper method that deletes the first record which satisfies the query.
+     * @param id indicates which record to delete
+     */
+    async deleteOne(id: number): Promise<void> {
+        await User.destroy({ where: { id }});
+        return;
     }
 
     /*--------------------------- Business Methods ---------------------------*/
@@ -134,5 +138,9 @@ export class BaseUserService {
             }
         });
         return trimmedData;
+    }
+
+    destroySession() {
+        this.sessionUser.destroy(this.req);
     }
 }
