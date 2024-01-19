@@ -6,11 +6,7 @@ import { SessionUser } from "../../helpers/session";
 import { Request, Response, NextFunction } from "express";
 import { HttpErrorBadRequest, HttpErrorConflict, HttpErrorNotFound } from "../../helpers/error";
 import { Op } from "sequelize";
-
-
-export interface TrimObjectData {
-    [key: string]: any;
-}
+import { TrimData } from "../base-service";
 
 
 export class UserBaseService extends BaseService {
@@ -111,29 +107,8 @@ export class UserBaseService extends BaseService {
 
     /*--------------------------- Business Methods ---------------------------*/
 
-    /**
-     * Method removes keys from the object.
-     * @param {TrimObjectData} object an object to trim
-     * @param {string[]} keys a list of object keys to remove 
-     * @returns Returns a new trimmed object.
-     * @example
-     * // Set an object
-     * const user = { id: 1, name: "John", password: "john123" };
-     * 
-     * // Get a trimmed object
-     * const trimmedUser = trimObject(user, ["id", "password"]);
-     * console.log(trimmedUser);
-     * // Logs:
-     * // { name: "John" }
-     */
-    trimObject(object: TrimObjectData, keys: string[] = ["id", "password", "verificationCode"]): TrimObjectData {
-        const trimmedData = object;
-        keys.forEach(element => {
-            if (element in trimmedData) {
-                delete trimmedData[element];
-            }
-        });
-        return trimmedData;
+    trimData(data: TrimData, keys: string[] = ["id", "password", "verificationCode"]): TrimData {
+        return super.trimData(data, keys);
     }
 
     destroySession() {

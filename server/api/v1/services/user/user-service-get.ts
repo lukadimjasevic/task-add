@@ -1,5 +1,6 @@
 import { SessionUserData } from "../../interfaces/types/express-session";
-import { UserBaseService, TrimObjectData } from "./user-base-service";
+import { UserBaseService } from "./user-base-service";
+import { TrimData } from "../base-service";
 import { Request, Response, NextFunction } from "express";
 
 
@@ -8,9 +9,9 @@ export class UserServiceGet extends UserBaseService {
         super(req, res, next);
     }
 
-    async getUser(): Promise<TrimObjectData> {
+    async getUser(): Promise<TrimData> {
         const userSession: SessionUserData = this.req.session.user!;
         const user = await this.findOne("id", userSession.id);
-        return this.trimObject(user.dataValues);
+        return this.trimData(user.dataValues);
     }
 }

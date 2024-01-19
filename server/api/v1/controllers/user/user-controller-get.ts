@@ -14,7 +14,7 @@ export class UserControllerGet extends UserBaseController {
     async getUser() {
         try {
             const user = await this.services.getUser();
-            return this.responses.responseOK("Successfully fetched user data", { user });
+            return this.responses.responseOK("Successfully fetched user data", { data: user });
         } catch (error: any) {
             return this.next(error);
         }
