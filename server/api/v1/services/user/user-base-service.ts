@@ -1,3 +1,4 @@
+import { BaseService } from "../base-service";
 import { Hash } from "../../helpers/hash";
 import User from "../../../../database/models/user.model";
 import { UserSignup } from "../../interfaces/user.interface";
@@ -12,17 +13,12 @@ export interface TrimObjectData {
 }
 
 
-export class UserBaseService {
-    req: Request;
-    res: Response;
-    next: NextFunction;
+export class UserBaseService extends BaseService {
     hash: Hash = new Hash();
     sessionUser: SessionUser = new SessionUser();
 
     constructor(req: Request, res: Response, next: NextFunction) {
-        this.req = req;
-        this.res = res;
-        this.next = next;
+        super(req, res, next);
     }
 
     /*---------------------------- Check Methods -----------------------------*/
