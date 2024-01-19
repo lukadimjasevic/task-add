@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from "express";
-import { BaseUserController } from "./base-user-controller";
+import { UserBaseController } from "./user-base-controller";
 import { UserServiceSignup } from "../../services/user";
 
 
-export class UserControllerSignup extends BaseUserController {
+export class UserControllerSignup extends UserBaseController {
     services: UserServiceSignup;
 
     constructor(req: Request, res: Response, next: NextFunction) {
