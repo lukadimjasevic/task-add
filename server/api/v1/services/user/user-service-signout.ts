@@ -8,6 +8,6 @@ export class UserServiceSignout extends BaseUserService {
     }
 
     signoutUser(): void {
-        this.sessionUser.destroy(this.req);
+        this.destroySession();
     }
 }

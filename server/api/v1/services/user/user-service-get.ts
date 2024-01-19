@@ -1,5 +1,5 @@
+import { SessionUserData } from "../../interfaces/types/express-session";
 import { BaseUserService, TrimObjectData } from "./base-user-service";
-import { HttpErrorInternalServerError } from "../../helpers/error";
 import { Request, Response, NextFunction } from "express";
 
 
@@ -9,11 +9,8 @@ export class UserServiceGet extends BaseUserService {
     }
 
     async getUser(): Promise<TrimObjectData> {
-        const email = this.req.session.user!.email;
-        const user = await this.find("email", email);
-        if (!user) {
-            throw new HttpErrorInternalServerError();
-        }
+        const userSession: SessionUserData = this.req.session.user!;
+        const user = await this.findOne("id", userSession.id);
         return this.trimObject(user.dataValues);
     }
 }

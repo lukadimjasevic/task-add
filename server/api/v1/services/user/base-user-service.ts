@@ -3,6 +3,8 @@ import User from "../../../../database/models/user.model";
 import { UserSignup } from "../../interfaces/user.interface";
 import { SessionUser } from "../../helpers/session";
 import { Request, Response, NextFunction } from "express";
+import { HttpErrorBadRequest, HttpErrorConflict, HttpErrorNotFound } from "../../helpers/error";
+import { Op } from "sequelize";
 
 
 export interface TrimObjectData {
@@ -33,7 +35,11 @@ export class BaseUserService {
      */
     checkFieldInAttributes(field: string): boolean {
         const attributes = Object.keys(User.getAttributes());
-        return attributes.includes(field);
+        const isIncludes = attributes.includes(field);
+        if (!isIncludes) {
+            throw new Error(`Field User.${field} does not exist.`);
+        }
+        return isIncludes;
     }
 
     /*--------------------------- Database Methods ---------------------------*/
@@ -41,44 +47,70 @@ export class BaseUserService {
     /**
      * Method creates a new User model record.
      * @param {UserSignup} data object of UserSignup interface
-     * @returns Returns an instance of User model. If a user already exists or 
-     * there is a problem with the field's validation rules, it returns null.
+     * @returns Returns an instance of User model.
      */
-    async create(data: UserSignup): Promise<User | null> {
-        const findUser = await this.find("email", data.email);
-        if (findUser) {
-            return null;
+    async create(data: UserSignup): Promise<User> {
+        const users = await User.findAll({
+            where: {
+                [Op.or]: [
+                    { email: data.email },
+                    { username: data.username},
+                ],
+            },
+        });
+        if (users.length) {
+            throw new HttpErrorConflict("User already exists. Please provide valid credentials.");
         }
+        const user = await User.create({
+            email: data.email,
+            username: data.username,
+            password: await this.hash.create(data.password),
+        });
+        return user;
+    }
+
+    /**
+     * Wrapper method that finds the first record which satisfies the query.
+     * @param {string} field field name associated with User's model attributes
+     * @param {any} value value of the param field
+     * @returns Returns an instance of User model.
+     */
+    async findOne(field: string, value: any): Promise<User> {
+        this.checkFieldInAttributes(field)
+        const user = await User.findOne({
+            where: { [field]: value }
+        });
+        if (!user) {
+            throw new HttpErrorNotFound("User doesn't exist. Please provide valid credentials.");
+        }
+        return user;
+    }
+
+    /**
+     * Wrapper method that updates the first record which satisfies the query.
+     * @param {string} field field name associated with User's model attributes 
+     * @param {any} value value of the param field
+     * @param {number} id indicates which record to update
+     */
+    async updateOne(field: string, value: any, id: number): Promise<void> {
+        this.checkFieldInAttributes(field);
         try {
-            const user = await User.create({
-                email: data.email,
-                username: data.username,
-                password: await this.hash.create(data.password),
-            });
-            return user;
+            await User.update({ [field]: value }, { where: { id }});
         } catch (error: any) {
-            console.log(new Error(error.message));
-            return null;
+            if (error.name === "SequelizeUniqueConstraintError") {
+                throw new HttpErrorBadRequest(`Field ${field} must be unique`);
+            }
+            throw error;
         }
     }
 
     /**
-     * Method finds a User model record.
-     * @param {string} field field name associated with User's model attributes
-     * @param {string} value value of the param field
-     * @returns Returns an instance of User model if the given params satisfied
-     * query. Otherwise, it returns null. Also, if the param field is unknown,
-     * it returns null
+     * Wrapper method that deletes the first record which satisfies the query.
+     * @param id indicates which record to delete
      */
-    async find(field: string, value: string): Promise<User | null> {
-        if (!this.checkFieldInAttributes(field)) {
-            console.log(new Error(`Field User.${field} does not exist.`));
-            return null;
-        }
-        const user = await User.findOne({
-            where: { [field]: value }
-        });
-        return user;
+    async deleteOne(id: number): Promise<void> {
+        await User.destroy({ where: { id }});
+        return;
     }
 
     /*--------------------------- Business Methods ---------------------------*/
@@ -106,5 +138,9 @@ export class BaseUserService {
             }
         });
         return trimmedData;
+    }
+
+    destroySession() {
+        this.sessionUser.destroy(this.req);
     }
 }

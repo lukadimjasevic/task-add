@@ -17,7 +17,7 @@ export class SessionUser {
     }
 
     destroy(req: Request) {
-        req.session.user = null;
+        req.session.user = undefined;
         req.session.destroy((error) => {
             if (error) {
                 console.log(error);

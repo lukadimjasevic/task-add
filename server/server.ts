@@ -8,7 +8,7 @@ import { errorHandler } from "./api/v1/middlewares/error.middleware";
 
 dotenv.config();
 
-class Server {
+export class Server {
     app: Application = express();
     port: number | string;
     constructor(port: number | string) {
@@ -48,7 +48,7 @@ if (process.env.NODE_ENV !== "test") {
             console.log("Database connection has been established successfully");
             server.start();
         })
-        .catch((error) => {
+        .catch((error: any) => {
             console.log(error);
         });    
 }
