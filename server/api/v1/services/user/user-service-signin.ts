@@ -1,11 +1,11 @@
-import { BaseUserService } from "./base-user-service";
+import { UserBaseService } from "./user-base-service";
 import { UserSignin } from "../../interfaces/user.interface";
 import { SessionUserData } from "../../interfaces/types/express-session";
 import { HttpErrorUnauthorized } from "../../helpers/error";
 import { Request, Response, NextFunction } from "express";
 
 
-export class UserServiceSignin extends BaseUserService {
+export class UserServiceSignin extends UserBaseService {
     constructor(req: Request, res: Response, next: NextFunction ) {
         super(req, res, next);
     }

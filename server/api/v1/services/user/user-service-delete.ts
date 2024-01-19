@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from "express";
-import { BaseUserService } from "./base-user-service";
+import { UserBaseService } from "./user-base-service";
 import { SessionUserData } from "../../interfaces/types/express-session";
 
 
-export class UserServiceDelete extends BaseUserService {
+export class UserServiceDelete extends UserBaseService {
     constructor(req: Request, res: Response, next: NextFunction) {
         super(req, res, next)
     }

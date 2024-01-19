@@ -12,7 +12,7 @@ export interface TrimObjectData {
 }
 
 
-export class BaseUserService {
+export class UserBaseService {
     req: Request;
     res: Response;
     next: NextFunction;

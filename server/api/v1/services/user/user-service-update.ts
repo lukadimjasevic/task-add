@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from "express";
-import { BaseUserService, TrimObjectData } from "./base-user-service";
+import { UserBaseService, TrimObjectData } from "./user-base-service";
 import { UserUpdate } from "../../interfaces/user.interface";
 import { SessionUserData } from "../../interfaces/types/express-session";
 
 
-export class UserServiceUpdate extends BaseUserService {
+export class UserServiceUpdate extends UserBaseService {
     constructor(req: Request, res: Response, next: NextFunction) {
         super(req, res, next);
     }

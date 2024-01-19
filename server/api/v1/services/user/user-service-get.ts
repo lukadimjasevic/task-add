@@ -1,9 +1,9 @@
 import { SessionUserData } from "../../interfaces/types/express-session";
-import { BaseUserService, TrimObjectData } from "./base-user-service";
+import { UserBaseService, TrimObjectData } from "./user-base-service";
 import { Request, Response, NextFunction } from "express";
 
 
-export class UserServiceGet extends BaseUserService {
+export class UserServiceGet extends UserBaseService {
     constructor(req: Request, res: Response, next: NextFunction) {
         super(req, res, next);
     }
