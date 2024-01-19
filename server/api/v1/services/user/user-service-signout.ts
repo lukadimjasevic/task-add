@@ -1,8 +1,8 @@
-import { BaseUserService } from "./base-user-service";
+import { UserBaseService } from "./user-base-service";
 import { Request, Response, NextFunction } from "express";
 
 
-export class UserServiceSignout extends BaseUserService {
+export class UserServiceSignout extends UserBaseService {
     constructor(req: Request, res: Response, next: NextFunction ) {
         super(req, res, next);
     }

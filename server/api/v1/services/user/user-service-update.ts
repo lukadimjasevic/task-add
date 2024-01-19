@@ -1,15 +1,16 @@
 import { Request, Response, NextFunction } from "express";
-import { BaseUserService, TrimObjectData } from "./base-user-service";
+import { UserBaseService } from "./user-base-service";
+import { TrimData } from "../base-service";
 import { UserUpdate } from "../../interfaces/user.interface";
 import { SessionUserData } from "../../interfaces/types/express-session";
 
 
-export class UserServiceUpdate extends BaseUserService {
+export class UserServiceUpdate extends UserBaseService {
     constructor(req: Request, res: Response, next: NextFunction) {
         super(req, res, next);
     }
 
-    async updateUser(): Promise<TrimObjectData> {
+    async updateUser(): Promise<TrimData> {
         const rawData = this.req.body;
         const data: UserUpdate = {};
         rawData.avatar !== undefined ? data.avatar = rawData.avatar : null;
@@ -22,6 +23,6 @@ export class UserServiceUpdate extends BaseUserService {
             await this.updateOne(field, value, userSession.id);
         });
         const user = await this.findOne("id", userSession.id);
-        return this.trimObject(user.dataValues);
+        return this.trimData(user.dataValues);
     }
 }

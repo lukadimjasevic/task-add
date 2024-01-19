@@ -4,6 +4,7 @@ import session from "express-session";
 import Database from "./database";
 import { SessionStoreSequelize } from "./api/v1/helpers/session";
 import userRouter from "./api/v1/routes/user.route";
+import taskStatusRouter from "./api/v1/routes/task_status.route";
 import { errorHandler } from "./api/v1/middlewares/error.middleware";
 
 dotenv.config();
@@ -17,6 +18,7 @@ export class Server {
 
     private _loadRoutes() {
         this.app.use("/api/v1/user", userRouter);
+        this.app.use("/api/v1/task-status", taskStatusRouter);
     }
 
     start() {

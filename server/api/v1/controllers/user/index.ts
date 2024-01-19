@@ -1,4 +1,4 @@
-import { BaseUserController } from "./base-user-controller";
+import { UserBaseController } from "./user-base-controller";
 import { UserControllerDelete } from "./user-controller-delete";
 import { UserControllerGet } from "./user-controller-get";
 import { UserControllerSignin } from "./user-controller-signin";
@@ -7,7 +7,7 @@ import { UserControllerSignup } from "./user-controller-signup";
 import { UserControllerUpdate } from "./user-controller-update";
 
 export {
-    BaseUserController,
+    UserBaseController,
     UserControllerDelete,
     UserControllerGet,
     UserControllerSignin,

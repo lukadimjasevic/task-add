@@ -1,3 +1,4 @@
+import { BaseService } from "../base-service";
 import { Hash } from "../../helpers/hash";
 import User from "../../../../database/models/user.model";
 import { UserSignup } from "../../interfaces/user.interface";
@@ -5,24 +6,15 @@ import { SessionUser } from "../../helpers/session";
 import { Request, Response, NextFunction } from "express";
 import { HttpErrorBadRequest, HttpErrorConflict, HttpErrorNotFound } from "../../helpers/error";
 import { Op } from "sequelize";
+import { TrimData } from "../base-service";
 
 
-export interface TrimObjectData {
-    [key: string]: any;
-}
-
-
-export class BaseUserService {
-    req: Request;
-    res: Response;
-    next: NextFunction;
+export class UserBaseService extends BaseService {
     hash: Hash = new Hash();
     sessionUser: SessionUser = new SessionUser();
 
     constructor(req: Request, res: Response, next: NextFunction) {
-        this.req = req;
-        this.res = res;
-        this.next = next;
+        super(req, res, next);
     }
 
     /*---------------------------- Check Methods -----------------------------*/
@@ -115,29 +107,8 @@ export class BaseUserService {
 
     /*--------------------------- Business Methods ---------------------------*/
 
-    /**
-     * Method removes keys from the object.
-     * @param {TrimObjectData} object an object to trim
-     * @param {string[]} keys a list of object keys to remove 
-     * @returns Returns a new trimmed object.
-     * @example
-     * // Set an object
-     * const user = { id: 1, name: "John", password: "john123" };
-     * 
-     * // Get a trimmed object
-     * const trimmedUser = trimObject(user, ["id", "password"]);
-     * console.log(trimmedUser);
-     * // Logs:
-     * // { name: "John" }
-     */
-    trimObject(object: TrimObjectData, keys: string[] = ["id", "password", "verificationCode"]): TrimObjectData {
-        const trimmedData = object;
-        keys.forEach(element => {
-            if (element in trimmedData) {
-                delete trimmedData[element];
-            }
-        });
-        return trimmedData;
+    trimData(data: TrimData, keys: string[] = ["id", "password", "verificationCode"]): TrimData {
+        return super.trimData(data, keys);
     }
 
     destroySession() {

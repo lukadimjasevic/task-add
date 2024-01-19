@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
-import { SuccessfulResponses } from "../../helpers/response";
+import { SuccessfulResponses } from "../helpers/response";
 
 
-export class BaseUserController {
+export class BaseController {
     req: Request;
     res: Response;
     next: NextFunction;
