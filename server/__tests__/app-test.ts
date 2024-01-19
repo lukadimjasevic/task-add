@@ -1,5 +1,7 @@
 import { db, server } from "../server";
+import { BaseTests } from "./base-tests";
 import { UserTests } from "./user";
+import { TaskStatusTests } from "./task_status";
 
 
 describe("App e2e-test", () => {
@@ -24,5 +26,7 @@ describe("App e2e-test", () => {
         });
     });
 
-    new UserTests().run();
+    const baseTests = new BaseTests();
+    new UserTests(baseTests.user).run();
+    new TaskStatusTests(baseTests.user).run();
 });
