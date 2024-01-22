@@ -2,6 +2,7 @@ import { db, server } from "../server";
 import { BaseTests } from "./base-tests";
 import { UserTests } from "./user";
 import { TaskStatusTests } from "./task_status";
+import { TaskCategoryTests } from "./task_category";
 
 
 describe("App e2e-test", () => {
@@ -29,4 +30,5 @@ describe("App e2e-test", () => {
     const baseTests = new BaseTests();
     new UserTests(baseTests.user).run();
     new TaskStatusTests(baseTests.user).run();
+    new TaskCategoryTests(baseTests.user, baseTests.taskCategory).run();
 });

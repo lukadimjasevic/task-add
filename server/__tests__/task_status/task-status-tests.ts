@@ -7,7 +7,7 @@ export class TaskStatusTests {
 
     constructor(user: UserTest) {
         this.user = user;
-    };
+    }
 
     run() {
         describe("Task Status", () => {

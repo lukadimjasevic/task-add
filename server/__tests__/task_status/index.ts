@@ -6,4 +6,4 @@ export {
     TaskStatusTestBase,
     TaskStatusTestGet,
     TaskStatusTests,
-}
+};

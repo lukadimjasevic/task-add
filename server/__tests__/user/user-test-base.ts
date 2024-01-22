@@ -9,6 +9,6 @@ export class UserTestBase {
         signout: "/api/v1/user/signout",
         update: "/api/v1/user",
         delete: "/api/v1/user",
-    }
+    };
     server: Server = server;
 }

@@ -1,19 +1,19 @@
 import { Request, Response, NextFunction } from "express";
-import { TaskStatusBaseController } from "./task-status-base-controller";
-import { TaskStatusServiceGet } from "../../services/task_status";
+import { BaseController } from "../base-controller";
+import { TaskStatusServiceRead } from "../../services/task_status";
 
 
-export class TaskStatusControllerGet extends TaskStatusBaseController {
-    services: TaskStatusServiceGet;
+export class TaskStatusControllerRead extends BaseController {
+    services: TaskStatusServiceRead;
 
     constructor(req: Request, res: Response, next: NextFunction) {
         super(req, res, next);
-        this.services = new TaskStatusServiceGet(req, res, next);
+        this.services = new TaskStatusServiceRead(req, res, next);
     }
 
     async getTaskStatuses() {
         try {
-            const taskStatuses = await this.services.getTaskStatuses()
+            const taskStatuses = await this.services.getTaskStatuses();
             return this.responses.responseOK("Successfully fetched task statuses", { data: taskStatuses });
         } catch (error: any) {
             return this.next(error);

@@ -1,7 +1,7 @@
 import { TaskStatusBaseService } from "./task-status-base-service";
-import { TaskStatusServiceGet } from "./task-status-service-get";
+import { TaskStatusServiceRead } from "./task-status-service-read";
 
 export {
     TaskStatusBaseService,
-    TaskStatusServiceGet,
-}
+    TaskStatusServiceRead,
+};

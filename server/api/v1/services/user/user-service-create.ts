@@ -1,13 +1,20 @@
+import { Request, Response, NextFunction } from "express";
 import { UserBaseService } from "./user-base-service";
-import { UserSignin } from "../../interfaces/user.interface";
+import { UserSignup, UserSignin } from "../../interfaces/user.interface";
 import { SessionUserData } from "../../interfaces/types/express-session";
 import { HttpErrorUnauthorized } from "../../helpers/error";
-import { Request, Response, NextFunction } from "express";
+import User from "../../../../database/models/user.model";
 
 
-export class UserServiceSignin extends UserBaseService {
-    constructor(req: Request, res: Response, next: NextFunction ) {
+export class UserServiceCreate extends UserBaseService {
+    constructor(req: Request, res: Response, next: NextFunction) {
         super(req, res, next);
+    }
+
+    async signupUser(): Promise<User> {
+        const data: UserSignup = this.req.body;
+        const user = await this.create(data);
+        return user;
     }
 
     async signinUser(): Promise<SessionUserData> {
@@ -24,5 +31,9 @@ export class UserServiceSignin extends UserBaseService {
         };
         this.sessionUser.save(this.req, userSession);
         return userSession;  
+    }
+
+    signoutUser(): void {
+        this.destroySession();
     }
 }

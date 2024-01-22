@@ -40,7 +40,7 @@ export class UserTestSignin extends UserTestBase {
                 const response = await request(this.server.app)
                     .post(this.routes.signin)
                     .send(user);
-                user.cookie = response.headers['set-cookie'];
+                user.cookie = response.headers["set-cookie"];
                 expect(response.statusCode).toEqual(200);
             });
         });

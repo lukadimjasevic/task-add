@@ -5,7 +5,7 @@ import { SessionUserData } from "../../interfaces/types/express-session";
 
 export class UserServiceDelete extends UserBaseService {
     constructor(req: Request, res: Response, next: NextFunction) {
-        super(req, res, next)
+        super(req, res, next);
     }
 
     async deleteUser(): Promise<void> {

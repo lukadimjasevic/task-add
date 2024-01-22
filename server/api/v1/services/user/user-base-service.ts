@@ -1,4 +1,4 @@
-import { BaseService } from "../base-service";
+import { BaseService, TrimData } from "../base-service";
 import { Hash } from "../../helpers/hash";
 import User from "../../../../database/models/user.model";
 import { UserSignup } from "../../interfaces/user.interface";
@@ -6,7 +6,6 @@ import { SessionUser } from "../../helpers/session";
 import { Request, Response, NextFunction } from "express";
 import { HttpErrorBadRequest, HttpErrorConflict, HttpErrorNotFound } from "../../helpers/error";
 import { Op } from "sequelize";
-import { TrimData } from "../base-service";
 
 
 export class UserBaseService extends BaseService {
@@ -68,7 +67,7 @@ export class UserBaseService extends BaseService {
      * @returns Returns an instance of User model.
      */
     async findOne(field: string, value: any): Promise<User> {
-        this.checkFieldInAttributes(field)
+        this.checkFieldInAttributes(field);
         const user = await User.findOne({
             where: { [field]: value }
         });

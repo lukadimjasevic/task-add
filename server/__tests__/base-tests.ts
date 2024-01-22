@@ -1,8 +1,10 @@
 import { UserTest } from "./interfaces/user.interface";
+import { Category } from "../api/v1/interfaces/task_category.interface";
 
 
 export class BaseTests {
     user: UserTest;
+    taskCategory: Category;
 
     constructor() {
         this.user = {
@@ -13,6 +15,10 @@ export class BaseTests {
             firstname: "Test",
             lastname: "User",
             cookie: "",
-        }
-    };
+        };
+        this.taskCategory = {
+            color: "#ffffff",
+            name: "Work",
+        };
+    }
 }

@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import { TaskStatusBaseService } from "./task-status-base-service";
-import TaskStatus from "../../../../database/models/task_status.model";
 import { TrimData } from "../base-service";
+import TaskStatus from "../../../../database/models/task_status.model";
 
 
-export class TaskStatusServiceGet extends TaskStatusBaseService {
+export class TaskStatusServiceRead extends TaskStatusBaseService {
     constructor(req: Request, res: Response, next: NextFunction) {
         super(req, res, next);
     }
