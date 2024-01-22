@@ -1,5 +1,6 @@
 import {
-    TaskCategoryTestCreate, 
+    TaskCategoryTestCreate,
+    TaskCategoryTestDelete, 
     TaskCategoryTestRead,
     TaskCategoryTestUpdate,
 } from "./";
@@ -21,6 +22,7 @@ export class TaskCategoryTests {
             new TaskCategoryTestCreate().test(this.user, this.taskCategory);
             new TaskCategoryTestRead().test(this.user);
             new TaskCategoryTestUpdate().test(this.user);
+            new TaskCategoryTestDelete().test(this.user);
         });
     }
 }
