@@ -5,8 +5,8 @@ import { TaskStatusControllerRead } from "../controllers/task_status";
 const router = Router();
 
 router.get("/", isAuthenticated, (req: Request, res: Response, next: NextFunction) => {
-    const controllerGet = new TaskStatusControllerRead(req, res, next);
-    controllerGet.getTaskStatuses();
+    const controllerRead = new TaskStatusControllerRead(req, res, next);
+    controllerRead.getTaskStatuses();
 });
 
 export default router;

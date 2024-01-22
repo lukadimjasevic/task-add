@@ -3,10 +3,8 @@ import { UserValidations } from "../validations/user";
 import { validate } from "../middlewares/validate.middleware";
 import { isAuthenticated } from "../middlewares/auth.middleware";
 import { 
-    UserControllerSignup,
-    UserControllerSignin,
-    UserControllerSignout,
-    UserControllerGet,
+    UserControllerCreate,
+    UserControllerRead,
     UserControllerUpdate,
     UserControllerDelete
 } from "../controllers/user";
@@ -14,20 +12,20 @@ import {
 const router = Router();
 
 router.post("/signup", UserValidations.setSignupRules(), validate, (req: Request, res: Response, next: NextFunction) => {
-    const controllerSignup = new UserControllerSignup(req, res, next);
-    controllerSignup.signupUser();
+    const controllerCreate = new UserControllerCreate(req, res, next);
+    controllerCreate.signupUser();
 });
 router.post("/signin", UserValidations.setSigninRules(), validate, (req: Request, res: Response, next: NextFunction) => {
-    const controllerSignin = new UserControllerSignin(req, res, next);
-    controllerSignin.signinUser();
+    const controllerCreate = new UserControllerCreate(req, res, next);
+    controllerCreate.signinUser();
 });
 router.post("/signout", isAuthenticated, (req: Request, res: Response, next: NextFunction) => {
-    const controllerSignout = new UserControllerSignout(req, res, next);
-    controllerSignout.signoutUser();
+    const controllerCreate = new UserControllerCreate(req, res, next);
+    controllerCreate.signoutUser();
 });
 router.get("/", isAuthenticated, (req: Request, res: Response, next: NextFunction) => {
-    const controllerGet = new UserControllerGet(req, res, next);
-    controllerGet.getUser();
+    const controllerRead = new UserControllerRead(req, res, next);
+    controllerRead.getUser();
 });
 router.put("/", UserValidations.setUpdateRules(), validate, isAuthenticated, (req: Request, res: Response, next: NextFunction) => {
     const controllerUpdate = new UserControllerUpdate(req, res, next);

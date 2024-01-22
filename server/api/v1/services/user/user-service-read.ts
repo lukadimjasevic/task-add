@@ -4,7 +4,7 @@ import { TrimData } from "../base-service";
 import { Request, Response, NextFunction } from "express";
 
 
-export class UserServiceGet extends UserBaseService {
+export class UserServiceRead extends UserBaseService {
     constructor(req: Request, res: Response, next: NextFunction) {
         super(req, res, next);
     }

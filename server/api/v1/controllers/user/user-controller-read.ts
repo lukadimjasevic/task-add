@@ -1,14 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 import { BaseController } from "../base-controller";
-import { UserServiceGet } from "../../services/user";
+import { UserServiceRead } from "../../services/user";
 
 
-export class UserControllerGet extends BaseController {
-    services: UserServiceGet;
+export class UserControllerRead extends BaseController {
+    services: UserServiceRead;
 
     constructor(req: Request, res: Response, next: NextFunction) {
         super(req, res, next);
-        this.services = new UserServiceGet(req, res, next);
+        this.services = new UserServiceRead(req, res, next);
     }
 
     async getUser() {
