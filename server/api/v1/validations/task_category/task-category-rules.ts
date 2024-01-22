@@ -1,4 +1,4 @@
-import { ValidationChain, body } from "express-validator";
+import { ValidationChain, body, param } from "express-validator";
 
 
 export class TaskCategoryRules {
@@ -33,7 +33,7 @@ export class TaskCategoryRules {
      * @returns Returns an express-validator ValidationChain
      */
     static ruleId(): ValidationChain {
-        return body("id")
+        return param("categoryId")
             .notEmpty().withMessage("Task category id is required")
             .isNumeric().withMessage("Task category id must be numeric");
     }

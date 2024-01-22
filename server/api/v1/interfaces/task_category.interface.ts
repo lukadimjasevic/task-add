@@ -1,10 +1,4 @@
-export interface CategoryCreate {
-    color: string;
-    name: string;
-}
-
-export interface CategoryUpdate {
-    id: number;
+export interface Category {
     color: string;
     name: string;
 }

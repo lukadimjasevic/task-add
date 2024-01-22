@@ -31,4 +31,14 @@ export class TaskCategoryValidations extends TaskCategoryRules {
             this.ruleName(),
         ];
     }
+
+    /**
+     * Method sets rules for deleting task category
+     * @returns Returns a list of task category rules of type ValidationChain
+     */
+    static setDeleteCategoryRules(): ValidationChain[] {
+        return [
+            this.ruleId(),
+        ];
+    }
 }
