@@ -8,7 +8,7 @@ export class TaskCategoryBaseService extends BaseService {
         super(req, res, next);
     }
 
-    trimData(data: TrimData, keys: string[] = ["id", "userId"]): TrimData {
+    trimData(data: TrimData, keys: string[] = ["userId"]): TrimData {
         return super.trimData(data, keys);
     }
 }

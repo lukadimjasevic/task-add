@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { TaskStatusBaseService } from "./task-status-base-service";
-import TaskStatus from "../../../../database/models/task_status.model";
 import { TrimData } from "../base-service";
+import TaskStatus from "../../../../database/models/task_status.model";
 
 
 export class TaskStatusServiceRead extends TaskStatusBaseService {
