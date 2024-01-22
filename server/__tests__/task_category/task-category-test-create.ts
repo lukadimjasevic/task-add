@@ -1,7 +1,7 @@
 import request from "supertest";
 import { TaskCategoryTestBase } from "./task-category-test-base";
 import { UserTest } from "../interfaces/user.interface";
-import { Category } from "../../api/v1/interfaces/task_category.interface";
+import { CategoryCreate } from "../../api/v1/interfaces/task_category.interface";
 
 
 export class TaskCategoryTestCreate extends TaskCategoryTestBase {
@@ -9,7 +9,7 @@ export class TaskCategoryTestCreate extends TaskCategoryTestBase {
         super();
     }
 
-    test(user: UserTest, taskCategory: Category) {     
+    test(user: UserTest, taskCategory: CategoryCreate) {     
         describe(`POST ${this.routes.createCategory} -> CREATE A NEW TASK CATEGORY`, () => {
             it("should return status code 400 if the color field is missing", async() => {
                 const response = await request(this.server.app)

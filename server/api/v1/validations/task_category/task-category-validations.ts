@@ -19,4 +19,16 @@ export class TaskCategoryValidations extends TaskCategoryRules {
             this.ruleName(),
         ];
     }
+
+    /**
+     * Method sets rules for updating existing task category
+     * @returns Returns a list of task category rules of type ValidationChain
+     */
+    static setUpdateCategoryRules(): ValidationChain[] {
+        return [
+            this.ruleId(),
+            this.ruleColor(),
+            this.ruleName(),
+        ];
+    }
 }

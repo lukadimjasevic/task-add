@@ -1,10 +1,10 @@
 import { UserTest } from "./interfaces/user.interface";
-import { Category } from "../api/v1/interfaces/task_category.interface";
+import { CategoryCreate } from "../api/v1/interfaces/task_category.interface";
 
 
 export class BaseTests {
     user: UserTest;
-    taskCategory: Category;
+    taskCategory: CategoryCreate;
 
     constructor() {
         this.user = {

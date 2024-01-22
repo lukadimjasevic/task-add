@@ -27,4 +27,14 @@ export class TaskCategoryRules {
             .isString().withMessage("Task category name must be a string")
             .isLength({ max: 64 }).withMessage("Task category name must be a maximum of 64 characters");
     }
+
+    /**
+     * Rule method for id field inside body request
+     * @returns Returns an express-validator ValidationChain
+     */
+    static ruleId(): ValidationChain {
+        return body("id")
+            .notEmpty().withMessage("Task category id is required")
+            .isNumeric().withMessage("Task category id must be numeric");
+    }
 }

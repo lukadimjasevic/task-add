@@ -1,13 +1,13 @@
 import { TaskCategoryTestCreate, TaskCategoryTestRead } from "./";
 import { UserTest } from "../interfaces/user.interface";
-import { Category } from "../../api/v1/interfaces/task_category.interface";
+import { CategoryCreate } from "../../api/v1/interfaces/task_category.interface";
 
 
 export class TaskCategoryTests {
     user: UserTest;
-    taskCategory: Category;
+    taskCategory: CategoryCreate;
 
-    constructor(user: UserTest, taskCategory: Category) {
+    constructor(user: UserTest, taskCategory: CategoryCreate) {
         this.user = user;
         this.taskCategory = taskCategory;
     }
