@@ -1,4 +1,4 @@
-import { TaskCategoryTestCreate } from "./";
+import { TaskCategoryTestCreate, TaskCategoryTestRead } from "./";
 import { UserTest } from "../interfaces/user.interface";
 import { Category } from "../../api/v1/interfaces/task_category.interface";
 
@@ -15,6 +15,7 @@ export class TaskCategoryTests {
     run() {
         describe("Task Category", () => {
             new TaskCategoryTestCreate().test(this.user, this.taskCategory);
+            new TaskCategoryTestRead().test(this.user);
         });
     }
 }
