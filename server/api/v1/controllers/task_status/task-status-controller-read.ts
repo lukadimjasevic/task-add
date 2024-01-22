@@ -1,14 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 import { BaseController } from "../base-controller";
-import { TaskStatusServiceGet } from "../../services/task_status";
+import { TaskStatusServiceRead } from "../../services/task_status";
 
 
-export class TaskStatusControllerGet extends BaseController {
-    services: TaskStatusServiceGet;
+export class TaskStatusControllerRead extends BaseController {
+    services: TaskStatusServiceRead;
 
     constructor(req: Request, res: Response, next: NextFunction) {
         super(req, res, next);
-        this.services = new TaskStatusServiceGet(req, res, next);
+        this.services = new TaskStatusServiceRead(req, res, next);
     }
 
     async getTaskStatuses() {

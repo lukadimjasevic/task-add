@@ -4,7 +4,7 @@ import TaskStatus from "../../../../database/models/task_status.model";
 import { TrimData } from "../base-service";
 
 
-export class TaskStatusServiceGet extends TaskStatusBaseService {
+export class TaskStatusServiceRead extends TaskStatusBaseService {
     constructor(req: Request, res: Response, next: NextFunction) {
         super(req, res, next);
     }

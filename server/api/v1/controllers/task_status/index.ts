@@ -1,5 +1,5 @@
-import { TaskStatusControllerGet } from "./task-status-controller-get";
+import { TaskStatusControllerRead } from "./task-status-controller-read";
 
 export {
-    TaskStatusControllerGet,
+    TaskStatusControllerRead,
 }
