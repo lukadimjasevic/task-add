@@ -10,7 +10,7 @@ export class TaskCategoryTests {
     constructor(user: UserTest, taskCategory: Category) {
         this.user = user;
         this.taskCategory = taskCategory;
-    };
+    }
 
     run() {
         describe("Task Category", () => {

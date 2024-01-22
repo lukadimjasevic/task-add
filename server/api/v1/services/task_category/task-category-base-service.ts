@@ -1,6 +1,5 @@
-import { BaseService } from "../base-service";
+import { BaseService, TrimData } from "../base-service";
 import { Request, Response, NextFunction } from "express";
-import { TrimData } from "../base-service";
 
 
 export class TaskCategoryBaseService extends BaseService {

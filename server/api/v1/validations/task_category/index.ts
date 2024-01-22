@@ -4,4 +4,4 @@ import { TaskCategoryValidations } from "./task-category-validations";
 export {
     TaskCategoryRules,
     TaskCategoryValidations,
-}
+};

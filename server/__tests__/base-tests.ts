@@ -15,10 +15,10 @@ export class BaseTests {
             firstname: "Test",
             lastname: "User",
             cookie: "",
-        }
+        };
         this.taskCategory = {
             color: "#ffffff",
             name: "Work",
-        }
-    };
+        };
+    }
 }

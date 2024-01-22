@@ -6,4 +6,4 @@ export {
     TaskCategoryBaseService,
     TaskCategoryServiceCreate,
     TaskCategoryServiceRead,
-}
+};

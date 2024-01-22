@@ -13,7 +13,7 @@ export class TaskStatusControllerRead extends BaseController {
 
     async getTaskStatuses() {
         try {
-            const taskStatuses = await this.services.getTaskStatuses()
+            const taskStatuses = await this.services.getTaskStatuses();
             return this.responses.responseOK("Successfully fetched task statuses", { data: taskStatuses });
         } catch (error: any) {
             return this.next(error);

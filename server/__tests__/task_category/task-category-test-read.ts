@@ -13,7 +13,7 @@ export class TaskCategoryTestRead extends TaskCategoryTestBase {
             it("should return status code 200 if task categories are fetched", async() => {
                 const response = await request(this.server.app)
                     .get(this.routes.readCategories)
-                    .set("Cookie", user.cookie)
+                    .set("Cookie", user.cookie);
                 expect(response.statusCode).toEqual(200);
             });
         });

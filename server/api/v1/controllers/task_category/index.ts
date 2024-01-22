@@ -4,4 +4,4 @@ import { TaskCategoryControllerRead } from "./task-category-controller-read";
 export {
     TaskCategoryControllerCreate,
     TaskCategoryControllerRead,
-}
+};

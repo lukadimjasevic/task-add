@@ -8,4 +8,4 @@ export {
     TaskCategoryTestCreate,
     TaskCategoryTestRead,
     TaskCategoryTests,
-}
+};

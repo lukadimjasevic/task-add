@@ -14,7 +14,7 @@ export class UserTests {
 
     constructor(user: UserTest) {
         this.user = user;
-    };
+    }
 
     run() {
         describe("User", () => {
