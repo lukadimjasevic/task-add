@@ -12,10 +12,9 @@ export class TaskCategoryTestUpdate extends TaskCategoryTestBase {
         describe(`PUT ${this.routes.updateCategory} -> UPDATE TASK CATEGORY`, () => {
             it("should return status code 404 if the task category is not found", async() => {
                 const response = await request(this.server.app)
-                    .put(this.routes.updateCategory)
+                    .put(this.routes.updateCategory + "/2")
                     .set("Cookie", user.cookie)
                     .send({
-                        id: 2,
                         name: "School",
                         color: "#ffffff",
                     });
@@ -23,10 +22,9 @@ export class TaskCategoryTestUpdate extends TaskCategoryTestBase {
             });
             it("should return status code 200 if the task category is updated", async() => {
                 const response = await request(this.server.app)
-                    .put(this.routes.updateCategory)
+                    .put(this.routes.updateCategory + "/1")
                     .set("Cookie", user.cookie)
                     .send({
-                        id: 1,
                         name: "School",
                         color: "#ffffff",
                     });
