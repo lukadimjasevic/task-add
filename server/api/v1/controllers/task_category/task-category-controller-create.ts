@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from "express";
-import { TaskCategoryBaseController } from "./task-category-base-controller";
+import { BaseController } from "../base-controller";
 import { TaskCategoryServiceCreate } from "../../services/task_category";
 
 
-export class TaskCategoryControllerCreate extends TaskCategoryBaseController {
+export class TaskCategoryControllerCreate extends BaseController {
     services: TaskCategoryServiceCreate;
 
     constructor(req: Request, res: Response, next: NextFunction) {
