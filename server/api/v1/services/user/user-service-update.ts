@@ -3,6 +3,8 @@ import { UserBaseService } from "./user-base-service";
 import { TrimData } from "../base-service";
 import { UserUpdate } from "../../interfaces/user.interface";
 import { SessionUserData } from "../../interfaces/types/express-session";
+import { HttpErrorNotFound } from "../../helpers/error";
+import User from "../../../../database/models/user.model";
 
 
 export class UserServiceUpdate extends UserBaseService {
@@ -10,19 +12,17 @@ export class UserServiceUpdate extends UserBaseService {
         super(req, res, next);
     }
 
-    async updateUser(): Promise<TrimData> {
-        const rawData = this.req.body;
-        const data: UserUpdate = {};
-        rawData.avatar !== undefined ? data.avatar = rawData.avatar : null;
-        rawData.firstname !== undefined ? data.firstname = rawData.firstname : null;
-        rawData.lastname !== undefined ? data.lastname = rawData.lastname : null;
+    async update(): Promise<TrimData> {
+        const data: UserUpdate = this.req.body;
         const userSession: SessionUserData = this.req.session.user!;
-        const fields = Object.keys(data);
-        fields.forEach(async(field) => {
-            const value = data[field as keyof UserUpdate];
-            await this.updateOne(field, value, userSession.id);
-        });
-        const user = await this.findOne("id", userSession.id);
+        const user = await User.findOne({ where: { id: userSession.id }});
+        if (!user) {
+            throw new HttpErrorNotFound("User doesn't exist. Please provide valid credentials.");
+        }
+        data.avatar !== undefined ? user.avatar = data.avatar : null;
+        data.firstname !== undefined ? user.firstname = data.firstname : null;
+        data.lastname !== undefined ? user.lastname = data.lastname : null;
+        await user.save();
         return this.trimData(user.dataValues);
     }
 }

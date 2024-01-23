@@ -28,7 +28,7 @@ export class TaskCategoryServiceUpdate extends TaskCategoryBaseService {
         }
         category.color != color ? category.color = color : null;
         category.name != name ? category.name = name : null;
-        category.save();
+        await category.save();
         return this.trimData(category.dataValues);
     }
 }

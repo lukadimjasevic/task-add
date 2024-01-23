@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { UserBaseService } from "./user-base-service";
 import { SessionUserData } from "../../interfaces/types/express-session";
+import User from "../../../../database/models/user.model";
 
 
 export class UserServiceDelete extends UserBaseService {
@@ -8,9 +9,10 @@ export class UserServiceDelete extends UserBaseService {
         super(req, res, next);
     }
 
-    async deleteUser(): Promise<void> {
+    async delete(): Promise<void> {
         const userSession: SessionUserData = this.req.session.user!;
-        await this.deleteOne(userSession.id);
-        this.destroySession();
+        await User.destroy({ where: { id: userSession.id }});
+        this.sessionUser.destroy(this.req);
+        return;
     }
 }
