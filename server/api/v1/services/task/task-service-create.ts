@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import { TaskBaseService } from "./task-base-service";
 import { SessionUserData } from "../../interfaces/types/express-session";
 import { TaskRequest } from "../../interfaces/task.interface";
-import { TrimData } from "../base-service";
 import { HttpErrorInternalServerError } from "../../helpers/error";
 import Task from "../../../../database/models/task.model";
 import TaskStatus from "../../../../database/models/task_status.model";
@@ -41,7 +40,7 @@ export class TaskServiceCreate extends TaskBaseService {
         return relation;
     }
  
-    private async connectTaskCategories(taskId: number) {
+    private async connectTaskCategories(taskId: number): Promise<void> {
         const userSession: SessionUserData = this.req.session.user!;
         const { categoryIds }: TaskRequest = this.req.body;
         if (!categoryIds) {

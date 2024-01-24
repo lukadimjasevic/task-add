@@ -28,7 +28,7 @@ class TaskTaskCategoryRel extends Model {
     taskCategoryId!: number;
 
     @BelongsTo(() => TaskCategory)
-    taskCategory!: TaskCategory;
+    categories!: TaskCategory;
 }
 
 export default TaskTaskCategoryRel;
