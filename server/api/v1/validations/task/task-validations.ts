@@ -18,6 +18,7 @@ export class TaskValidations extends TaskRules {
             this.ruleDeadlineDate(),
             this.ruleDescription(),
             this.ruleName(),
+            this.ruleCategoryIds(),
         ];
     }
 }

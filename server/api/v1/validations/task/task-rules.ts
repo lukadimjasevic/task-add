@@ -25,7 +25,7 @@ export class TaskRules {
     static ruleDescription(): ValidationChain {
         return body("description")
             .isString().withMessage("Task description must be a string")
-            .optional({ nullable: true });;
+            .optional({ nullable: true });
     }
 
     /**
@@ -37,5 +37,15 @@ export class TaskRules {
             .notEmpty().withMessage("Task name is required")
             .isString().withMessage("Task name must be a string")
             .isLength({ max: 64 }).withMessage("Task name must be a maximum of 64 characters");
+    }
+
+    /**
+     * Rule method for task categories field inside body request
+     * @returns Returns an express-validator ValidationChain
+     */
+    static ruleCategoryIds(): ValidationChain {
+        return body("categoryIds")
+            .isArray().withMessage("Task categories must be an array")
+            .optional({ nullable: true });
     }
 }
