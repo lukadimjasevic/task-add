@@ -11,7 +11,7 @@ const router = Router();
 
 router.post("/", TaskValidations.setCreateTaskRules(), validate, isAuthenticated, (req: Request, res: Response, next: NextFunction) => {
     const controllerCreate = new TaskControllerCreate(req, res, next);
-    controllerCreate.create();
+    controllerCreate.createTask();
 });
 router.get("/", isAuthenticated, (req: Request, res: Response, next: NextFunction) => {
     const controllerRead = new TaskControllerRead(req, res, next);

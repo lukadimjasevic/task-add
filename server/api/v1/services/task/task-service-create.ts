@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { TaskBaseService } from "./task-base-service";
-import { SessionUserData } from "../../interfaces/types/express-session";
+import { BaseService } from "../base-service";
 import { TaskRequest } from "../../interfaces/task.interface";
 import { HttpErrorInternalServerError } from "../../helpers/error";
 import Task from "../../../../database/models/task.model";
@@ -9,13 +8,13 @@ import TaskCategory from "../../../../database/models/task_category.model";
 import TaskTaskCategoryRel from "../../../../database/models/task_task_category_rel.model";
 
 
-export class TaskServiceCreate extends TaskBaseService {
+export class TaskServiceCreate extends BaseService {
     constructor(req: Request, res: Response, next: NextFunction) {
         super(req, res, next);
     }
 
-    async create(): Promise<Task> {
-        const userSession: SessionUserData = this.req.session.user!;
+    async createTask(): Promise<Task> {
+        const userSession = this.getSessionUser();
         const taskRequest: TaskRequest = this.req.body;
         const taskStatus = await TaskStatus.findOne({ where: { name: "active" }});
         if (!taskStatus) {
@@ -41,7 +40,7 @@ export class TaskServiceCreate extends TaskBaseService {
     }
  
     private async connectTaskCategories(taskId: number): Promise<void> {
-        const userSession: SessionUserData = this.req.session.user!;
+        const userSession = this.getSessionUser();
         const { categoryIds }: TaskRequest = this.req.body;
         if (!categoryIds) {
             return;

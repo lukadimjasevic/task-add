@@ -1,13 +1,15 @@
 import { Request, Response, NextFunction } from "express";
 import { Op } from "sequelize";
-import { UserBaseService } from "./user-base-service";
+import { BaseService } from "../base-service";
+import { Hash } from "../../helpers/hash";
+import { SessionUser } from "../../helpers/session";
 import { UserSignup, UserSignin } from "../../interfaces/user.interface";
 import { SessionUserData } from "../../interfaces/types/express-session";
 import { HttpErrorUnauthorized, HttpErrorConflict, HttpErrorNotFound } from "../../helpers/error";
 import User from "../../../../database/models/user.model";
 
 
-export class UserServiceCreate extends UserBaseService {
+export class UserServiceCreate extends BaseService {
     constructor(req: Request, res: Response, next: NextFunction) {
         super(req, res, next);
     }
@@ -28,7 +30,7 @@ export class UserServiceCreate extends UserBaseService {
         const user = await User.create({
             email: data.email,
             username: data.username,
-            password: await this.hash.create(data.password),
+            password: await Hash.create(data.password),
         });
         return user;
     }
@@ -39,7 +41,7 @@ export class UserServiceCreate extends UserBaseService {
         if (!user) {
             throw new HttpErrorNotFound("User doesn't exist. Please provide valid credentials.");
         }
-        const hashMatch = await this.hash.compare(data.password, user.password);
+        const hashMatch = await Hash.compare(data.password, user.password);
         if (!hashMatch) {
             throw new HttpErrorUnauthorized("Email or password is incorrect. Please provide valid credentials.");
         }
@@ -48,11 +50,11 @@ export class UserServiceCreate extends UserBaseService {
             email: user.email,
             username: user.username,
         };
-        this.sessionUser.save(this.req, userSession);
+        SessionUser.save(this.req, userSession);
         return userSession;  
     }
 
     signout(): void {
-        this.sessionUser.destroy(this.req);
+        SessionUser.destroy(this.req);
     }
 }

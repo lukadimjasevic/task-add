@@ -1,20 +1,29 @@
 import { Request, Response, NextFunction } from "express";
-import { TaskCategoryBaseService } from "./task-category-base-service";
-import { SessionUserData } from "../../interfaces/types/express-session";
+import { BaseService } from "../base-service";
 import { Category } from "../../interfaces/task_category.interface";
-import { TrimData } from "../base-service";
+import { HttpErrorInternalServerError } from "../../helpers/error";
 import TaskCategory from "../../../../database/models/task_category.model";
 
 
-export class TaskCategoryServiceCreate extends TaskCategoryBaseService {
+export class TaskCategoryServiceCreate extends BaseService {
     constructor(req: Request, res: Response, next: NextFunction) {
         super(req, res, next);
     }
 
-    async createCategory(): Promise<TrimData> {
-        const userSession: SessionUserData = this.req.session.user!;
+    async createCategory(): Promise<TaskCategory> {
+        const userSession = this.getSessionUser();
         const { color, name }: Category = this.req.body;
-        const category = await TaskCategory.create({ color, name, userId: userSession.id });
-        return this.trimData(category.dataValues);
+        const categoryCreate = await TaskCategory.create({
+            color: color,
+            name: name,
+            userId: userSession.id
+        });
+        const categoryFind = await TaskCategory.findByPk(categoryCreate.id, {
+            attributes: { exclude: ["userId"] },
+        });
+        if (!categoryFind) {
+            throw new HttpErrorInternalServerError();
+        }
+        return categoryFind;
     }
 }

@@ -6,7 +6,7 @@ import { HttpErrorInternalServerError } from "../error";
 export class SessionUser {
     constructor() {}
 
-    save(req: Request, data: SessionUserData) {
+    static save(req: Request, data: SessionUserData) {
         req.session.user = data;
         req.session.save((error) => {
             if (error) {
@@ -16,7 +16,7 @@ export class SessionUser {
         });
     }
 
-    destroy(req: Request) {
+    static destroy(req: Request) {
         req.session.user = undefined;
         req.session.destroy((error) => {
             if (error) {

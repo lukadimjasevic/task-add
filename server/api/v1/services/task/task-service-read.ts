@@ -1,19 +1,18 @@
 import { Request, Response, NextFunction } from "express";
-import { TaskBaseService } from "./task-base-service";
-import { SessionUserData } from "../../interfaces/types/express-session";
+import { BaseService } from "../base-service";
 import Task from "../../../../database/models/task.model";
 import TaskStatus from "../../../../database/models/task_status.model";
 import TaskCategory from "../../../../database/models/task_category.model";
 import TaskTaskCategoryRel from "../../../../database/models/task_task_category_rel.model";
 
 
-export class TaskServiceRead extends TaskBaseService {
+export class TaskServiceRead extends BaseService {
     constructor(req: Request, res: Response, next: NextFunction) {
         super(req, res, next);
     }
 
     async getAll(): Promise<Task[]> {
-        const userSession: SessionUserData = this.req.session.user!;
+        const userSession = this.getSessionUser();
         const tasks = await Task.findAll({
             where: { userId: userSession.id },
             attributes: { exclude: ["userId", "statusId"]},

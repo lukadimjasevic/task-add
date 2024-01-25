@@ -11,9 +11,9 @@ export class TaskControllerCreate extends BaseController {
         this.services = new TaskServiceCreate(req, res, next);
     }
 
-    async create() {
+    async createTask() {
         try {
-            const task = await this.services.create();
+            const task = await this.services.createTask();
             return this.responses.responseCreated("Successfully created a new task", { data: task });
         } catch (error: any) {
             return this.next(error);
