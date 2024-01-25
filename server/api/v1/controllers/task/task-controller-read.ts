@@ -19,4 +19,13 @@ export class TaskControllerRead extends BaseController {
             return this.next(error);
         }
     }
+
+    async getOne() {
+        try {
+            const task = await this.services.getOne();
+            return this.responses.responseOK("Task successfully fetched", { data: task });
+        } catch (error: any) {
+            return this.next(error);
+        }
+    }
 }

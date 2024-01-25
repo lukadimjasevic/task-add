@@ -21,4 +21,14 @@ export class TaskValidations extends TaskRules {
             this.ruleCategoryIds(),
         ];
     }
+
+    /**
+     * Method sets rules for fetching one task
+     * @returns Returns a list of task rules of type ValidationChain
+     */
+    static setGetOneTaskRules(): ValidationChain[] {
+        return [
+            this.ruleId(),
+        ];
+    }
 }

@@ -17,5 +17,9 @@ router.get("/", isAuthenticated, (req: Request, res: Response, next: NextFunctio
     const controllerRead = new TaskControllerRead(req, res, next);
     controllerRead.getAll();
 });
+router.get("/:taskId", TaskValidations.setGetOneTaskRules(), validate, isAuthenticated, (req: Request, res: Response, next: NextFunction) => {
+    const controllerRead = new TaskControllerRead(req, res, next);
+    controllerRead.getOne();
+});
 
 export default router;

@@ -48,4 +48,14 @@ export class TaskRules {
             .isArray().withMessage("Task categories must be an array")
             .optional({ nullable: true });
     }
+
+    /**
+     * Rule method for id field inside param of request
+     * @returns Returns an express-validator ValidationChain
+     */
+    static ruleId(): ValidationChain {
+        return param("taskId")
+            .notEmpty().withMessage("Task id is required")
+            .isNumeric().withMessage("Task id must be numeric");
+    }
 }

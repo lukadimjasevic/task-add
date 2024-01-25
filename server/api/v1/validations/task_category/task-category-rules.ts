@@ -29,7 +29,7 @@ export class TaskCategoryRules {
     }
 
     /**
-     * Rule method for id field inside body request
+     * Rule method for id field inside param of request
      * @returns Returns an express-validator ValidationChain
      */
     static ruleId(): ValidationChain {
