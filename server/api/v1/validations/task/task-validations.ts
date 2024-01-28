@@ -18,7 +18,6 @@ export class TaskValidations extends TaskRules {
             this.ruleDeadlineDate(),
             this.ruleDescription(),
             this.ruleName(),
-            this.ruleCategoryIds(),
         ];
     }
 
@@ -28,6 +27,20 @@ export class TaskValidations extends TaskRules {
      */
     static setGetOneTaskRules(): ValidationChain[] {
         return [
+            this.ruleId(),
+        ];
+    }
+
+    /**
+     * Method sets rules for updating existing task
+     * @returns Returns a list of task rules of type ValidationChain
+     */
+    static setUpdateTaskRules(): ValidationChain[] {
+        return [
+            this.ruleDeadlineDate({ optional: true }),
+            this.ruleDescription(),
+            this.ruleName({ optional: true }),
+            this.ruleStatus(),
             this.ruleId(),
         ];
     }

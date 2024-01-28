@@ -10,12 +10,19 @@ export class TaskRules {
      * Rule method for deadline date field inside body request
      * @returns Returns an express-validator ValidationChain
      */
-    static ruleDeadlineDate(): ValidationChain {
-        return body("deadlineDate")
-            .notEmpty().withMessage("Task deadline date is required")
+    static ruleDeadlineDate(options={ optional: false }): ValidationChain {
+        const rule = body("deadlineDate")
             .custom((value) => {
                 return Date.parse(value);
-            }).withMessage("Task deadline date must be a date");
+            }).withMessage("Task deadline date must be a date")
+            .custom((value) => {
+                return Date.now() < new Date(value).getTime();
+            }).withMessage("Task deadline date cannot be in the past").exists();
+
+        if (!options.optional) {
+            return rule.notEmpty().withMessage("Task deadline date is required");
+        }
+        return rule.optional();
     }
 
     /**
@@ -32,21 +39,26 @@ export class TaskRules {
      * Rule method for name field inside body request
      * @returns Returns an express-validator ValidationChain
      */
-    static ruleName(): ValidationChain {
-        return body("name")
-            .notEmpty().withMessage("Task name is required")
+    static ruleName(options={ optional: false }): ValidationChain {
+        const rule = body("name")
             .isString().withMessage("Task name must be a string")
-            .isLength({ max: 64 }).withMessage("Task name must be a maximum of 64 characters");
+            .isLength({ min: 4, max: 64 }).withMessage("Task name must be between 4 and 64 characters");
+        
+        if (!options.optional) {
+            return rule.notEmpty().withMessage("Task name is required");
+        }
+        return rule.optional();
     }
 
     /**
-     * Rule method for task categories field inside body request
+     * Rule method for status field inside body request
      * @returns Returns an express-validator ValidationChain
      */
-    static ruleCategoryIds(): ValidationChain {
-        return body("categoryIds")
-            .isArray().withMessage("Task categories must be an array")
-            .optional({ nullable: true });
+    static ruleStatus(): ValidationChain {
+        return body("status")
+            .isString().withMessage("Task status must be a string")
+            .isLength({ min: 4, max: 64 }).withMessage("Task status must be between 4 and 64 characters")
+            .optional();
     }
 
     /**

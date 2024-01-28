@@ -1,6 +1,6 @@
 export interface TaskRequest {
-    deadlineDate: Date;
+    deadlineDate?: Date;
     description?: string;
-    name: string;
-    categoryIds?: number[];
+    name?: string;
+    status?: string;
 }

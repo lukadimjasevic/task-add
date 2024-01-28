@@ -5,6 +5,7 @@ import { isAuthenticated } from "../middlewares/auth.middleware";
 import {
     TaskControllerCreate,
     TaskControllerRead,
+    TaskControllerUpdate,
 } from "../controllers/task";
 
 const router = Router();
@@ -20,6 +21,10 @@ router.get("/", isAuthenticated, (req: Request, res: Response, next: NextFunctio
 router.get("/:taskId", TaskValidations.setGetOneTaskRules(), validate, isAuthenticated, (req: Request, res: Response, next: NextFunction) => {
     const controllerRead = new TaskControllerRead(req, res, next);
     controllerRead.getOne();
+});
+router.put("/:taskId", TaskValidations.setUpdateTaskRules(), validate, isAuthenticated, (req: Request, res: Response, next: NextFunction) => {
+    const controllerUpdate = new TaskControllerUpdate(req, res, next);
+    controllerUpdate.updateTask();
 });
 
 export default router;
