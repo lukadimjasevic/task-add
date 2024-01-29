@@ -19,4 +19,14 @@ export class TaskCategoryRelationValidations extends TaskCategoryRelationRules {
             this.ruleCategoryId(),
         ];
     }
+
+    /**
+     * Method sets rules for a new task category relation
+     * @returns Returns a list of task category rules of type ValidationChain
+     */
+    static setDeleteRules(): ValidationChain[] {
+        return [
+            this.ruleId(),
+        ];
+    }
 }

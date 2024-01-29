@@ -12,7 +12,7 @@ export class TaskCategoryRelationServiceCreate extends BaseService {
         super(req, res, next);
     }
 
-    async createRelation(): Promise<void> {
+    async createRelation(): Promise<TaskTaskCategoryRel> {
         const userSession = this.getSessionUser();
         const data: TaskCategoryRelation = this.req.body;
 
@@ -43,6 +43,6 @@ export class TaskCategoryRelationServiceCreate extends BaseService {
             throw new HttpErrorConflict("Task category already exists on task");
         }
 
-        return;
+        return relation;
     }
 }

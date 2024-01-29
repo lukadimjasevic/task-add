@@ -1,4 +1,4 @@
-import { ValidationChain, body } from "express-validator";
+import { ValidationChain, body, param } from "express-validator";
 
 
 export class TaskCategoryRelationRules {
@@ -24,5 +24,15 @@ export class TaskCategoryRelationRules {
         return body("categoryId")
             .notEmpty().withMessage("Task category ID is required")
             .isNumeric().withMessage("Task category ID must be numeric");
+    }
+
+    /**
+     * Rule method for id field inside body request
+     * @returns Returns an express-validator ValidationChain
+     */
+    static ruleId(): ValidationChain {
+        return param("relationId")
+            .notEmpty().withMessage("Task category relation ID is required")
+            .isNumeric().withMessage("Task category relation ID must be numeric");
     }
 }

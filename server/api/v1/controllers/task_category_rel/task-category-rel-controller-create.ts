@@ -13,8 +13,8 @@ export class TaskCategoryRelationControllerCreate extends BaseController {
 
     async createRelation() {
         try {
-            await this.services.createRelation();
-            return this.responses.responseCreated("Successfully added task category to task");
+            const relation = await this.services.createRelation();
+            return this.responses.responseCreated("Successfully added task category to task", { data: relation });
         } catch (error: any) {
             console.log(error);
             return this.next(error);
