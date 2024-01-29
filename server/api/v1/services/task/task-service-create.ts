@@ -18,6 +18,7 @@ export class TaskServiceCreate extends BaseService {
         // Finds task status
         const taskStatus = await TaskStatus.findOne({ where: { name: "active" }});
         if (!taskStatus) {
+            console.log("Cannot find the task status");
             throw new HttpErrorInternalServerError();
         }
 

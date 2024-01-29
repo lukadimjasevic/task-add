@@ -4,6 +4,7 @@ import { validate } from "../middlewares/validate.middleware";
 import { isAuthenticated } from "../middlewares/auth.middleware";
 import {
     TaskControllerCreate,
+    TaskControllerDelete,
     TaskControllerRead,
     TaskControllerUpdate,
 } from "../controllers/task";
@@ -25,6 +26,10 @@ router.get("/:taskId", TaskValidations.setGetOneTaskRules(), validate, isAuthent
 router.put("/:taskId", TaskValidations.setUpdateTaskRules(), validate, isAuthenticated, (req: Request, res: Response, next: NextFunction) => {
     const controllerUpdate = new TaskControllerUpdate(req, res, next);
     controllerUpdate.updateTask();
+});
+router.delete("/:taskId", TaskValidations.setDeleteTaskRules(), validate, isAuthenticated, (req: Request, res: Response, next: NextFunction) => {
+    const controllerDelete = new TaskControllerDelete(req, res, next);
+    controllerDelete.deleteTask();
 });
 
 export default router;

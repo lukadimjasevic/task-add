@@ -44,4 +44,14 @@ export class TaskValidations extends TaskRules {
             this.ruleId(),
         ];
     }
+
+    /**
+     * Method sets rules for updating existing task
+     * @returns Returns a list of task rules of type ValidationChain
+     */
+    static setDeleteTaskRules(): ValidationChain[] {
+        return [
+            this.ruleId(),
+        ];
+    }
 }
