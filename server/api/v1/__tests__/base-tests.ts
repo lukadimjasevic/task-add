@@ -1,6 +1,7 @@
 import { server, Server } from "../../../server";
 import { UserTest } from "../interfaces/user.interface";
 import { Category } from "../interfaces/task_category.interface";
+import { TaskRequest } from "../interfaces/task.interface";
 
 
 export class BaseTests {
@@ -21,11 +22,15 @@ export class BaseTests {
         update: "/api/v1/task-category",
         delete: "/api/v1/task-category",
     };
+    readonly routesTask = {
+        create: "/api/v1/task",
+    }
     
     server: Server = server;
     
     user: UserTest;
     taskCategory: Category;
+    task: TaskRequest;
 
     constructor() {}
 }

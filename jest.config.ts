@@ -8,6 +8,7 @@ const config: Config = {
         "<rootDir>/server/api/v1/__tests__/user",
         "<rootDir>/server/api/v1/__tests__/task_status",
         "<rootDir>/server/api/v1/__tests__/task_category",
+        "<rootDir>/server/api/v1/__tests__/task",
         "<rootDir>/server/api/v1/__tests__/base-tests.ts",
     ],
 };

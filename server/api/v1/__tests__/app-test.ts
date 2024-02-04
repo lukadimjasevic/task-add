@@ -1,9 +1,18 @@
+import { TruncateOptions } from "sequelize";
 import { db, server } from "../../../server";
 import { UserTests } from "./user";
-import { UserTest } from "../interfaces/user.interface";
 import { TaskStatusTests } from "./task_status";
 import { TaskCategoryTests } from "./task_category";
+import { TaskTests } from "./task";
+import { UserTest } from "../interfaces/user.interface";
 import { Category } from "../interfaces/task_category.interface";
+import { TaskRequest } from "../interfaces/task.interface";
+import Session from "../../../database/models/session.model";
+import TaskCategory from "../../../database/models/task_category.model";
+import TaskTaskCategoryRel from "../../../database/models/task_task_category_rel.model";
+import Task from "../../../database/models/task.model";
+import UserOtp from "../../../database/models/user_otp.model";
+import User from "../../../database/models/user.model";
 
 const user: UserTest = {
     email: "test.user@gmail.com",
@@ -20,10 +29,26 @@ const taskCategory: Category = {
     name: "Work",
 };
 
-describe("REST API --> TESTING", () => {
+const task: TaskRequest = {
+    deadlineDate: new Date(2026, 4, 4),
+    name: "Random Task Name",
+    description: "Random task description.",
+};
+
+const truncateOptions: TruncateOptions = {
+    cascade: true,
+    restartIdentity: true,
+};
+
+describe("REST API V1 --> TESTING", () => {
     beforeAll(async() => {
         try {
-            await db.truncate({ cascade: true, restartIdentity: true });
+            await Session.truncate(truncateOptions);
+            await TaskCategory.truncate(truncateOptions);
+            await TaskTaskCategoryRel.truncate(truncateOptions);
+            await Task.truncate(truncateOptions);
+            await UserOtp.truncate(truncateOptions);
+            await User.truncate(truncateOptions);
             await db.authenticate();
             server.start();
         } catch (error: any) {
@@ -42,4 +67,5 @@ describe("REST API --> TESTING", () => {
     new UserTests(user).run();
     new TaskStatusTests(user).run();
     new TaskCategoryTests(user, taskCategory).run();
+    new TaskTests(user, task).run();
 });
