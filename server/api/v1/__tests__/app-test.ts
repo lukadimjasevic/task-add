@@ -4,6 +4,7 @@ import { UserTests } from "./user";
 import { TaskStatusTests } from "./task_status";
 import { TaskCategoryTests } from "./task_category";
 import { TaskTests } from "./task";
+import { TaskCategoryRelationTests } from "./task_category_rel";
 import { UserTest } from "../interfaces/user.interface";
 import { Category } from "../interfaces/task_category.interface";
 import { TaskRequest } from "../interfaces/task.interface";
@@ -64,8 +65,21 @@ describe("REST API V1 --> TESTING", () => {
         }
     });
 
-    new UserTests(user).run();
-    new TaskStatusTests(user).run();
-    new TaskCategoryTests(user, taskCategory).run();
-    new TaskTests(user, task).run();
+    const userTests = new UserTests(user);
+    const taskStatusTests = new TaskStatusTests(user);
+    const taskCategoryTests = new TaskCategoryTests(user, taskCategory);
+    const taskTests = new TaskTests(user, task);
+    const taskCategoryRelationTests = new TaskCategoryRelationTests(user);
+
+    userTests.run();
+    taskStatusTests.run();
+    taskCategoryTests.run();
+    taskTests.run();
+    taskCategoryRelationTests.run();
+    
+    describe("Delete requests", () => {
+        taskCategoryTests.testDelete();
+        taskTests.testDelete();
+        userTests.testDelete();
+    });
 });
