@@ -21,7 +21,7 @@ export class UserTests extends BaseTests {
         });
     }
 
-    private testSignup() {
+    testSignup() {
         describe(`POST ${this.routesUser.signup} -> SIGNUP USER`, () => {
             it("should return status code 400 if the email field is missing", async() => {
                 const { email, ...data } = this.user;
@@ -72,7 +72,7 @@ export class UserTests extends BaseTests {
         });
     }
 
-    private testSignin() {
+    testSignin() {
         describe(`POST ${this.routesUser.signin} -> SIGNIN USER`, () => {
             it("should return status code 400 if the email field is missing", async() => {
                 const { email, ...data } = this.user;
@@ -110,7 +110,7 @@ export class UserTests extends BaseTests {
         });
     }
 
-    private testSignout() {
+    testSignout() {
         describe(`POST ${this.routesUser.signout} -> SIGNOUT USER`, () => {
             it("should return status code 200 if the user is signed out", async() => {
                 const response = await request(this.server.app)
@@ -131,7 +131,7 @@ export class UserTests extends BaseTests {
         });
     }
 
-    private testRead() {
+    testRead() {
         describe(`GET ${this.routesUser.read} -> GET USER`, () => {
             it("should return status code 200 if the user data is fetched", async() => {
                 const response = await request(this.server.app)
@@ -142,7 +142,7 @@ export class UserTests extends BaseTests {
         });
     }
 
-    private testUpdate() {
+    testUpdate() {
         describe(`PUT ${this.routesUser.update} -> UPDATE USER`, () => {
             it("should return status code 200 if the user data is updated", async() => {
                 const response = await request(this.server.app)
@@ -154,7 +154,7 @@ export class UserTests extends BaseTests {
         });
     }
 
-    private testDelete() {
+    testDelete() {
         describe(`DELETE ${this.routesUser.delete} -> DELETE USER`, () => {
             it("should return status code 200 if the user is deleted", async() => {
                 const response = await request(this.server.app)

@@ -17,11 +17,10 @@ export class TaskTests extends BaseTests {
             this.testReadAll();
             this.testReadOne();
             this.testUpdate();
-            this.testDelete();
         });
     }
 
-    private testCreate() {
+    testCreate() {
         describe(`POST ${this.routesTask.create} -> CREATE A NEW TASK`, () => {
             it("should return status code 400 if the deadline date field is missing", async() => {
                 const response = await request(this.server.app)
@@ -108,7 +107,7 @@ export class TaskTests extends BaseTests {
         });
     }
 
-    private testReadAll() {
+    testReadAll() {
         describe(`GET ${this.routesTask.readAll} -> GET ALL TASKS`, () => {
             it("should return status code 200 if tasks are fetched", async() => {
                 const response = await request(this.server.app)
@@ -119,7 +118,7 @@ export class TaskTests extends BaseTests {
         });
     }
 
-    private testReadOne() {
+    testReadOne() {
         describe(`GET ${this.routesTask.readOne} -> GET ONE TASK`, () => {
             it("should return status code 404 if the task is not found", async() => {
                 const response = await request(this.server.app)
@@ -136,7 +135,7 @@ export class TaskTests extends BaseTests {
         });
     }
 
-    private testUpdate() {
+    testUpdate() {
         describe(`PUT ${this.routesTask.update} -> UPDATE ONE TASK`, () => {
             it("should return status code 404 if the task is not found", async() => {
                 const response = await request(this.server.app)
@@ -267,7 +266,7 @@ export class TaskTests extends BaseTests {
         });
     }
 
-    private testDelete() {
+    testDelete() {
         describe(`DELETE ${this.routesTask.delete} -> DELETE TASK`, () => {
             it("should return status code 404 if the task is not found", async() => {
                 const response = await request(this.server.app)

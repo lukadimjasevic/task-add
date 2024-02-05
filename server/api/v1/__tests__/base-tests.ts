@@ -29,6 +29,9 @@ export class BaseTests {
         update: "/api/v1/task",
         delete: "/api/v1/task",
     }
+    readonly routesTaskCategoryRelation = {
+        create: "/api/v1/task-category-relation",
+    }
     
     server: Server = server;
     

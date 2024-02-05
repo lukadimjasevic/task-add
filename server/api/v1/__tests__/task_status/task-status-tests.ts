@@ -15,7 +15,7 @@ export class TaskStatusTests extends BaseTests {
         });
     }
 
-    private testRead() {
+    testRead() {
         describe(`GET ${this.routesTaskStatus.read} -> GET TASK STATUSES`, () => {
             it("should return status code 200 if the task statuses are fetched", async() => {
                 const response = await request(this.server.app)

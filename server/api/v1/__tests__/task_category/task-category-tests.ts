@@ -16,11 +16,10 @@ export class TaskCategoryTests extends BaseTests {
             this.testCreate();
             this.testRead();
             this.testUpdate();
-            this.testDelete();
         });
     }
 
-    private testCreate() {
+    testCreate() {
         describe(`POST ${this.routesTaskCategory.create} -> CREATE A NEW TASK CATEGORY`, () => {
             it("should return status code 400 if the color field is missing", async() => {
                 const response = await request(this.server.app)
@@ -80,7 +79,7 @@ export class TaskCategoryTests extends BaseTests {
         });
     }
 
-    private testRead() {
+    testRead() {
         describe(`GET ${this.routesTaskCategory.read} -> GET TASK CATEGORIES`, () => {
             it("should return status code 200 if task categories are fetched", async() => {
                 const response = await request(this.server.app)
@@ -91,7 +90,7 @@ export class TaskCategoryTests extends BaseTests {
         });
     }
 
-    private testUpdate() {
+    testUpdate() {
         describe(`PUT ${this.routesTaskCategory.update} -> UPDATE TASK CATEGORY`, () => {
             it("should return status code 404 if the task category is not found", async() => {
                 const response = await request(this.server.app)
@@ -116,7 +115,7 @@ export class TaskCategoryTests extends BaseTests {
         });
     }
 
-    private testDelete() {
+    testDelete() {
         describe(`DELETE ${this.routesTaskCategory.delete} -> DELETE TASK CATEGORY`, () => {
             it("should return status code 404 if the task category is not found", async() => {
                 const response = await request(this.server.app)
