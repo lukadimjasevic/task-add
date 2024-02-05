@@ -30,7 +30,7 @@ const taskCategory: Category = {
 };
 
 const task: TaskRequest = {
-    deadlineDate: new Date(2026, 4, 4),
+    deadlineDate: new Date(Date.now() + 1000 * 60 * 60 * 24),
     name: "Random Task Name",
     description: "Random task description.",
 };

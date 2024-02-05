@@ -26,6 +26,7 @@ export class BaseTests {
         create: "/api/v1/task",
         readAll: "/api/v1/task",
         readOne: "/api/v1/task",
+        update: "/api/v1/task",
     }
     
     server: Server = server;
