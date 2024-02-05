@@ -17,6 +17,7 @@ export class TaskTests extends BaseTests {
             this.testReadAll();
             this.testReadOne();
             this.testUpdate();
+            this.testDelete();
         });
     }
 
@@ -261,6 +262,23 @@ export class TaskTests extends BaseTests {
                         description: "New task description.",
                         status: "completed",
                     });
+                expect(response.statusCode).toEqual(200);
+            });
+        });
+    }
+
+    private testDelete() {
+        describe(`DELETE ${this.routesTask.delete} -> DELETE TASK`, () => {
+            it("should return status code 404 if the task is not found", async() => {
+                const response = await request(this.server.app)
+                    .delete(this.routesTask.delete + "/2")
+                    .set("Cookie", this.user.cookie);
+                expect(response.statusCode).toEqual(404);
+            });
+            it("should return status code 200 if the task is deleted", async() => {
+                const response = await request(this.server.app)
+                    .delete(this.routesTask.delete + "/1")
+                    .set("Cookie", this.user.cookie);
                 expect(response.statusCode).toEqual(200);
             });
         });
