@@ -24,6 +24,8 @@ export class BaseTests {
     };
     readonly routesTask = {
         create: "/api/v1/task",
+        readAll: "/api/v1/task",
+        readOne: "/api/v1/task",
     }
     
     server: Server = server;

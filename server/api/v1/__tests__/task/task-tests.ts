@@ -14,6 +14,8 @@ export class TaskTests extends BaseTests {
     run() {
         describe("Task", () => {
             this.testCreate();
+            this.readAll();
+            this.readOne();
         });
     }
 
@@ -100,6 +102,28 @@ export class TaskTests extends BaseTests {
                     .set("Cookie", this.user.cookie)
                     .send(this.task);
                 expect(response.statusCode).toEqual(201);
+            });
+        });
+    }
+
+    private readAll() {
+        describe(`GET ${this.routesTask.readAll} -> GET ALL TASKS`, () => {
+            it("should return status code 200 if tasks are fetched", async() => {
+                const response = await request(this.server.app)
+                    .get(this.routesTask.readAll)
+                    .set("Cookie", this.user.cookie)
+                expect(response.statusCode).toEqual(200);
+            });
+        });
+    }
+
+    private readOne() {
+        describe(`GET ${this.routesTask.readOne} -> GET ONE TASK`, () => {
+            it("should return status code 200 if the task is fetched", async() => {
+                const response = await request(this.server.app)
+                    .get(this.routesTask.readOne + "/1")
+                    .set("Cookie", this.user.cookie)
+                expect(response.statusCode).toEqual(200);
             });
         });
     }
