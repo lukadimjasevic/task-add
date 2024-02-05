@@ -14,8 +14,8 @@ export class TaskTests extends BaseTests {
     run() {
         describe("Task", () => {
             this.testCreate();
-            this.readAll();
-            this.readOne();
+            this.testReadAll();
+            this.testReadOne();
         });
     }
 
@@ -106,7 +106,7 @@ export class TaskTests extends BaseTests {
         });
     }
 
-    private readAll() {
+    private testReadAll() {
         describe(`GET ${this.routesTask.readAll} -> GET ALL TASKS`, () => {
             it("should return status code 200 if tasks are fetched", async() => {
                 const response = await request(this.server.app)
@@ -117,8 +117,14 @@ export class TaskTests extends BaseTests {
         });
     }
 
-    private readOne() {
+    private testReadOne() {
         describe(`GET ${this.routesTask.readOne} -> GET ONE TASK`, () => {
+            it("should return status code 404 if the task is not found", async() => {
+                const response = await request(this.server.app)
+                    .get(this.routesTask.readOne + "/2")
+                    .set("Cookie", this.user.cookie)
+                expect(response.statusCode).toEqual(404);
+            });
             it("should return status code 200 if the task is fetched", async() => {
                 const response = await request(this.server.app)
                     .get(this.routesTask.readOne + "/1")
