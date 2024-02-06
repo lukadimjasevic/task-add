@@ -1,17 +1,23 @@
-import { SessionUserData } from "../../interfaces/types/express-session";
-import { UserBaseService } from "./user-base-service";
-import { TrimData } from "../base-service";
 import { Request, Response, NextFunction } from "express";
+import { BaseService } from "../base-service";
+import { HttpErrorNotFound } from "../../helpers/error";
+import User from "../../../../database/models/user.model";
 
 
-export class UserServiceRead extends UserBaseService {
+export class UserServiceRead extends BaseService {
     constructor(req: Request, res: Response, next: NextFunction) {
         super(req, res, next);
     }
 
-    async getUser(): Promise<TrimData> {
-        const userSession: SessionUserData = this.req.session.user!;
-        const user = await this.findOne("id", userSession.id);
-        return this.trimData(user.dataValues);
+    async get(): Promise<User> {
+        const userSession = this.getSessionUser();
+        const user = await User.findOne({
+            where: { id: userSession.id },
+            attributes: { exclude: ["id", "password", "verificationCode"] },
+        });
+        if (!user) {
+            throw new HttpErrorNotFound("User doesn't exist. Please provide valid credentials.");
+        }
+        return user;
     }
 }

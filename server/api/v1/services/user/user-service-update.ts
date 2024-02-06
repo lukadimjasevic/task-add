@@ -1,28 +1,36 @@
 import { Request, Response, NextFunction } from "express";
-import { UserBaseService } from "./user-base-service";
-import { TrimData } from "../base-service";
+import { BaseService } from "../base-service";
 import { UserUpdate } from "../../interfaces/user.interface";
-import { SessionUserData } from "../../interfaces/types/express-session";
+import { HttpErrorNotFound } from "../../helpers/error";
+import User from "../../../../database/models/user.model";
 
 
-export class UserServiceUpdate extends UserBaseService {
+export class UserServiceUpdate extends BaseService {
     constructor(req: Request, res: Response, next: NextFunction) {
         super(req, res, next);
     }
 
-    async updateUser(): Promise<TrimData> {
-        const rawData = this.req.body;
-        const data: UserUpdate = {};
-        rawData.avatar !== undefined ? data.avatar = rawData.avatar : null;
-        rawData.firstname !== undefined ? data.firstname = rawData.firstname : null;
-        rawData.lastname !== undefined ? data.lastname = rawData.lastname : null;
-        const userSession: SessionUserData = this.req.session.user!;
-        const fields = Object.keys(data);
-        fields.forEach(async(field) => {
-            const value = data[field as keyof UserUpdate];
-            await this.updateOne(field, value, userSession.id);
+    async update(): Promise<User> {
+        const userSession = this.getSessionUser();
+
+        const getUpdateValues = (): UserUpdate => {
+            const data: UserUpdate = this.req.body;
+            const values: UserUpdate = {};
+            data.avatar !== undefined ? values.avatar = data.avatar : null;
+            data.firstname !== undefined ? values.firstname = data.firstname : null;
+            data.lastname !== undefined ? values.lastname = data.lastname : null;
+            return values;
+        };
+        
+        await User.update(getUpdateValues(), { where: { id: userSession.id }});
+        const user = await User.findOne({
+            where: { id: userSession.id },
+            attributes: { exclude: ["id", "password", "verificationCode"] },
         });
-        const user = await this.findOne("id", userSession.id);
-        return this.trimData(user.dataValues);
+        if (!user) {
+            throw new HttpErrorNotFound("User doesn't exist. Please provide valid credentials.");
+        }
+
+        return user;
     }
 }

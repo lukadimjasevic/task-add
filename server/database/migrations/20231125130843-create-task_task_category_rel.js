@@ -17,7 +17,7 @@ module.exports = {
                     key: "id",
                 },
                 // onUpdate: "",
-                // onDelete: ""
+                onDelete: "CASCADE",
             },
             task_category_id: {
                 type: Sequelize.DataTypes.INTEGER,
@@ -27,7 +27,7 @@ module.exports = {
                     key: "id",
                 },
                 // onUpdate: "",
-                // onDelete: ""
+                onDelete: "CASCADE",
             },
             create_date: {
                 type: Sequelize.DataTypes.DATE,

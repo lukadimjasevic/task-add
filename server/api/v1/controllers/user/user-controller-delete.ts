@@ -11,9 +11,9 @@ export class UserControllerDelete extends BaseController {
         this.services = new UserServiceDelete(req, res, next);
     }
 
-    async deleteUser() {
+    async delete() {
         try {
-            await this.services.deleteUser();
+            await this.services.delete();
             return this.responses.responseOK("Account successfully deleted");
         } catch (error: any) {
             return this.next(error);

@@ -6,6 +6,8 @@ import { SessionStoreSequelize } from "./api/v1/helpers/session";
 import userRouter from "./api/v1/routes/user.route";
 import taskStatusRouter from "./api/v1/routes/task_status.route";
 import taskCategoryRouter from "./api/v1/routes/task_category.route";
+import taskRouter from "./api/v1/routes/task.route";
+import taskCategoryRelationRouter from "./api/v1/routes/task_category_rel.route";
 import { errorHandler } from "./api/v1/middlewares/error.middleware";
 
 dotenv.config();
@@ -21,6 +23,8 @@ export class Server {
         this.app.use("/api/v1/user", userRouter);
         this.app.use("/api/v1/task-status", taskStatusRouter);
         this.app.use("/api/v1/task-category", taskCategoryRouter);
+        this.app.use("/api/v1/task", taskRouter);
+        this.app.use("/api/v1/task-category-relation", taskCategoryRelationRouter);
     }
 
     start() {

@@ -6,7 +6,13 @@ module.exports = {
         return await queryInterface.bulkInsert("task_status", [
         {
             color: "green",
-            name: "done",
+            name: "completed",
+            create_date: new Date(),
+            update_date: new Date(),
+        },
+        {
+            color: "yellow",
+            name: "active",
             create_date: new Date(),
             update_date: new Date(),
         },

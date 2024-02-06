@@ -11,27 +11,27 @@ export class UserControllerCreate extends BaseController {
         this.services = new UserServiceCreate(req, res, next);
     }
 
-    async signupUser() {
+    async signup() {
         try {
-            await this.services.signupUser();
+            await this.services.signup();
             return this.responses.responseCreated("Successfully created a new account");
         } catch (error: any) {
             return this.next(error);
         }
     }
 
-    async signinUser() {
+    async signin() {
         try {
-            await this.services.signinUser();
+            await this.services.signin();
             return this.responses.responseOK("Successfully signed in");
         } catch (error: any) {
             return this.next(error);
         }
     }
 
-    async signoutUser() {
+    async signout() {
         try {
-            this.services.signoutUser();
+            this.services.signout();
             return this.responses.responseOK("Successfully signed out");
         } catch (error: any) {
             return this.next(error);
