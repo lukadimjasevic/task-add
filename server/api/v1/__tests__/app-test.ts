@@ -78,6 +78,7 @@ describe("REST API V1 --> TESTING", () => {
     taskCategoryRelationTests.run();
     
     describe("Delete requests", () => {
+        taskCategoryRelationTests.testDelete();
         taskCategoryTests.testDelete();
         taskTests.testDelete();
         userTests.testDelete();

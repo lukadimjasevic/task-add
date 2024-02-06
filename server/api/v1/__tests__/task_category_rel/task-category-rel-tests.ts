@@ -1,7 +1,6 @@
 import request from "supertest";
 import { BaseTests } from "../base-tests";
 import { UserTest } from "../../interfaces/user.interface";
-import { TaskRequest } from "../../interfaces/task.interface";
 
 
 export class TaskCategoryRelationTests extends BaseTests {
@@ -75,6 +74,23 @@ export class TaskCategoryRelationTests extends BaseTests {
                         categoryId: 1,
                     });
                 expect(response.statusCode).toEqual(409);
+            });
+        });
+    }
+
+    testDelete() {
+        describe(`DELETE ${this.routesTaskCategoryRelation.delete} -> DELETE TASK CATEGORY RELATION`, () => {
+            it("should return status code 404 if the task category relation is not found", async() => {
+                const response = await request(this.server.app)
+                    .delete(this.routesTaskCategoryRelation.delete + "/2")
+                    .set("Cookie", this.user.cookie);
+                expect(response.statusCode).toEqual(404);
+            });
+            it("should return status code 200 if the task category is deleted", async() => {
+                const response = await request(this.server.app)
+                    .delete(this.routesTaskCategoryRelation.delete + "/1")
+                    .set("Cookie", this.user.cookie);
+                expect(response.statusCode).toEqual(200);
             });
         });
     }

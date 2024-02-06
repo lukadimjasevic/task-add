@@ -31,6 +31,7 @@ export class BaseTests {
     }
     readonly routesTaskCategoryRelation = {
         create: "/api/v1/task-category-relation",
+        delete: "/api/v1/task-category-relation",
     }
     
     server: Server = server;
