@@ -23,6 +23,9 @@
         "seed:undo:dev": "NODE_ENV=development npx sequelize-cli db:seed:undo:all",
         "seed:undo:test": "NODE_ENV=test npx sequelize-cli db:seed:undo:all",
         "seed:undo:prod": "NODE_ENV=production npx sequelize-cli db:seed:undo:all",
+        "reset:dev": "npm run seed:undo:dev && npm run migrate:undo:dev && npm run migrate:dev && npm run seed:dev",
+        "reset:test": "npm run seed:undo:test && npm run migrate:undo:test && npm run migrate:test && npm run seed:test",
+        "reset:prod": "npm run seed:undo:prod && npm run migrate:undo:prod && npm run migrate:prod && npm run seed:prod",
         "test:api": "npx jest --detectOpenHandles --verbose",
         "lint:check": "eslint .",
         "lint:fix": "eslint --fix ."
