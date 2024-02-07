@@ -42,6 +42,7 @@ export class UserValidations extends UserRules {
             this.ruleAvatar(),
             this.ruleFirstname(),
             this.ruleLastname(),
+            this.rulePassword({ optional: true }),
         ];
     }
 }

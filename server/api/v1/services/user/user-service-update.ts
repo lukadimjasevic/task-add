@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { BaseService } from "../base-service";
+import { Hash } from "../../helpers/hash";
 import { UserUpdate } from "../../interfaces/user.interface";
-import { HttpErrorNotFound } from "../../helpers/error";
 import User from "../../../../database/models/user.model";
 
 
@@ -11,26 +11,16 @@ export class UserServiceUpdate extends BaseService {
     }
 
     async update(): Promise<User> {
-        const userSession = this.getSessionUser();
+        const user = this.getUser();
+        const data: UserUpdate = this.req.body; 
+ 
+        data.avatar !== undefined ? user.avatar = data.avatar : null;
+        data.firstname !== undefined ? user.firstname = data.firstname : null;
+        data.lastname !== undefined ? user.lastname = data.lastname : null;
+        data.password !== undefined ? user.password = await Hash.create(data.password) : null;
 
-        const getUpdateValues = (): UserUpdate => {
-            const data: UserUpdate = this.req.body;
-            const values: UserUpdate = {};
-            data.avatar !== undefined ? values.avatar = data.avatar : null;
-            data.firstname !== undefined ? values.firstname = data.firstname : null;
-            data.lastname !== undefined ? values.lastname = data.lastname : null;
-            return values;
-        };
+        await user.save();
         
-        await User.update(getUpdateValues(), { where: { id: userSession.id }});
-        const user = await User.findOne({
-            where: { id: userSession.id },
-            attributes: { exclude: ["id", "password", "verificationCode"] },
-        });
-        if (!user) {
-            throw new HttpErrorNotFound("User doesn't exist. Please provide valid credentials.");
-        }
-
-        return user;
+        return (await User.findByPk(user.id))!;
     }
 }

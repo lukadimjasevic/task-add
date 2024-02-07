@@ -31,11 +31,15 @@ export class UserRules {
      * Rule method for password field inside body request
      * @returns Returns an express-validator ValidationChain
      */
-    static rulePassword(): ValidationChain {
-        return body("password")
-            .notEmpty().withMessage("Password is required")
+    static rulePassword(options={ optional: false }): ValidationChain {
+        const rule = body("password")
             .isString().withMessage("Password must be a string")
             .isLength({ min: 8 }).withMessage("Password must be minimum of 8 characters");
+            
+        if (!options.optional) {
+            return rule.notEmpty().withMessage("Password is required");
+        }
+        return rule.optional();
     }
 
     /**

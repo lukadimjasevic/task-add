@@ -9,6 +9,11 @@ import TaskCategory from "./task_category.model";
     modelName: "User",
     createdAt: "create_date",
     updatedAt: "update_date",
+    defaultScope: {
+        attributes: {
+            exclude: ["id", "password", "verificationCode"]
+        }
+    }
 })
 class User extends Model {
     @Column({

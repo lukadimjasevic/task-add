@@ -37,7 +37,7 @@ export class UserServiceCreate extends BaseService {
 
     async signin(): Promise<SessionUserData> {
         const data: UserSignin = this.req.body;
-        const user = await User.findOne({ where: { email: data.email }});
+        const user = await User.unscoped().findOne({ where: { email: data.email }});
         if (!user) {
             throw new HttpErrorNotFound("User doesn't exist. Please provide valid credentials.");
         }

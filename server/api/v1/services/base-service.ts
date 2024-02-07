@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { SessionUserData } from "../interfaces/types/express-session";
+import User from "../../../database/models/user.model";
 
 
 export class BaseService {
@@ -19,5 +20,13 @@ export class BaseService {
      */
     getSessionUser(): SessionUserData {
         return this.req.session.user!;
+    }
+
+    /**
+     * Method returns the current user
+     * @returns Instance of User's model from res.locals object
+     */
+    getUser(): User {
+        return this.res.locals.user;
     }
 }
