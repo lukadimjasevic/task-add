@@ -16,14 +16,7 @@ export class UserServiceCreate extends BaseService {
 
     async signup(): Promise<User> {
         const data: UserSignup = this.req.body;
-        const users = await User.findAll({
-            where: {
-                [Op.or]: [
-                    { email: data.email },
-                    { username: data.username},
-                ],
-            },
-        });
+        const users = await User.findAll({ where: { email: data.email }});
         if (users.length) {
             throw new HttpErrorConflict("User already exists. Please provide valid credentials.");
         }

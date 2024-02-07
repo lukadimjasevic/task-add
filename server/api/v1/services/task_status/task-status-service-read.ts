@@ -9,9 +9,7 @@ export class TaskStatusServiceRead extends BaseService {
     }
 
     async getTaskStatuses(): Promise<TaskStatus[]> {
-        const taskStatuses = await TaskStatus.findAll({
-            attributes: { exclude: ["id", "create_date", "update_date"] },
-        });
+        const taskStatuses = await TaskStatus.findAll();
         return taskStatuses;
     }
 }

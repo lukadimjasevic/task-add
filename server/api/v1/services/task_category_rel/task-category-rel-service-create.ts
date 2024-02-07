@@ -13,17 +13,17 @@ export class TaskCategoryRelationServiceCreate extends BaseService {
     }
 
     async createRelation(): Promise<TaskTaskCategoryRel> {
-        const userSession = this.getSessionUser();
+        const user = this.getUser();
         const data: TaskCategoryRelation = this.req.body;
 
         // Finds requested task
-        const task = await Task.findOne({ where: { id: data.taskId, userId: userSession.id }});
+        const task = await Task.findOne({ where: { id: data.taskId, userId: user.id }});
         if (!task) {
             throw new HttpErrorNotFound("Task cannot be found");
         }
 
         // Finds requested task category
-        const category = await TaskCategory.findOne({ where: { id: data.categoryId, userId: userSession.id }});
+        const category = await TaskCategory.findOne({ where: { id: data.categoryId, userId: user.id }});
         if (!category) {
             throw new HttpErrorNotFound("Task category cannot be found");
         }

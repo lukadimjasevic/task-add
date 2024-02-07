@@ -11,12 +11,12 @@ export class TaskCategoryServiceCreate extends BaseService {
     }
 
     async createCategory(): Promise<TaskCategory> {
-        const userSession = this.getSessionUser();
+        const user = this.getUser();
         const { color, name }: Category = this.req.body;
         const categoryCreate = await TaskCategory.create({
             color: color,
             name: name,
-            userId: userSession.id
+            userId: user.id
         });
         const categoryFind = await TaskCategory.findByPk(categoryCreate.id, {
             attributes: { exclude: ["userId"] },

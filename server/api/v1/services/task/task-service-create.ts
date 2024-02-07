@@ -12,11 +12,11 @@ export class TaskServiceCreate extends BaseService {
     }
 
     async createTask(): Promise<Task> {
-        const userSession = this.getSessionUser();
+        const user = this.getUser();
         const taskRequest: TaskRequest = this.req.body;
         
         // Finds task status
-        const taskStatus = await TaskStatus.findOne({ where: { name: "active" }});
+        const taskStatus = await TaskStatus.scope("active").findOne();
         if (!taskStatus) {
             console.log("Cannot find the task status");
             throw new HttpErrorInternalServerError();
@@ -26,7 +26,7 @@ export class TaskServiceCreate extends BaseService {
             deadlineDate: taskRequest.deadlineDate,
             description: taskRequest.description,
             name: taskRequest.name,
-            userId: userSession.id,
+            userId: user.id,
             statusId: taskStatus.id,
         });
 

@@ -30,7 +30,6 @@ module.exports = {
             username: {
                 type: Sequelize.DataTypes.STRING(16),
                 allowNull: false,
-                unique: true,
             },
             verification_code: {
                 type: Sequelize.DataTypes.STRING(6),
