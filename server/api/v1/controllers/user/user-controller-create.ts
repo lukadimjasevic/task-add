@@ -29,10 +29,28 @@ export class UserControllerCreate extends BaseController {
         }
     }
 
-    async signout() {
+    signout() {
         try {
             this.services.signout();
             return this.responses.responseOK("Successfully signed out");
+        } catch (error: any) {
+            return this.next(error);
+        }
+    }
+
+    async verifyGenerate() {
+        try {
+            await this.services.generateVerificationCode();
+            return this.responses.responseCreated("Successfully generated a new verification code");
+        } catch (error: any) {
+            return this.next(error);
+        }
+    }
+
+    async verifyValidate() {
+        try {
+            await this.services.validateVerificationCode();
+            return this.responses.responseOK("Account successfully verified");
         } catch (error: any) {
             return this.next(error);
         }

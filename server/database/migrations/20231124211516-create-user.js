@@ -31,12 +31,15 @@ module.exports = {
                 type: Sequelize.DataTypes.STRING(16),
                 allowNull: false,
             },
-            verification_code: {
-                type: Sequelize.DataTypes.STRING(6),
-            },
             verified: {
                 type: Sequelize.DataTypes.BOOLEAN,
                 defaultValue: false,
+            },
+            verification_code: {
+                type: Sequelize.DataTypes.STRING(6),
+            },
+            verification_code_last_date: {
+                type: Sequelize.DataTypes.DATE,
             },
             create_date: {
                 type: Sequelize.DataTypes.DATE,
