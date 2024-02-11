@@ -1,6 +1,7 @@
 import request from "supertest";
 import { BaseTests } from "../base-tests";
 import { UserTest } from "../../interfaces/user.interface";
+import User from "../../../../database/models/user.model";
 
 
 export class UserTests extends BaseTests {
@@ -15,6 +16,8 @@ export class UserTests extends BaseTests {
             this.testSignin();
             this.testRead();
             this.testUpdate();
+            this.testVerifyGenerate();
+            this.testVerifyValidate();
             // TODO: Debug and find the issue with signout
             // this.testSignout();
             // this.testDelete();
@@ -127,6 +130,65 @@ export class UserTests extends BaseTests {
                     .send(this.user);
                 this.user.cookie = response.headers["set-cookie"];
                 expect(response.statusCode).toEqual(200);
+            });
+        });
+    }
+
+    testVerifyGenerate() {
+        describe(`POST ${this.routesUser.verifyGenerate} -> GENERATE VERIFICATION CODE`, () => {
+            it("should return status 201 if the verification code is generated", async() => {
+                const response = await request(this.server.app)
+                    .post(this.routesUser.verifyGenerate)
+                    .set("Cookie", this.user.cookie);
+                expect(response.statusCode).toEqual(201);                   
+            });
+            it("should return status 400 if 60 seconds aren't passed before generating a new code", async() => {
+                const response = await request(this.server.app)
+                    .post(this.routesUser.verifyGenerate)
+                    .set("Cookie", this.user.cookie);
+                expect(response.statusCode).toEqual(400);
+            });
+        });
+    }
+    
+    testVerifyValidate() {
+        describe(`POST ${this.routesUser.verifyValidate} -> VALIDATE VERIFICATION CODE`, () => {
+            it("should return status 400 if the verification code isn't a string", async() => {
+                const response = await request(this.server.app)
+                    .post(this.routesUser.verifyValidate)
+                    .set("Cookie", this.user.cookie)
+                    .send({
+                        code: 1,
+                    });
+                expect(response.statusCode).toEqual(400);                   
+            });
+            it("should return status 400 if the verification code isn't a 6-digit code", async() => {
+                const response = await request(this.server.app)
+                    .post(this.routesUser.verifyValidate)
+                    .set("Cookie", this.user.cookie)
+                    .send({
+                        code: "1234567",
+                    });
+                expect(response.statusCode).toEqual(400);                   
+            });
+            it("should return status 400 if the verification codes aren't matched", async() => {
+                const response = await request(this.server.app)
+                    .post(this.routesUser.verifyValidate)
+                    .set("Cookie", this.user.cookie)
+                    .send({
+                        code: "aaaaaa",
+                    });
+                expect(response.statusCode).toEqual(400);                   
+            });
+            it("should return status 200 if the verification codes are matched", async() => {
+                const user = await User.unscoped().findOne({ where: { email: this.user.email }});
+                const response = await request(this.server.app)
+                    .post(this.routesUser.verifyValidate)
+                    .set("Cookie", this.user.cookie)
+                    .send({
+                        code: user!.verificationCode,
+                    });
+                expect(response.statusCode).toEqual(200);                   
             });
         });
     }

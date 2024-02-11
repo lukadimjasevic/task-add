@@ -24,4 +24,5 @@ export interface UserTest {
     firstname: string,
     lastname: string,
     cookie: string,
+    verificationCode: string | null;
 }
