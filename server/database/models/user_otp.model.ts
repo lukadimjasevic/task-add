@@ -13,20 +13,13 @@ class UserOtp extends Model {
         type: DataType.STRING(64),
         allowNull: false,
     })
-    otpAscii!: string;
+    secret!: string;
 
     @Column({
         type: DataType.TEXT,
         allowNull: false,
     })
-    otpAuthUrl!: string;
-
-    @Default(false)
-    @Column({
-        type: DataType.BOOLEAN,
-        allowNull: false,
-    })
-    otpEnabled!: boolean;
+    authUrl!: string;
 
     @ForeignKey(() => User)
     @Column({
