@@ -5,6 +5,7 @@ import { isAuthenticated } from "../middlewares/auth.middleware";
 import { isAvailable2FA, isEnabled2FA } from "../middlewares/2fa.middleware";
 import {
     UserOtpControllerCreate,
+    UserOtpControllerDelete,
     UserOtpControllerRead,
 } from "../controllers/user_otp";
 
@@ -21,6 +22,10 @@ router.post("/verify", UserOtpValidations.setValidateVerificationRules(), valida
 router.get("/", isAuthenticated, isEnabled2FA, (req: Request, res: Response, next: NextFunction) => {
     const controllerRead = new UserOtpControllerRead(req, res, next);
     controllerRead.getQRCode();
+});
+router.delete("/", isAuthenticated, isEnabled2FA, (req: Request, res: Response, next: NextFunction) => {
+    const controllerDelete = new UserOtpControllerDelete(req, res, next);
+    controllerDelete.delete2FA();
 });
 
 export default router;
