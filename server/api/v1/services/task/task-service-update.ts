@@ -32,7 +32,7 @@ export class TaskServiceUpdate extends BaseService {
 
         // Finds and updates requested task status if exists
         if (taskUpdate.status) {
-            const status = await TaskStatus.findOne({ where: { name: taskUpdate.status }});
+            const status = await TaskStatus.unscoped().findOne({ where: { name: taskUpdate.status }});
             if (!status) {
                 throw new HttpErrorNotFound("Task status cannot be found");
             }

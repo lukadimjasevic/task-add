@@ -16,6 +16,7 @@ export class TaskCategoryControllerRead extends BaseController {
             const categories = await this.services.getCategories();
             return this.responses.responseOK("Successfully fetched task categories", { data: categories });
         } catch (error: any) {
+            console.log(error);
             return this.next(error);
         }
     }

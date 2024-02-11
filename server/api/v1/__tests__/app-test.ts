@@ -77,11 +77,11 @@ describe("REST API V1 --> TESTING", () => {
     taskCategoryTests.run();
     taskTests.run();
     taskCategoryRelationTests.run();
-    /*
+    
     describe("Delete requests", () => {
         taskCategoryRelationTests.testDelete();
         taskCategoryTests.testDelete();
         taskTests.testDelete();
         userTests.testDelete();
-    });*/
+    });
 });

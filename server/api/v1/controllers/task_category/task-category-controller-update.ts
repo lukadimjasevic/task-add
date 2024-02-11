@@ -16,6 +16,7 @@ export class TaskCategoryControllerUpdate extends BaseController {
             const category = await this.services.updateCategory();
             return this.responses.responseOK("Task category updated successfully", { data: category });
         } catch (error: any) {
+            console.log(error);
             return this.next(error);
         }
     }

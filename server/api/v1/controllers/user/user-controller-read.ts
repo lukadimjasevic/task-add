@@ -16,6 +16,7 @@ export class UserControllerRead extends BaseController {
             const user = await this.services.get();
             return this.responses.responseOK("Successfully fetched user data", { data: user });
         } catch (error: any) {
+            console.log(error);
             return this.next(error);
         }
     }

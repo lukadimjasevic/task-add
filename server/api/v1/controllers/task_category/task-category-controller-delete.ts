@@ -16,6 +16,7 @@ export class TaskCategoryControllerDelete extends BaseController {
             await this.services.deleteCategory();
             return this.responses.responseOK("Task category deleted successfully");
         } catch (error: any) {
+            console.log(error);
             return this.next(error);
         }
     }
