@@ -20,4 +20,14 @@ export class UserOtpControllerCreate extends BaseController {
             return this.next(error);
         }
     }
+
+    async verify2FA() {
+        try {
+            await this.services.verify2FA();
+            return this.responses.responseOK("Authentication successful");
+        } catch (error: any) {
+            console.log(error);
+            return this.next(error);
+        }
+    }
 }
