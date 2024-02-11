@@ -14,3 +14,16 @@ export const isAvailable2FA = async(req: Request, res: Response, next: NextFunct
         return next(new HttpErrorBadRequest("Account has already enabled 2FA"));
     }
 };
+
+export const isEnabled2FA = async(req: Request, res: Response, next: NextFunction) => {
+    const user: User = res.locals.user;
+    const userOtp = await UserOtp.unscoped().findOne({ where: { userId: user.id }});
+    if (user.verified && userOtp) {
+        res.locals.userOtp = userOtp;
+        return next();
+    } else if (!user.verified) {
+        return next(new HttpErrorBadRequest("Account must be verified and have 2FA enabled"));
+    } else {
+        return next(new HttpErrorBadRequest("Account must have 2FA enabled"));
+    }
+};
