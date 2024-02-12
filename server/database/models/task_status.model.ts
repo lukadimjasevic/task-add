@@ -7,6 +7,18 @@ import Task from "./task.model";
     modelName: "TaskStatus",
     createdAt: "create_date",
     updatedAt: "update_date",
+    defaultScope: {
+        attributes: { 
+            exclude: ["id", "create_date", "update_date"]
+        }
+    },
+    scopes: {
+        active: {
+            where: {
+                name: "active",
+            }
+        }
+    }
 })
 class TaskStatus extends Model {
     @Column({

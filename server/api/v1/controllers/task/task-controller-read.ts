@@ -16,6 +16,7 @@ export class TaskControllerRead extends BaseController {
             const tasks = await this.services.getAll();
             return this.responses.responseOK("Successfully fetched all tasks", { data: tasks });
         } catch (error: any) {
+            console.log(error);
             return this.next(error);
         }
     }

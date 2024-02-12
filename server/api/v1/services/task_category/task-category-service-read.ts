@@ -9,9 +9,9 @@ export class TaskCategoryServiceRead extends BaseService {
     }
 
     async getCategories(): Promise<TaskCategory[]> {
-        const userSession = this.getSessionUser();
+        const user = this.getUser();
         const categories = await TaskCategory.findAll({
-            where: { userId: userSession.id },
+            where: { userId: user.id },
             attributes: { exclude: ["userId"] },
         });
         return categories;

@@ -11,11 +11,11 @@ export class TaskCategoryServiceUpdate extends BaseService {
     }
 
     async updateCategory(): Promise<TaskCategory> {
-        const userSession = this.getSessionUser();
+        const user = this.getUser();
         const { color, name }: Category = this.req.body;
         const categoryId = this.req.params.categoryId;
         const category = await TaskCategory.findOne({
-            where: { id: categoryId, userId: userSession.id },
+            where: { id: categoryId, userId: user.id },
             attributes: { exclude: ["userId"] },
         });
         if (!category) {

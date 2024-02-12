@@ -11,7 +11,7 @@ export class TaskCategoryRelationServiceDelete extends BaseService {
     }
 
     async deleteRelation(): Promise<void> {
-        const userSession = this.getSessionUser();
+        const user = this.getUser();
         const relationId = this.req.params.relationId;
 
         // Finds the task category relation
@@ -21,7 +21,7 @@ export class TaskCategoryRelationServiceDelete extends BaseService {
         }
 
         // Finds the task from a relation and checks if the user owns it
-        const task = await Task.findOne({ where: { id: relation.taskId, userId: userSession.id }});
+        const task = await Task.findOne({ where: { id: relation.taskId, userId: user.id }});
         if (!task) {
             throw new HttpErrorNotFound("Task category relation cannot be found");
         }

@@ -42,6 +42,17 @@ export class UserValidations extends UserRules {
             this.ruleAvatar(),
             this.ruleFirstname(),
             this.ruleLastname(),
+            this.rulePassword({ optional: true }),
+        ];
+    }
+
+    /**
+     * Method sets verification validation rules
+     * @returns Returns a list of verification validation rules of type ValidationChain
+     */
+    static setValidateVerificationRules(): ValidationChain[] {
+        return [
+            this.ruleVerificationCode(),
         ];
     }
 }

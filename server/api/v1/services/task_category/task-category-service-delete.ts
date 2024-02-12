@@ -10,10 +10,10 @@ export class TaskCategoryServiceDelete extends BaseService {
     }
 
     async deleteCategory(): Promise<void> {
-        const userSession = this.getSessionUser();
+        const user = this.getUser();
         const categoryId = this.req.params.categoryId;
         const category = await TaskCategory.destroy({
-            where: { id: categoryId, userId: userSession.id },
+            where: { id: categoryId, userId: user.id },
         });
         if (!category) {
             throw new HttpErrorNotFound("Task category with the given id cannot be found");

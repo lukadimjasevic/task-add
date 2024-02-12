@@ -16,6 +16,7 @@ export class UserControllerUpdate extends BaseController {
             const user = await this.services.update();
             return this.responses.responseOK("Profile updated successfully", { user });
         } catch (error: any) {
+            console.log(error);
             return this.next(error);
         }
     }

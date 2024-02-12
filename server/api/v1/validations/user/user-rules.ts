@@ -31,11 +31,15 @@ export class UserRules {
      * Rule method for password field inside body request
      * @returns Returns an express-validator ValidationChain
      */
-    static rulePassword(): ValidationChain {
-        return body("password")
-            .notEmpty().withMessage("Password is required")
+    static rulePassword(options={ optional: false }): ValidationChain {
+        const rule = body("password")
             .isString().withMessage("Password must be a string")
             .isLength({ min: 8 }).withMessage("Password must be minimum of 8 characters");
+            
+        if (!options.optional) {
+            return rule.notEmpty().withMessage("Password is required");
+        }
+        return rule.optional();
     }
 
     /**
@@ -76,5 +80,15 @@ export class UserRules {
             .isString().withMessage("Lastname must be a string")
             .isLength({ max: 32 }).withMessage("Lastname must be a maximum of 32 characters")
             .optional({ nullable: true });
+    }
+
+    /**
+     * Rule method for code field inside body request
+     * @returns Returns an express-validator ValidationChain
+     */
+    static ruleVerificationCode(): ValidationChain {
+        return body("code")
+            .isString().withMessage("Verification code must be a string")
+            .custom((value) => value.length === 6).withMessage("Verification code a is 6-digit code")
     }
 }

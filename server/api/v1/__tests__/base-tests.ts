@@ -9,6 +9,8 @@ export class BaseTests {
         signup: "/api/v1/user/signup",
         signin: "/api/v1/user/signin",
         signout: "/api/v1/user/signout",
+        verifyGenerate: "/api/v1/user/verify-generate",
+        verifyValidate: "/api/v1/user/verify-validate",
         read: "/api/v1/user",
         update: "/api/v1/user",
         delete: "/api/v1/user",
@@ -32,6 +34,12 @@ export class BaseTests {
     readonly routesTaskCategoryRelation = {
         create: "/api/v1/task-category-relation",
         delete: "/api/v1/task-category-relation",
+    }
+    readonly routesUserOtp = {
+        enable: "/api/v1/2fa/enable",
+        verify: "/api/v1/2fa/verify",
+        read: "/api/v1/2fa",
+        delete: "/api/v1/2fa",
     }
     
     server: Server = server;

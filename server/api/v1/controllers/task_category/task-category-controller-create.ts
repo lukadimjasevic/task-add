@@ -16,6 +16,7 @@ export class TaskCategoryControllerCreate extends BaseController {
             const category = await this.services.createCategory();
             return this.responses.responseCreated("Successfully created a new task category", { data: category });
         } catch (error: any) {
+            console.log(error);
             return this.next(error);
         }
     }

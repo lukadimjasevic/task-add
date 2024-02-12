@@ -5,7 +5,7 @@ import { Hash } from "../../helpers/hash";
 import { SessionUser } from "../../helpers/session";
 import { UserSignup, UserSignin } from "../../interfaces/user.interface";
 import { SessionUserData } from "../../interfaces/types/express-session";
-import { HttpErrorUnauthorized, HttpErrorConflict, HttpErrorNotFound } from "../../helpers/error";
+import { HttpErrorUnauthorized, HttpErrorConflict, HttpErrorNotFound, HttpErrorBadRequest } from "../../helpers/error";
 import User from "../../../../database/models/user.model";
 
 
@@ -16,14 +16,7 @@ export class UserServiceCreate extends BaseService {
 
     async signup(): Promise<User> {
         const data: UserSignup = this.req.body;
-        const users = await User.findAll({
-            where: {
-                [Op.or]: [
-                    { email: data.email },
-                    { username: data.username},
-                ],
-            },
-        });
+        const users = await User.findAll({ where: { email: data.email }});
         if (users.length) {
             throw new HttpErrorConflict("User already exists. Please provide valid credentials.");
         }
@@ -37,7 +30,7 @@ export class UserServiceCreate extends BaseService {
 
     async signin(): Promise<SessionUserData> {
         const data: UserSignin = this.req.body;
-        const user = await User.findOne({ where: { email: data.email }});
+        const user = await User.unscoped().findOne({ where: { email: data.email }});
         if (!user) {
             throw new HttpErrorNotFound("User doesn't exist. Please provide valid credentials.");
         }
@@ -56,5 +49,48 @@ export class UserServiceCreate extends BaseService {
 
     signout(): void {
         SessionUser.destroy(this.req);
+    }
+
+    async generateVerificationCode(): Promise<void> {
+        const user = this.getUser();
+        const millisToNextCode = 1000 * 60; // 60 seconds
+        
+        if (user.verificationCodeLastDate && user.verificationCodeLastDate.getTime() + millisToNextCode > Date.now()) {
+            throw new HttpErrorBadRequest("You can generate a new verification code every 60 s");
+        }
+
+        const generateCode = () => {
+            let code = "";
+            for (let i = 0; i < 6; i++) {
+                code += Math.floor(Math.random() * 10);
+            }
+            return code;
+        }
+
+        user.verificationCode = generateCode();
+        user.verificationCodeLastDate = new Date();
+        await user.save();
+    }
+
+    async validateVerificationCode(): Promise<void> {
+        const user = this.getUser();
+        const code: string = this.req.body.code;
+        const millisToDeleteCode = 1000 * 60 * 10 // 10 minutes
+
+        if (!user.verificationCodeLastDate || user.verificationCodeLastDate.getTime() + millisToDeleteCode < Date.now()) {
+            user.verificationCode = null;
+            user.verificationCodeLastDate = null;
+            await user.save();
+            throw new HttpErrorBadRequest("Verification code expired, please generate a new one");
+        }
+
+        if (user.verificationCode !== code) {
+            throw new HttpErrorBadRequest("Verification codes do not match");   
+        }
+
+        user.verified = true;
+        user.verificationCode = null;
+        user.verificationCodeLastDate = null;
+        await user.save();
     }
 }

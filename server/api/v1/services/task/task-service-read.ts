@@ -13,9 +13,9 @@ export class TaskServiceRead extends BaseService {
     }
 
     async getAll(): Promise<Task[]> {
-        const userSession = this.getSessionUser();
+        const user = this.getSessionUser();
         const tasks = await Task.findAll({
-            where: { userId: userSession.id },
+            where: { userId: user.id },
             attributes: { exclude: ["userId", "statusId"]},
             include: [
                 {
@@ -37,10 +37,10 @@ export class TaskServiceRead extends BaseService {
     }
 
     async getOne(): Promise<Task> {
-        const userSession = this.getSessionUser();
+        const user = this.getUser();
         const taskId = this.req.params.taskId;
         const task = await Task.findOne({
-            where: { id: taskId, userId: userSession.id },
+            where: { id: taskId, userId: user.id },
             attributes: { exclude: ["userId", "statusId"]},
             include: [
                 {

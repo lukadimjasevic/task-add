@@ -9,6 +9,11 @@ import TaskCategory from "./task_category.model";
     modelName: "User",
     createdAt: "create_date",
     updatedAt: "update_date",
+    defaultScope: {
+        attributes: {
+            exclude: ["id", "password", "verificationCode", "verificationCodeLastDate"]
+        }
+    }
 })
 class User extends Model {
     @Column({
@@ -46,16 +51,21 @@ class User extends Model {
     })
     username!: string;
 
-    @Column({
-        type: DataType.STRING(6),
-    })
-    verificationCode!: string;
-
     @Default(false)
     @Column({
         type: DataType.BOOLEAN,
     })
     verified!: boolean;
+
+    @Column({
+        type: DataType.STRING(6),
+    })
+    verificationCode!: string | null;
+
+    @Column({
+        type: DataType.DATE,
+    })
+    verificationCodeLastDate!: Date | null;
 
     @HasOne(() => UserOtp)
     userOtp!: UserOtp;

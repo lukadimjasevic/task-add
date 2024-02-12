@@ -9,18 +9,13 @@ module.exports = {
                 primaryKey: true,
                 autoIncrement: true,
             },
-            otp_ascii: {
+            secret: {
                 type: Sequelize.DataTypes.STRING(64),
                 allowNull: false,
             },
-            otp_auth_url: {
+            auth_url: {
                 type: Sequelize.DataTypes.TEXT,
                 allowNull: false,
-            },
-            otp_enabled: {
-                type: Sequelize.DataTypes.BOOLEAN,
-                allowNull: false,
-                defaultValue: false,
             },
             user_id: {
                 type: Sequelize.DataTypes.INTEGER,
@@ -31,7 +26,7 @@ module.exports = {
                     key: "id",
                 },
                 // onUpdate: "",
-                // onDelete: ""
+                onDelete: "CASCADE",
             },
             create_date: {
                 type: Sequelize.DataTypes.DATE,

@@ -10,11 +10,11 @@ export class TaskServiceDelete extends BaseService {
     }
 
     async deleteTask(): Promise<void> {
-        const userSession = this.getSessionUser();
+        const user = this.getUser();
         const taskId = this.req.params.taskId;
         
         // Finds the task
-        const task = await Task.findOne({ where: { id: taskId, userId: userSession.id }});
+        const task = await Task.findOne({ where: { id: taskId, userId: user.id }});
         if (!task) {
             throw new HttpErrorNotFound("Task cannot be found");
         }

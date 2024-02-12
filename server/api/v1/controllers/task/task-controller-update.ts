@@ -16,6 +16,7 @@ export class TaskControllerUpdate extends BaseController {
             const task = await this.services.updateTask();
             return this.responses.responseOK("Task updated successfully", { data: task });
         } catch (error: any) {
+            console.log(error);
             return this.next(error);
         }
     }

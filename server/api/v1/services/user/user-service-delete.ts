@@ -10,8 +10,8 @@ export class UserServiceDelete extends BaseService {
     }
 
     async delete(): Promise<void> {
-        const userSession = this.getSessionUser();
-        await User.destroy({ where: { id: userSession.id }});
+        const user = this.getUser();
+        await User.destroy({ where: { id: user.id }});
         SessionUser.destroy(this.req);
         return;
     }
