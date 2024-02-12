@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { HttpErrorBadRequest } from "../helpers/error";
+import { HttpErrorBadRequest, HttpErrorConflict } from "../helpers/error";
 import User from "../../../database/models/user.model";
 import UserOtp from "../../../database/models/user_otp.model";
 
@@ -11,7 +11,7 @@ export const isAvailable2FA = async(req: Request, res: Response, next: NextFunct
     } else if (!user.verified) {
         return next(new HttpErrorBadRequest("Account must be verified to enable 2FA"));
     } else {
-        return next(new HttpErrorBadRequest("Account has already enabled 2FA"));
+        return next(new HttpErrorConflict("Account has already enabled 2FA"));
     }
 };
 
