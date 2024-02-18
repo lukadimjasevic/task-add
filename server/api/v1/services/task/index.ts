@@ -8,4 +8,4 @@ export {
     TaskServiceDelete,
     TaskServiceRead,
     TaskServiceUpdate,
-}
+};

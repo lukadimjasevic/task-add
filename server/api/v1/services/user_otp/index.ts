@@ -6,4 +6,4 @@ export {
     UserOtpServiceCreate,
     UserOtpDelete,
     UserOtpServiceRead,
-}
+};

@@ -4,4 +4,4 @@ import { TaskValidations } from "./task-validations";
 export {
     TaskRules,
     TaskValidations,
-}
+};
