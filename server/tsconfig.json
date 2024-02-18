@@ -33,7 +33,7 @@
         // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
         "typeRoots": [                                       /* Specify multiple folders that act like './node_modules/@types'. */
             "node_modules/@types", 
-            "./server/api/v1/interfaces/types",
+            "./api/v1/interfaces/types",
         ],   
         // "types": [],                                      /* Specify type package names to be included without being referenced in a source file. */
         // "allowUmdGlobalAccess": true,                     /* Allow accessing UMD globals from modules. */
@@ -111,7 +111,7 @@
     },
 
     "include": [
-        "./server/*.ts",
+        "./*.ts",
     ],
 
     "exclude": [

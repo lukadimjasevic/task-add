@@ -36,4 +36,4 @@ dist
 .vscode-test
 
 # Configuration files
-server/database/config/config.json
+database/config/config.json
