@@ -10,6 +10,7 @@ import taskRouter from "./api/v1/routes/task.route";
 import taskCategoryRelationRouter from "./api/v1/routes/task_category_rel.route";
 import userOtp from "./api/v1/routes/user_otp.route";
 import { errorHandler } from "./api/v1/middlewares/error.middleware";
+import cors from "cors";
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ export class Server {
     }
 
     start() {
+        this.app.use(cors());
         this.app.use(express.json());
         this.app.use(session({
             cookie: { httpOnly: false, maxAge: 1000 * 60 * 60 * 24 },
