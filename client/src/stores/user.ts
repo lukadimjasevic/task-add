@@ -3,6 +3,7 @@ import type { User } from "taskadd/user";
 import type { CustomStore } from "taskadd/store";
 
 const defaultValues: User = {
+    avatar: null,
     email: null,
     firstname: null,
     lastname: null,
@@ -19,6 +20,7 @@ const createUser = (): CustomStore => {
         update,
         setValues: (values) => {
             const data = {
+                avatar: values.avatar,
                 email: values.email, 
                 firstname: values.firstname, 
                 lastname: values.lastname,

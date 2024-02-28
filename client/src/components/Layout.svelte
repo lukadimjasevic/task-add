@@ -9,10 +9,10 @@
 </script>
 
 {#if !$auth.cookie}
-    <div class="container-fluid">
+    <div class="container-fluid p-0">
         <Header />
 
-        <main class="row">
+        <main class="bg-dark text-light">
             <svelte:component this={page.component} />
         </main>
         
@@ -23,7 +23,7 @@
         <Header />
 
         <Sidebar />
-            <main class="row g-0 m-0 w-100 bg-dark">
+            <main class="bg-dark text-light">
                 <svelte:component this={page.component} />
             </main>
         

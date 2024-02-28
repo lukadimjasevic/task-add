@@ -30,11 +30,7 @@
 {:else}
     <Router {url}>
         {#each pages as page}
-            {#if page.protected}
-                <ProtectedRoute path={page.path}>
-                    <Layout {page} />
-                </ProtectedRoute>
-            {:else}
+            {#if !page.protected}
                 <Route path={page.path}>
                     <Layout {page} />
                 </Route>
