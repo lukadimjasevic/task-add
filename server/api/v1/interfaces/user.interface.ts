@@ -10,7 +10,7 @@ export interface UserSignin {
 }
 
 export interface UserUpdate { 
-    avatar?: Blob;
+    avatar?: Express.Multer.File;
     firstname?: string;
     lastname?: string;
     password?: string;

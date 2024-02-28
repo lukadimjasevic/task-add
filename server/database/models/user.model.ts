@@ -18,8 +18,12 @@ import TaskCategory from "./task_category.model";
 class User extends Model {
     @Column({
         type: DataType.BLOB,
+        get() {
+            const avatar = this.getDataValue("avatar");
+            return avatar ? avatar.toString("base64") : avatar;
+        }
     })
-    avatar!: Blob;
+    avatar!: ArrayBuffer | null;
 
     @Column({
         type: DataType.STRING(320),
@@ -31,12 +35,12 @@ class User extends Model {
     @Column({
         type: DataType.STRING(32),
     })
-    firstname!: string;
+    firstname!: string | null;
 
     @Column({
         type: DataType.STRING(32),
     })
-    lastname!: string;
+    lastname!: string | null;
 
     @Column({
         type: DataType.STRING(72),
