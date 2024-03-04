@@ -71,6 +71,11 @@ class User extends Model {
     })
     verificationCodeLastDate!: Date | null;
 
+    @Column({
+        type: DataType.BOOLEAN,
+    })
+    otpEnabled: boolean;
+
     @HasOne(() => UserOtp)
     userOtp!: UserOtp;
 

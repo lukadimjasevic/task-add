@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { OTPSecret, OTPAuthTOTP } from "../../helpers/otp";
 import { BaseService } from "../base-service";
 import UserOtp from "../../../../database/models/user_otp.model";
+import User from "../../../../database/models/user.model";
 import { HttpErrorUnauthorized } from "../../helpers/error";
 
 
@@ -28,6 +29,8 @@ export class UserOtpServiceCreate extends BaseService {
             authUrl: authUrl,
             userId: user.id,
         });
+        user.otpEnabled = true;
+        await user.save();
         return await totp.generateQRCode();
     }
 
