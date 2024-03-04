@@ -50,7 +50,7 @@ export class UserServiceCreate extends BaseService {
         SessionUser.destroy(this.req);
     }
 
-    async generateVerificationCode(): Promise<void> {
+    async generateVerificationCode(): Promise<Date> {
         const user = this.getUser();
         const millisToNextCode = 1000 * 60; // 60 seconds
         
@@ -69,6 +69,7 @@ export class UserServiceCreate extends BaseService {
         user.verificationCode = generateCode();
         user.verificationCodeLastDate = new Date();
         await user.save();
+        return user.verificationCodeLastDate;
     }
 
     async validateVerificationCode(): Promise<void> {

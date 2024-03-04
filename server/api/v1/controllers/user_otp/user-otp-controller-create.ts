@@ -13,8 +13,8 @@ export class UserOtpControllerCreate extends BaseController {
 
     async enable2FA() {
         try {
-            await this.services.enable2FA();
-            return this.responses.responseCreated("Successfully enabled 2FA");
+            const qrcode = await this.services.enable2FA();
+            return this.responses.responseCreated("Successfully enabled 2FA", { data: { qrcode }});
         } catch (error: any) {
             console.log(error);
             return this.next(error);

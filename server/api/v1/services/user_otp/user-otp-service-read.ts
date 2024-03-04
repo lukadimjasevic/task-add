@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { BaseService } from "../base-service";
+import { OTPAuthTOTP } from "../../helpers/otp";
 import UserOtp from "../../../../database/models/user_otp.model";
-import * as QRCode from "qrcode";
 
 
 export class UserOtpServiceRead extends BaseService {
@@ -10,16 +10,14 @@ export class UserOtpServiceRead extends BaseService {
     }
 
     async getQRCode(): Promise<string> {
+        const user = this.getUser();
         const userOtp: UserOtp = this.res.locals.userOtp;
         
-        return new Promise((resolve, reject) => {
-            QRCode.toDataURL(userOtp.authUrl, (error, qrCodeUrl) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(qrCodeUrl);
-                }
-            });
+        const totp = new OTPAuthTOTP({
+            label: user.email,
+            secret: userOtp.secret,
         });
+
+        return await totp.generateQRCode();
     }
 }
