@@ -9,6 +9,7 @@ const defaultValues: User = {
     lastname: null,
     username: null,
     verified: null,
+    verificationCodeLastDate: null,
     otpEnabled: null,
     otpGenerated: null,
 };
@@ -28,6 +29,9 @@ const createUser = (): UserStore => {
                 lastname: values.lastname,
                 username: values.username,
                 verified: values.verified,
+                verificationCodeLastDate: values.verificationCodeLastDate 
+                    ? new Date(values.verificationCodeLastDate) 
+                    : null,
                 otpEnabled: values.otpEnabled,
                 otpGenerated: values.otpGenerated,
             };
@@ -35,6 +39,9 @@ const createUser = (): UserStore => {
         },
         setVerified: (verified: boolean) => {
             update((current: User) => current = { ...current, verified });
+        },
+        setVerificationCodeLastDate: (verificationCodeLastDate: Date) => {
+            update((current: User) => current = { ...current, verificationCodeLastDate });
         },
         setOtpEnabled: (otpEnabled: boolean) => {
             update((current: User) => current = { ...current, otpEnabled });

@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { user } from "../../stores/user";
-    import { userOTP } from "../../stores/user-otp";
-    import { api } from "../../api";
-    import { FormCard, FormSubmit } from "../common/forms";
-    import Modal from "../common/Modal.svelte";
-    import OTPInput from "./OTPInput.svelte";
+    import { user } from "../../../stores/user";
+    import { userOTP } from "../../../stores/user-otp";
+    import { api } from "../../../api";
+    import { FormCard, FormSubmit } from "../../common/forms";
+    import Modal from "../../common/Modal.svelte";
+    import OTPInput from "../OTPInput.svelte";
 
     let showModal: boolean = false;
 
@@ -48,7 +48,7 @@
             <img src={$userOTP.qrcode} alt="Auth QR Code"/>
         </div>
         <div class="col-12">
-            <FormCard on:submit={handleEnableOTP}>
+            <FormCard on:submit={handleEnableOTP} className="d-flex flex-column gap-3">
                 <OTPInput />
                 <FormSubmit className="w-100">Verify & Continue</FormSubmit>
             </FormCard>

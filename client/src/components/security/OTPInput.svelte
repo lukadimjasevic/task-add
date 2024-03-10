@@ -36,7 +36,7 @@
     }
 </script>
 
-<div class="row p-5">
+<div class="row px-5 py-2">
     {#each otpInputs as otpInput, index}
         <div class="col-2 px-1">
             <input 

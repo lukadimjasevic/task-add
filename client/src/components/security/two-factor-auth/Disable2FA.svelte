@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { user } from "../../stores/user";
-    import { api } from "../../api";
-    import Modal from "../common/Modal.svelte";
+    import { user } from "../../../stores/user";
+    import { api } from "../../../api";
+    import Modal from "../../common/Modal.svelte";
 
     let showModal: boolean = false;
 

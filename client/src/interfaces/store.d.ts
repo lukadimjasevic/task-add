@@ -8,6 +8,7 @@ declare module "taskadd/store" {
 
     export interface UserStore extends CustomStore {
         setVerified(verified: boolean): void;
+        setVerificationCodeLastDate(date: Date): void;
         setOtpEnabled(enabled: boolean): void;
         setOtpGenerated(generated: boolean): void;
     }

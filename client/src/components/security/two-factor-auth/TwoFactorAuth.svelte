@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { user } from "../../stores/user";
+    import { user } from "../../../stores/user";
     import Enable2FA from "./Enable2FA.svelte";
     import Edit2FA from "./Edit2FA.svelte";
     import Disable2FA from "./Disable2FA.svelte";
@@ -11,7 +11,7 @@
     {#if !$user.verified}
         <div class="alert alert-info my-3" role="alert">
             <span>To enable Two-Factor Authentication your account
-            <span class="badge text-bg-info">{$user.email}</span> must be verified first.</span>
+            <b>{$user.email}</b> must be verified first.</span>
         </div>
     {:else}
         {#if !$user.otpEnabled}

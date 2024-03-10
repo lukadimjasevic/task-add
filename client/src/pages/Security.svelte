@@ -1,8 +1,8 @@
 <script lang="ts">
     import { LayoutPage } from "../components/common/layouts";
     import Card from "../components/common/Card.svelte";
-    import EmailVerification from "../components/security/EmailVerification.svelte";
-    import TwoFactorAuth from "../components/security/TwoFactorAuth.svelte";
+    import EmailVerification from "../components/security/email-verification";
+    import TwoFactorAuth from "../components/security/two-factor-auth";
 </script>
 
 <LayoutPage>
