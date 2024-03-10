@@ -12,7 +12,7 @@
 
 {#if show}
     <div transition:fly={{ duration: 300 }} class="custom-modal row {className}">
-        <div class="custom-modal-content bg-light col-md-8 col-lg-5 border rounded">
+        <div class="custom-modal-content bg-light col-md-8 col-lg-5 border rounded p-0">
             <div class="custom-modal-header border-bottom m-3 pb-2">
                 <h1 class="custom-modal-header fs-5 m-0"><slot name="title"/></h1>
                 <ButtonClose on:click={handleClose} className="btn-close-black" />
@@ -54,5 +54,6 @@
         display: flex;
         justify-content: end;
         align-items: center;
+        gap: 0.5rem;
     }
 </style>

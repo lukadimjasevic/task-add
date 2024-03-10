@@ -20,8 +20,15 @@ const get = async() => {
     });
 }
 
+const disable = async() => {
+    return await request("/2fa", {
+        method: "DELETE",
+    });
+}
+
 export const otp = {
     generate,
     enable,
     get,
+    disable,
 };
