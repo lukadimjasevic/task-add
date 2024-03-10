@@ -23,9 +23,9 @@
         <Header />
 
         <Sidebar />
-            <main class="bg-dark text-light">
-                <svelte:component this={page.component} />
-            </main>
+        <main class="bg-dark text-light">
+            <svelte:component this={page.component} />
+        </main>
         
         <Footer />
     </div>

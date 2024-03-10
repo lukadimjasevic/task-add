@@ -1,6 +1,7 @@
 <script lang="ts">
     import { user } from "../stores/user";
     import { api } from "../api";
+    import LayoutPage from "../components/LayoutPage.svelte";
     import Card from "../components/Card.svelte";
     import FormCard from "../components/FormCard.svelte";
     import FormFloating from "../components/FormFloating.svelte";
@@ -42,7 +43,7 @@
 
 </script>
 
-<div class="row g-0 m-0 pt-5 d-flex justify-content-center">
+<LayoutPage>
     <Card>
         <span slot="header">Account Profile</span>
         <div slot="body">
@@ -71,7 +72,7 @@
             </FormCard>
         </div>
     </Card>
-</div>
+</LayoutPage>
 
 <style>
     img {

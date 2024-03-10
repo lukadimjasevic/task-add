@@ -1,31 +1,32 @@
 <script lang="ts">
+    import { user } from "../stores/user";
     import { onMount } from "svelte";
-    import type { CustomStore } from "taskadd/store";
+    import { api } from "../api";
 
     let isLoaded: boolean = false;
-    let error: null | { errorName: string, message: string } = null;
+    let errors: { errorName: string, message: string }[] = [];
 
     onMount(async() => {
-        const response = await fetchFunc();
-        if (response.errorName) {
-            error = { errorName: response.errorName, message: response.message };
+        const responseUser = await api.user.get();
+        if (responseUser.errorName) {
+            errors.push({ errorName: responseUser.errorName, message: responseUser.message });
             isLoaded = true;
             return;
         }
-        store.setValues(response.data);
+        user.setValues(responseUser.data);
         isLoaded = true;
         return;
     });
-
-    export let fetchFunc: () => Promise<any>;
-    export let store: CustomStore;
 </script>
 
 {#if !isLoaded}
     <h1>Loading...</h1>
 {:else}
-    {#if error} 
-        <h1>Error while trying to fetch resource: {error.errorName}: {error.message}</h1>
+    {#if errors.length} 
+        <h1>Error while trying to fetch resource:</h1>
+        {#each errors as error}
+            <h4>{error.errorName}: {error.message}</h4>
+        {/each}
     {:else}
         <slot/>
     {/if}

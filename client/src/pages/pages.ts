@@ -5,6 +5,7 @@ import Home from "./Home.svelte";
 import Signup from "./Signup.svelte";
 import Signin from "./Signin.svelte";
 import Profile from "./Profile.svelte";
+import Security from "./Security.svelte";
 import type { Page } from "taskadd/page";
 
 export const home: Page = {
@@ -49,9 +50,22 @@ export const profile: Page = {
     },
 }
 
+export const security: Page = {
+    name: "Security",
+    path: "/security",
+    component: Security,
+    protected: true,
+    beforeNavigate: async() => {
+        const responseUser = await api.user.get();
+        user.setValues(responseUser.data);
+        navigate(security.path);
+    },
+}
+
 export const pages = [
     home,
     signup,
     signin,
     profile,
+    security,
 ];

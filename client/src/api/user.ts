@@ -19,7 +19,23 @@ const update = async(avatar: File | null, firstname: string, lastname: string) =
     });
 }
 
+const generateVerificationCode = async() => {
+    return await request("/user/verify-generate", {
+        method: "POST",
+    });
+}
+
+const validateVerificationCode = async(code: string) => {
+    const data = { code };
+    return await request("/user/verify-validate", {
+        method: "POST",
+        body: JSON.stringify(data),
+    });
+}
+
 export const user = {
     get,
     update,
+    generateVerificationCode,
+    validateVerificationCode,
 };

@@ -14,7 +14,12 @@
         "allowJs": true,
         "checkJs": true,
         "isolatedModules": true,
-        "types": ["./src/interfaces/page", "./src/interfaces/store", "./src/interfaces/user"],
+        "types": [
+            "./src/interfaces/page", 
+            "./src/interfaces/store", 
+            "./src/interfaces/user",
+            "./src/interfaces/user-otp",
+        ],
     },
     "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte"],
     "references": [{ "path": "./tsconfig.node.json" }]

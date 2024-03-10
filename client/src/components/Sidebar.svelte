@@ -4,14 +4,14 @@
     import ButtonClose from "./ButtonClose.svelte";
     import ButtonCollapse from "./ButtonCollapse.svelte";
     import SidebarLink from "./SidebarLink.svelte";
-    import { home, profile } from "../pages/pages";
+    import { home, profile, security } from "../pages/pages";
 
 </script>
 
 {#if $sidebar}
     <div transition:slide={{ axis: "x", duration: 300 }} class="sidebar bg-dark border-end border-light border-opacity-10 text-light p-3">
         <div class="d-flex flex-row-reverse">
-            <ButtonClose onClick={() => sidebar.set(false)} />
+            <ButtonClose on:click={() => sidebar.set(false)} className="btn-close-white" />
         </div>
         <hr class="hr" />
         <div>
@@ -27,7 +27,7 @@
             <ButtonCollapse className="w-100 text-start">
                 <span slot="name">Account</span>
                 <SidebarLink onClick={profile.beforeNavigate}><i class="bi bi-person me-2"></i> {profile.name}</SidebarLink>
-                <SidebarLink onClick={profile.beforeNavigate}><i class="bi bi-lock me-2"></i> Security</SidebarLink>
+                <SidebarLink onClick={security.beforeNavigate}><i class="bi bi-lock me-2"></i> {security.name}</SidebarLink>
                 <SidebarLink onClick={profile.beforeNavigate}><i class="bi bi-box-arrow-left me-2"></i> Sign Out</SidebarLink>
             </ButtonCollapse>
         </div>

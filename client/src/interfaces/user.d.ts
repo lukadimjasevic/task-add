@@ -6,5 +6,7 @@ declare module "taskadd/user" {
         lastname: string | null;
         username: string | null;
         verified: boolean | null;
+        otpEnabled: boolean | null;
+        otpGenerated: boolean | null;
     }
 }
