@@ -9,8 +9,14 @@ import {
     UserControllerUpdate,
     UserControllerDelete
 } from "../controllers/user";
+import multer from "multer";
 
 const router = Router();
+const upload = multer({
+    limits: {
+        fieldSize: 10 * 1024 * 1024,
+    }
+});
 
 router.post("/signup", UserValidations.setSignupRules(), validate, (req: Request, res: Response, next: NextFunction) => {
     const controllerCreate = new UserControllerCreate(req, res, next);
@@ -36,7 +42,7 @@ router.get("/", isAuthenticated, (req: Request, res: Response, next: NextFunctio
     const controllerRead = new UserControllerRead(req, res, next);
     controllerRead.get();
 });
-router.put("/", UserValidations.setUpdateRules(), validate, isAuthenticated, (req: Request, res: Response, next: NextFunction) => {
+router.put("/", upload.single("avatar"), UserValidations.setUpdateRules(), validate, isAuthenticated, (req: Request, res: Response, next: NextFunction) => {
     const controllerUpdate = new UserControllerUpdate(req, res, next);
     controllerUpdate.update();
 });

@@ -11,6 +11,16 @@ export class UserOtpControllerCreate extends BaseController {
         this.services = new UserOtpServiceCreate(req, res, next);
     }
 
+    async generateOTP() {
+        try {
+            const qrcode = await this.services.generateOTP();
+            return this.responses.responseCreated("Successfully generated otp", { data: { qrcode }});
+        } catch (error: any) {
+            console.log(error);
+            return this.next(error);
+        }
+    }
+
     async enable2FA() {
         try {
             await this.services.enable2FA();

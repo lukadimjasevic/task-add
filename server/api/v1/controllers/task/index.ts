@@ -8,4 +8,4 @@ export {
     TaskControllerDelete,
     TaskControllerRead,
     TaskControllerUpdate,
-}
+};

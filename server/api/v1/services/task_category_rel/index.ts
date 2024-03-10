@@ -4,4 +4,4 @@ import { TaskCategoryRelationServiceDelete } from "./task-category-rel-service-d
 export {
     TaskCategoryRelationServiceCreate,
     TaskCategoryRelationServiceDelete,
-}
+};

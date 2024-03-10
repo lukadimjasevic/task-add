@@ -89,6 +89,6 @@ export class UserRules {
     static ruleVerificationCode(): ValidationChain {
         return body("code")
             .isString().withMessage("Verification code must be a string")
-            .custom((value) => value.length === 6).withMessage("Verification code a is 6-digit code")
+            .custom((value) => value.length === 6).withMessage("Verification code a is 6-digit code");
     }
 }

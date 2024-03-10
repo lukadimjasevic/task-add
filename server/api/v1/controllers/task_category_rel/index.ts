@@ -4,4 +4,4 @@ import { TaskCategoryRelationControllerDelete } from "./task-category-rel-contro
 export {
     TaskCategoryRelationControllerCreate,
     TaskCategoryRelationControllerDelete,
-}
+};

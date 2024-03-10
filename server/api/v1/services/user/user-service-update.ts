@@ -13,10 +13,24 @@ export class UserServiceUpdate extends BaseService {
     async update(): Promise<User> {
         const user = this.getUser();
         const data: UserUpdate = this.req.body; 
- 
-        data.avatar !== undefined ? user.avatar = data.avatar : null;
-        data.firstname !== undefined ? user.firstname = data.firstname : null;
-        data.lastname !== undefined ? user.lastname = data.lastname : null;
+        data.avatar = this.req.file;
+        
+        if (data.avatar === undefined || !data.avatar.size) {
+            user.avatar = null;
+        } else {
+            user.avatar = data.avatar.buffer;
+        }
+        if (data.firstname === undefined || data.firstname === "") {
+            user.firstname = null;
+        } else {
+            user.firstname = data.firstname;
+        }
+        if (data.lastname === undefined || data.lastname === "") {
+            user.lastname = null;
+        } else {
+            user.lastname = data.lastname;
+        }
+        
         data.password !== undefined ? user.password = await Hash.create(data.password) : null;
 
         await user.save();

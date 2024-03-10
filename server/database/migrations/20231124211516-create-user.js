@@ -41,6 +41,14 @@ module.exports = {
             verification_code_last_date: {
                 type: Sequelize.DataTypes.DATE,
             },
+            otp_enabled: {
+                type: Sequelize.DataTypes.BOOLEAN,
+                defaultValue: false,
+            },
+            otp_generated: {
+                type: Sequelize.DataTypes.BOOLEAN,
+                defaultValue: false,
+            },
             create_date: {
                 type: Sequelize.DataTypes.DATE,
                 allowNull: false,

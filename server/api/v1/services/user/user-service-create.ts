@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import { Op } from "sequelize";
 import { BaseService } from "../base-service";
 import { Hash } from "../../helpers/hash";
 import { SessionUser } from "../../helpers/session";
@@ -51,7 +50,7 @@ export class UserServiceCreate extends BaseService {
         SessionUser.destroy(this.req);
     }
 
-    async generateVerificationCode(): Promise<void> {
+    async generateVerificationCode(): Promise<Date> {
         const user = this.getUser();
         const millisToNextCode = 1000 * 60; // 60 seconds
         
@@ -65,17 +64,18 @@ export class UserServiceCreate extends BaseService {
                 code += Math.floor(Math.random() * 10);
             }
             return code;
-        }
+        };
 
         user.verificationCode = generateCode();
         user.verificationCodeLastDate = new Date();
         await user.save();
+        return user.verificationCodeLastDate;
     }
 
     async validateVerificationCode(): Promise<void> {
         const user = this.getUser();
         const code: string = this.req.body.code;
-        const millisToDeleteCode = 1000 * 60 * 10 // 10 minutes
+        const millisToDeleteCode = 1000 * 60 * 10; // 10 minutes
 
         if (!user.verificationCodeLastDate || user.verificationCodeLastDate.getTime() + millisToDeleteCode < Date.now()) {
             user.verificationCode = null;

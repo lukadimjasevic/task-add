@@ -6,4 +6,4 @@ export {
     UserOtpControllerCreate,
     UserOtpControllerDelete,
     UserOtpControllerRead,
-}
+};

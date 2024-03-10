@@ -9,7 +9,11 @@ export class UserOtpDelete extends BaseService {
     }
 
     async delete2FA(): Promise<void> {
+        const user = this.getUser();
         const userOtp: UserOtp = this.res.locals.userOtp;
+        user.otpEnabled = false;
+        user.otpGenerated = false;
+        await user.save();
         await userOtp.destroy();
         return;
     }

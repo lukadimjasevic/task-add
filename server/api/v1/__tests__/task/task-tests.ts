@@ -112,7 +112,7 @@ export class TaskTests extends BaseTests {
             it("should return status code 200 if tasks are fetched", async() => {
                 const response = await request(this.server.app)
                     .get(this.routesTask.readAll)
-                    .set("Cookie", this.user.cookie)
+                    .set("Cookie", this.user.cookie);
                 expect(response.statusCode).toEqual(200);
             });
         });
@@ -123,13 +123,13 @@ export class TaskTests extends BaseTests {
             it("should return status code 404 if the task is not found", async() => {
                 const response = await request(this.server.app)
                     .get(this.routesTask.readOne + "/2")
-                    .set("Cookie", this.user.cookie)
+                    .set("Cookie", this.user.cookie);
                 expect(response.statusCode).toEqual(404);
             });
             it("should return status code 200 if the task is fetched", async() => {
                 const response = await request(this.server.app)
                     .get(this.routesTask.readOne + "/1")
-                    .set("Cookie", this.user.cookie)
+                    .set("Cookie", this.user.cookie);
                 expect(response.statusCode).toEqual(200);
             });
         });

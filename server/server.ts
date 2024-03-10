@@ -10,8 +10,11 @@ import taskRouter from "./api/v1/routes/task.route";
 import taskCategoryRelationRouter from "./api/v1/routes/task_category_rel.route";
 import userOtp from "./api/v1/routes/user_otp.route";
 import { errorHandler } from "./api/v1/middlewares/error.middleware";
+import cors from "cors";
 
 dotenv.config();
+
+const NODE_ENV = process.env.NODE_ENV;
 
 export class Server {
     app: Application = express();
@@ -30,6 +33,14 @@ export class Server {
     }
 
     start() {
+        this.app.use(cors({
+            origin: NODE_ENV == "dev" 
+                ? process.env.DEV_CLIENT_URL 
+                : NODE_ENV == "test" 
+                    ? process.env.TEST_CLIENT_URL 
+                    : process.env.PROD_CLIENT_URL,
+            credentials: true,
+        }));
         this.app.use(express.json());
         this.app.use(session({
             cookie: { httpOnly: false, maxAge: 1000 * 60 * 60 * 24 },
@@ -49,10 +60,10 @@ export class Server {
 }
 
 const db = new Database();
-const port = process.env.NODE_ENV === "test" ? 8081 : process.env.PORT || 8080;
+const port = NODE_ENV === "test" ? 8081 : process.env.PORT || 8080;
 const server = new Server(port);
 
-if (process.env.NODE_ENV !== "test") {
+if (NODE_ENV !== "test") {
     db.authenticate()
         .then(() => {
             console.log("Database connection has been established successfully");

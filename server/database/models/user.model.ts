@@ -11,15 +11,19 @@ import TaskCategory from "./task_category.model";
     updatedAt: "update_date",
     defaultScope: {
         attributes: {
-            exclude: ["id", "password", "verificationCode", "verificationCodeLastDate"]
+            exclude: ["id", "password", "verificationCode"]
         }
     }
 })
 class User extends Model {
     @Column({
         type: DataType.BLOB,
+        get() {
+            const avatar = this.getDataValue("avatar");
+            return avatar ? avatar.toString("base64") : avatar;
+        }
     })
-    avatar!: Blob;
+    avatar!: ArrayBuffer | null;
 
     @Column({
         type: DataType.STRING(320),
@@ -31,12 +35,12 @@ class User extends Model {
     @Column({
         type: DataType.STRING(32),
     })
-    firstname!: string;
+    firstname!: string | null;
 
     @Column({
         type: DataType.STRING(32),
     })
-    lastname!: string;
+    lastname!: string | null;
 
     @Column({
         type: DataType.STRING(72),
@@ -66,6 +70,16 @@ class User extends Model {
         type: DataType.DATE,
     })
     verificationCodeLastDate!: Date | null;
+
+    @Column({
+        type: DataType.BOOLEAN,
+    })
+    otpEnabled: boolean;
+
+    @Column({
+        type: DataType.BOOLEAN,
+    })
+    otpGenerated: boolean;
 
     @HasOne(() => UserOtp)
     userOtp!: UserOtp;

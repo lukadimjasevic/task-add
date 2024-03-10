@@ -30,17 +30,17 @@ export class BaseTests {
         readOne: "/api/v1/task",
         update: "/api/v1/task",
         delete: "/api/v1/task",
-    }
+    };
     readonly routesTaskCategoryRelation = {
         create: "/api/v1/task-category-relation",
         delete: "/api/v1/task-category-relation",
-    }
+    };
     readonly routesUserOtp = {
         enable: "/api/v1/2fa/enable",
         verify: "/api/v1/2fa/verify",
         read: "/api/v1/2fa",
         delete: "/api/v1/2fa",
-    }
+    };
     
     server: Server = server;
     
