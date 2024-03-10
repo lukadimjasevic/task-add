@@ -12,6 +12,7 @@ export class UserOtpDelete extends BaseService {
         const user = this.getUser();
         const userOtp: UserOtp = this.res.locals.userOtp;
         user.otpEnabled = false;
+        user.otpGenerated = false;
         await user.save();
         await userOtp.destroy();
         return;

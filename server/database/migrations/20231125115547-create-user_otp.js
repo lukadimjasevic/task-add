@@ -45,6 +45,9 @@ module.exports = {
             IF (SELECT otp_enabled FROM "user" WHERE id = OLD.user_id) THEN
                 RAISE EXCEPTION 'Cannot delete record because otp_enabled is true in table "user".';
             END IF;
+            IF (SELECT otp_generated FROM "user" WHERE id = OLD.user_id) THEN
+                RAISE EXCEPTION 'Cannot delete record because otp_generated is true in table "user".';
+            END IF;
             RETURN OLD;
             END;
             $$ LANGUAGE plpgsql;

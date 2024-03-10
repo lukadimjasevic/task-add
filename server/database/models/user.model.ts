@@ -76,6 +76,11 @@ class User extends Model {
     })
     otpEnabled: boolean;
 
+    @Column({
+        type: DataType.BOOLEAN,
+    })
+    otpGenerated: boolean;
+
     @HasOne(() => UserOtp)
     userOtp!: UserOtp;
 

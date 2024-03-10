@@ -45,6 +45,10 @@ module.exports = {
                 type: Sequelize.DataTypes.BOOLEAN,
                 defaultValue: false,
             },
+            otp_generated: {
+                type: Sequelize.DataTypes.BOOLEAN,
+                defaultValue: false,
+            },
             create_date: {
                 type: Sequelize.DataTypes.DATE,
                 allowNull: false,
