@@ -11,7 +11,7 @@ import TaskCategory from "./task_category.model";
     updatedAt: "update_date",
     defaultScope: {
         attributes: {
-            exclude: ["id", "password", "verificationCode", "verificationCodeLastDate"]
+            exclude: ["id", "password", "verificationCode"]
         }
     }
 })

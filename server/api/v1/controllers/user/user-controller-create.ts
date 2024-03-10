@@ -43,8 +43,8 @@ export class UserControllerCreate extends BaseController {
 
     async verifyGenerate() {
         try {
-            const lastVerificationCodeDate = await this.services.generateVerificationCode();
-            return this.responses.responseCreated("Successfully generated a new verification code", { data: { lastVerificationCodeDate }});
+            const verificationCodeLastDate = await this.services.generateVerificationCode();
+            return this.responses.responseCreated("Successfully generated a new verification code", { data: { verificationCodeLastDate }});
         } catch (error: any) {
             console.log(error);
             return this.next(error);
