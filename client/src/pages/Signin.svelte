@@ -16,7 +16,7 @@
     let password: string;
 
     const signin = async() => {
-        const response = await api.auth.signIn(email, password);
+        const response = await api.auth.signin(email, password);
         if (response.statusCode === 200) {
             auth.setCookie();
             navigate(home.path);

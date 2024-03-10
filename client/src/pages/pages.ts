@@ -4,6 +4,7 @@ import { navigate } from "svelte-routing";
 import Home from "./Home.svelte";
 import Signup from "./Signup.svelte";
 import Signin from "./Signin.svelte";
+import Signout from "./Signout.svelte";
 import Profile from "./Profile.svelte";
 import Security from "./Security.svelte";
 import type { Page } from "taskadd/page";
@@ -38,6 +39,16 @@ export const signin: Page = {
     },
 };
 
+export const signout: Page = {
+    name: "Sign out",
+    path: "/signout",
+    component: Signout,
+    protected: true,
+    beforeNavigate: async() => {
+        navigate(signout.path);
+    }
+}
+
 export const profile: Page = {
     name: "Profile",
     path: "/profile",
@@ -66,6 +77,7 @@ export const pages = [
     home,
     signup,
     signin,
+    signout,
     profile,
     security,
 ];

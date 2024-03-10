@@ -4,8 +4,7 @@
     import { ButtonClose } from "./buttons";
     import { ButtonCollapse } from "./buttons";
     import SidebarLink from "./SidebarLink.svelte";
-    import { home, profile, security } from "../../pages/pages";
-
+    import { home, profile, security, signout } from "../../pages/pages";
 </script>
 
 {#if $sidebar}
@@ -17,18 +16,24 @@
         <div>
             <ButtonCollapse className="w-100 text-start">
                 <span slot="name">Home</span>
-                <SidebarLink onClick={home.beforeNavigate}>Overview</SidebarLink>
+                <SidebarLink on:click={home.beforeNavigate}>Overview</SidebarLink>
             </ButtonCollapse>
             <ButtonCollapse className="w-100 text-start">
                 <span slot="name">Tasks</span>
-                <SidebarLink onClick={profile.beforeNavigate}>Overview</SidebarLink>
+                <SidebarLink on:click={profile.beforeNavigate}>Overview</SidebarLink>
             </ButtonCollapse>
             <hr class="hr" />
             <ButtonCollapse className="w-100 text-start">
                 <span slot="name">Account</span>
-                <SidebarLink onClick={profile.beforeNavigate}><i class="bi bi-person me-2"></i> {profile.name}</SidebarLink>
-                <SidebarLink onClick={security.beforeNavigate}><i class="bi bi-lock me-2"></i> {security.name}</SidebarLink>
-                <SidebarLink onClick={profile.beforeNavigate}><i class="bi bi-box-arrow-left me-2"></i> Sign Out</SidebarLink>
+                <SidebarLink on:click={profile.beforeNavigate}>
+                    <i class="bi bi-person me-2"></i> {profile.name}
+                </SidebarLink>
+                <SidebarLink on:click={security.beforeNavigate}>
+                    <i class="bi bi-lock me-2"></i> {security.name}
+                </SidebarLink>
+                <SidebarLink on:click={signout.beforeNavigate}>
+                    <i class="bi bi-box-arrow-left me-2"></i> {signout.name}
+                </SidebarLink>
             </ButtonCollapse>
         </div>
     </div>

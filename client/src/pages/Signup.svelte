@@ -18,7 +18,7 @@
     let passwordRetype: string;
 
     const signup = async() => {
-        const response = await api.auth.signUp(email, username, password, passwordRetype);
+        const response = await api.auth.signup(email, username, password, passwordRetype);
         if (response.statusCode === 201) {
             navigate(signin.path);
         }
