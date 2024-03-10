@@ -1,13 +1,9 @@
 <script lang="ts">
     import { user } from "../stores/user";
     import { api } from "../api";
-    import LayoutPage from "../components/LayoutPage.svelte";
-    import Card from "../components/Card.svelte";
-    import FormCard from "../components/FormCard.svelte";
-    import FormFloating from "../components/FormFloating.svelte";
-    import FormInput from "../components/FormInput.svelte";
-    import FormFile from "../components/FormFile.svelte";
-    import FormSubmit from "../components/FormSubmit.svelte";
+    import { LayoutPage } from "../components/common/layouts";
+    import Card from "../components/common/Card.svelte";
+    import { FormCard, FormFloating, FormInput, FormFile, FormSubmit } from "../components/common/forms"
 
     let avatar: File | null = null;
     let avatarUrl: string | null = $user.avatar ? `data:image/jpg;base64,${$user.avatar}` : null;
@@ -47,9 +43,9 @@
     <Card>
         <span slot="header">Account Profile</span>
         <div slot="body">
-            <FormCard onSubmit={handleUpdate} className="row g-2 m-0">
+            <FormCard on:submit={handleUpdate} className="row g-2 m-0">
                 <div class="col-md-4 d-flex flex-column text-center mb-3">
-                    <FormFile onChange={(event) => handleAvatarChange(event)}>
+                    <FormFile on:change={(event) => handleAvatarChange(event)}>
                         {#if !avatarUrl} 
                             <div class="bi bi-person-circle" style="font-size: 100px" />
                         {:else}

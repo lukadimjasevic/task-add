@@ -4,9 +4,7 @@
     import { navigate } from "svelte-routing";
     import { api } from "../api";
     import { signin, home } from "../pages/pages";
-    import FormInput from "../components/FormInput.svelte";
-    import FormCard from "../components/FormCard.svelte";
-    import FormSubmit from "../components/FormSubmit.svelte";
+    import { FormCard, FormInput, FormSubmit } from "../components/common/forms";
 
     onMount(() => {
         if ($auth.cookie) {
@@ -29,7 +27,7 @@
 
 <div class="d-flex flex-column justify-content-center align-items-center">
     <h2 class="col-md-4 text-center">Sign Up - Create Account</h2>
-    <FormCard className="col-md-4 m-4" onSubmit={signup}>
+    <FormCard className="col-md-4 m-4" on:submit={signup}>
         <FormInput bind:value={email} type="email" placeholder="Email" required={true} />
         <FormInput bind:value={username} placeholder="Username" required={true} />
         <FormInput bind:value={password} type="password" placeholder="Create password" required={true} />

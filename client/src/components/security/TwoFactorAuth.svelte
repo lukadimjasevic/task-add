@@ -2,10 +2,9 @@
     import { user } from "../../stores/user";
     import { userOTP } from "../../stores/user-otp";
     import { api } from "../../api";
-    import FormCard from "../FormCard.svelte";
-    import FormSubmit from "../FormSubmit.svelte";
-    import OTPInput from "../OTPInput.svelte";
-    import Modal from "../Modal.svelte";
+    import { FormCard, FormSubmit } from "../common/forms";
+    import OTPInput from "./OTPInput.svelte";
+    import Modal from "../common/Modal.svelte";
 
     let showModal: boolean = false;
 
@@ -81,7 +80,7 @@
                     </div>
                     {#if !$user.otpEnabled}
                         <div class="col-12">
-                            <FormCard onSubmit={handleEnableOTP}>
+                            <FormCard on:submit={handleEnableOTP}>
                                 <OTPInput />
                                 <FormSubmit className="w-100">Verify & Continue</FormSubmit>
                             </FormCard>

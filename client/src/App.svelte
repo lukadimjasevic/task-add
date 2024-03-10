@@ -2,9 +2,9 @@
     import { auth } from "./stores/auth";
     import { Router, Route } from "svelte-routing";
     import { pages } from "./pages/pages";
-    import Layout from "./components/Layout.svelte";
-    import ProtectedRoute from "./components/ProtectedRoute.svelte";
-    import DataFetcher from "./components/DataFetcher.svelte";
+    import { LayoutApp } from "./components/common/layouts";
+    import ProtectedRoute from "./components/common/ProtectedRoute.svelte";
+    import DataFetcher from "./components/common/DataFetcher.svelte";
   
     export const url = "";
 </script>
@@ -15,11 +15,11 @@
             {#each pages as page}
                 {#if page.protected}
                     <ProtectedRoute path={page.path}>
-                        <Layout {page} />
+                        <LayoutApp {page} />
                     </ProtectedRoute>
                 {:else}
                     <Route path={page.path}>
-                        <Layout {page} />
+                        <LayoutApp {page} />
                     </Route>
                 {/if}
             {/each}
@@ -30,7 +30,7 @@
         {#each pages as page}
             {#if !page.protected}
                 <Route path={page.path}>
-                    <Layout {page} />
+                    <LayoutApp {page} />
                 </Route>
             {/if}
         {/each}

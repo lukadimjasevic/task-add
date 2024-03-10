@@ -1,6 +1,6 @@
 <script lang="ts">
     import { slide, fade, fly } from "svelte/transition"
-    import ButtonClose from "./ButtonClose.svelte";
+    import { ButtonClose } from "./buttons";
 
     export let show: boolean = false;
     export let className: string = "";

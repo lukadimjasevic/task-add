@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { auth } from "../stores/auth";
+    import { auth } from "../../../stores/auth";
     import type { Page } from "taskadd/page";
-    import Header from "./Header.svelte";
-    import Footer from "./Footer.svelte";
-    import Sidebar from "./Sidebar.svelte";
+    import Header from "../Header.svelte";
+    import Footer from "../Footer.svelte";
+    import Sidebar from "../Sidebar.svelte";
     
     export let page: Page;
 </script>

@@ -2,12 +2,8 @@
     import { user } from "../../stores/user";
     import { verificationCodeTimer } from "../../stores/countdown-timer";
     import { api } from "../../api";
-    import FormCard from "../FormCard.svelte";
-    import FormFloating from "../FormFloating.svelte";
-    import FormInput from "../FormInput.svelte";
-    import FormSubmit from "../FormSubmit.svelte";
-    import FormSwitch from "../FormSwitch.svelte"
-    import Modal from "../Modal.svelte";
+    import { FormCard, FormFloating, FormInput, FormSubmit, FormSwitch } from "../common/forms";
+    import Modal from "../common/Modal.svelte";
 
     let showModal: boolean = false;
     let verificationCode: string;
@@ -47,7 +43,7 @@
         <Modal bind:show={showModal}>
             <span slot="title">Verify Email</span>
             <div slot="body">
-                <FormCard onSubmit={handleSendCode} className="my-3">
+                <FormCard on:submit={handleSendCode} className="my-3">
                     <FormSubmit disabled={$verificationCodeTimer === 0 ? false : true}>Get a Verification Code</FormSubmit>
                     {#if $verificationCodeTimer}
                         <div>
@@ -56,7 +52,7 @@
                         </div>
                     {/if}
                 </FormCard>
-                <FormCard onSubmit={handleValidateCode} className="my-3">
+                <FormCard on:submit={handleValidateCode} className="my-3">
                     <FormFloating id="verificationCodeInput" className="mb-3">
                         <FormInput bind:value={verificationCode} placeholder="Enter a 6-digit code" />
                         <span slot="label">Enter a 6-digit code</span>

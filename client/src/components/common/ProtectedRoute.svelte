@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { auth } from "../stores/auth";
+    import { auth } from "../../stores/auth";
     import { Route } from "svelte-routing";
 
     export let path: string;

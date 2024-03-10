@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { sidebar } from "../stores/sidebar";
+    import { sidebar } from "../../stores/sidebar";
     import { slide } from "svelte/transition";
-    import ButtonClose from "./ButtonClose.svelte";
-    import ButtonCollapse from "./ButtonCollapse.svelte";
+    import { ButtonClose } from "./buttons";
+    import { ButtonCollapse } from "./buttons";
     import SidebarLink from "./SidebarLink.svelte";
-    import { home, profile, security } from "../pages/pages";
+    import { home, profile, security } from "../../pages/pages";
 
 </script>
 
