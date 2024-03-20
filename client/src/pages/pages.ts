@@ -1,4 +1,5 @@
 import { user } from "../stores/user";
+import { tasks } from "../stores/task";
 import { api } from "../api";
 import { navigate } from "svelte-routing";
 import Home from "./Home.svelte";
@@ -7,6 +8,7 @@ import Signin from "./Signin.svelte";
 import Signout from "./Signout.svelte";
 import Profile from "./Profile.svelte";
 import Security from "./Security.svelte";
+import TaskDashboard from "./TaskDashboard.svelte";
 import type { Page } from "taskadd/page";
 
 export const home: Page = {
@@ -73,6 +75,19 @@ export const security: Page = {
     },
 }
 
+export const taskDashboard: Page = {
+    name: "Dashboard",
+    path: "/task-dashboard",
+    component: TaskDashboard,
+    protected: true,
+    beforeNavigate: async() => {
+        const responseTasks = await api.task.getAll();
+        tasks.resetSelected();
+        tasks.setValues(responseTasks.data);
+        navigate(taskDashboard.path);
+    }
+}
+
 export const pages = [
     home,
     signup,
@@ -80,4 +95,5 @@ export const pages = [
     signout,
     profile,
     security,
+    taskDashboard,
 ];

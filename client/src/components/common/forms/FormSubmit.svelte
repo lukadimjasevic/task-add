@@ -1,17 +1,13 @@
 <script lang="ts">
     export let className: string = "";
     export let disabled: boolean = false;
+    export let form: string | null = null;
 </script>
 
 <button
-    type="submit" 
-    class={"btn btn-primary " + className} 
-    {disabled}>
+    type="submit"
+    class={"btn btn-primary " + className}
+    {disabled}
+    {form}>
     <slot/>
 </button>
-
-<style>
-    button {
-        height: 3rem;
-    }
-</style>

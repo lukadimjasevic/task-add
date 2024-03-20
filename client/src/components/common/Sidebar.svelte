@@ -4,7 +4,7 @@
     import { ButtonClose } from "./buttons";
     import { ButtonCollapse } from "./buttons";
     import SidebarLink from "./SidebarLink.svelte";
-    import { home, profile, security, signout } from "../../pages/pages";
+    import { home, profile, security, taskDashboard, signout } from "../../pages/pages";
 </script>
 
 {#if $sidebar}
@@ -20,7 +20,9 @@
             </ButtonCollapse>
             <ButtonCollapse className="w-100 text-start">
                 <span slot="name">Tasks</span>
-                <SidebarLink on:click={profile.beforeNavigate}>Overview</SidebarLink>
+                <SidebarLink on:click={taskDashboard.beforeNavigate}>
+                    <i class="bi bi-bar-chart me-2"></i> {taskDashboard.name}
+                </SidebarLink>
             </ButtonCollapse>
             <hr class="hr" />
             <ButtonCollapse className="w-100 text-start">

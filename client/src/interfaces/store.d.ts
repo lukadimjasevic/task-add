@@ -1,5 +1,6 @@
 declare module "taskadd/store" {
     import type { Writable } from "svelte/store";
+    import type { Task } from "taskadd/task";
 
     export interface CustomStore extends Writable<T> {
         setValues(values: any): void;
@@ -15,5 +16,11 @@ declare module "taskadd/store" {
 
     export interface UserOTPStore extends CustomStore {
         setToken(token: string): void;
+    }
+
+    export interface TaskStore extends CustomStore {
+        toggleSelected(taskId: number): void;
+        toggleAllSelected(): void;
+        resetSelected(): void;
     }
 }
