@@ -2,7 +2,8 @@
     import { tasks } from "../../stores/task";
     import { api } from "../../api";
     import type { Task } from "taskadd/task";
-    import ButtonDelete from "../common/buttons/ButtonDelete.svelte";
+    import { ButtonDelete } from "../common/buttons";
+    import TaskEdit from "./TaskEdit.svelte";
 
     const handleDeleteAction = () => {
         $tasks.tasks.forEach(async(task: Task) => {
@@ -17,9 +18,16 @@
             }
         });
     }
+
+    const findSelectedTask = (): Task => {
+        return $tasks.tasks.find((task: Task) => task.selected);
+    }
 </script>
 
 <div class="d-flex align-items-center gap-3">
+    {#if $tasks.tasksSelected.count === 1}
+        <TaskEdit task={findSelectedTask()}/>
+    {/if}
     {#if $tasks.tasksSelected.count > 0}
         <ButtonDelete on:click={handleDeleteAction} />
         <span>{$tasks.tasksSelected.count} selected</span>

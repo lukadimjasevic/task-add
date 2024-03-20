@@ -1,19 +1,23 @@
 <script lang="ts">
     import { tasks } from "../../stores/task";
     import { api } from "../../api";
-    import Modal from "../common/Modal.svelte";
+    import type { Task } from "taskadd/task";
+    import { ButtonEdit } from "../common/buttons";
     import { FormCard, FormFloating, FormInput, FormTextarea, FormSubmit } from "../common/forms";
+    import Modal from "../common/Modal.svelte";
+
+    export let task: Task;
 
     let showModal: boolean = false;
 
-    let taskName: string;
-    let taskDescription: string;
-    let taskDeadlineDateStr: string;
+    let taskName: string = task.name;
+    let taskDescription: string = task.description;
+    let taskDeadlineDateStr: string = task.deadlineDate.toISOString().split("T")[0];
     $: taskDeadlineDate = new Date(taskDeadlineDateStr);
 
-    const handleAdd = async() => {
-        const response = await api.task.create(taskName, taskDescription, taskDeadlineDate);
-        if (response.statusCode === 201) {
+    const handleEdit = async() => {
+        const response = await api.task.update(task.id, taskName, taskDescription, taskDeadlineDate);
+        if (response.statusCode === 200) {
             const fetchedTasks = await api.task.getAll();
             if (fetchedTasks.statusCode === 200) {
                 showModal = false;
@@ -23,18 +27,13 @@
     }
 </script>
 
-<div class="d-flex align-items-center justify-content-between">
-    <span>What do you need to do?</span>
-    <button type="button" class="btn btn-primary" on:click={() => showModal = true}>
-        Add Task
-    </button>
-</div>
+<ButtonEdit on:click={() => showModal = true}/>
 
 <Modal bind:show={showModal}>
-    <span slot="title">Add Task</span>
+    <span slot="title">Edit Task - {task.name}</span>
     <div slot="body" class="row">
         <div class="col-12">
-            <FormCard id="formTaskAdd" on:submit={handleAdd} className="d-flex flex-column gap-2">
+            <FormCard id="formTaskEdit" on:submit={handleEdit} className="d-flex flex-column gap-2">
                 <FormFloating id="taskName">
                     <FormInput bind:value={taskName} placeholder="Name" required={true} min={4} max={64} />
                     <span slot="label">Name</span>
@@ -51,6 +50,6 @@
         </div>
     </div>
     <div slot="footer">
-        <FormSubmit form="formTaskAdd">Add</FormSubmit>
+        <FormSubmit form="formTaskEdit">Edit</FormSubmit>
     </div>
 </Modal>
