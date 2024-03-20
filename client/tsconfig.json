@@ -19,6 +19,7 @@
             "./src/interfaces/store", 
             "./src/interfaces/user",
             "./src/interfaces/user-otp",
+            "./src/interfaces/task",
         ],
     },
     "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte"],
