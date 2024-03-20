@@ -7,8 +7,8 @@ import TaskTaskCategoryRel from "./task_task_category_rel.model";
     timestamps: true,
     tableName: "task",
     modelName: "Task",
-    createdAt: "create_date",
-    updatedAt: "update_date",
+    createdAt: "createDate",
+    updatedAt: "updateDate",
 })
 class Task extends Model {
     @Column({
