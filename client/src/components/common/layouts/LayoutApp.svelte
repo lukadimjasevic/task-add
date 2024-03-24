@@ -4,36 +4,41 @@
     import Header from "../Header.svelte";
     import Footer from "../Footer.svelte";
     import Sidebar from "../Sidebar.svelte";
+    import LayoutPage from "./LayoutPage.svelte";
     
     export let page: Page;
 </script>
 
 {#if !$auth.cookie}
-    <div class="container-fluid p-0">
-        <Header />
+    <div class="container-fluid p-0 bg-primary">
+        <!--Header /-->
 
-        <main class="bg-dark text-light">
+        <main class="text-light">
             <svelte:component this={page.component} />
         </main>
         
-        <Footer />
+        <!--Footer /-->
     </div>
 {:else}
-    <div class="container-fluid p-0">
-        <Header />
+    <div class="container-fluid p-0 bg-primary">
+        <!--Header /-->
 
-        <Sidebar />
-        <main class="bg-dark text-light">
+        <LayoutPage>
             <svelte:component this={page.component} />
-        </main>
+        </LayoutPage>
         
-        <Footer />
+        <!--Sidebar />
+        <main class="text-light">
+            <svelte:component this={page.component} />
+        </main-->
+        
+        <!--Footer /-->
     </div>
 {/if}
 
 
 <style>
     main {
-        min-height: 93vh;
+        min-height: 100vh;
     }
 </style>

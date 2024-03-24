@@ -19,8 +19,12 @@ declare module "taskadd/store" {
     }
 
     export interface TaskStore extends CustomStore {
-        toggleSelected(taskId: number): void;
-        toggleAllSelected(): void;
+        toggleSelectedTask(task: Task): void;
+        toggleSelectedTasks(tasks: Task[], state: boolean): void;
+        setCountToday(count: number): void;
+        setCountTomorrow(count: number): void;
+        setCountWeek(count: number): void;
+        setCountFuture(count: number): void;
         resetSelected(): void;
     }
 }

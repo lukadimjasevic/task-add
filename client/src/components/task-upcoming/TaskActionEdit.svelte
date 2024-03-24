@@ -2,34 +2,30 @@
     import { tasks } from "../../stores/task";
     import { api } from "../../api";
     import type { Task } from "taskadd/task";
-    import { ButtonEdit } from "../common/buttons";
     import { FormCard, FormFloating, FormInput, FormTextarea, FormSubmit } from "../common/forms";
     import Modal from "../common/Modal.svelte";
-
-    export let task: Task;
-
-    let showModal: boolean = false;
-
-    let taskName: string = task.name;
-    let taskDescription: string = task.description;
-    let taskDeadlineDateStr: string = task.deadlineDate.toISOString().split("T")[0];
-    $: taskDeadlineDate = new Date(taskDeadlineDateStr);
 
     const handleEdit = async() => {
         const response = await api.task.update(task.id, taskName, taskDescription, taskDeadlineDate);
         if (response.statusCode === 200) {
             const fetchedTasks = await api.task.getAll();
             if (fetchedTasks.statusCode === 200) {
-                showModal = false;
+                show = false;
                 tasks.setValues(fetchedTasks.data);
             }
         }
     }
+
+    export let task: Task;
+    export let show: boolean = false;
+
+    let taskName: string = task.name;
+    let taskDescription: string = task.description;
+    let taskDeadlineDateStr: string = task.deadlineDate.toISOString().split("T")[0];
+    $: taskDeadlineDate = new Date(taskDeadlineDateStr);
 </script>
 
-<ButtonEdit on:click={() => showModal = true}/>
-
-<Modal bind:show={showModal}>
+<Modal bind:show>
     <span slot="title">Edit Task - {task.name}</span>
     <div slot="body" class="row">
         <div class="col-12">
@@ -50,6 +46,6 @@
         </div>
     </div>
     <div slot="footer">
-        <FormSubmit form="formTaskEdit">Edit</FormSubmit>
+        <FormSubmit form="formTaskEdit">Save</FormSubmit>
     </div>
 </Modal>

@@ -21,18 +21,16 @@
     }
 </script>
 
-<LayoutPage>
-    <Card>
-        <span slot="header">Sign Out</span>
-        <div slot="body" class="row">
-            <div class="col-12">
-                <span>Are you sure you want to sign out?</span>
-            </div>
-            <div class="col-12 text-end">
-                <button type="button" class="btn btn-danger" on:click={handleSignOut}>
-                    Sign Out
-                </button>
-            </div>
+<Card>
+    <span slot="header">Sign Out</span>
+    <div slot="body" class="row">
+        <div class="col-12">
+            <span>Are you sure you want to sign out?</span>
         </div>
-    </Card>
-</LayoutPage>
+        <div class="col-12 text-end">
+            <button type="button" class="btn btn-danger" on:click={handleSignOut}>
+                Sign Out
+            </button>
+        </div>
+    </div>
+</Card>

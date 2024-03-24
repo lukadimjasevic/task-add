@@ -1,4 +1,4 @@
-import "bootstrap/scss/bootstrap.scss";
+import "./scss/custom.scss";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/js/index.esm";
 import App from "./App.svelte";

@@ -4,10 +4,11 @@ import type { TasksFrame, Task, TaskCategory } from "taskadd/task";
 
 const defaultValues: TasksFrame = {
     tasks: [],
-    tasksSelected: {
-        count: 0,
-        selected: false,
-    }
+    countActive: 0,
+    countToday: 0,
+    countTomorrow: 0,
+    countWeek: 0,
+    countFuture: 0,
 };
 
 const createTasks = (): TaskStore => {
@@ -47,9 +48,9 @@ const createTasks = (): TaskStore => {
         
         return dataTask;
     }
-    
-    const countSelected = (tasks: Task[]) => {
-        return tasks.filter((task: Task) => task.selected).length;
+
+    const countActive = (tasks: Task[]) => {
+        return tasks.filter((task: Task) => task.status.name.toLowerCase() === "active").length;
     }
 
     return {
@@ -63,56 +64,58 @@ const createTasks = (): TaskStore => {
                 dataTasks.push(dataTask);
             });
             set({
+                ...defaultValues,
                 tasks: dataTasks,
-                tasksSelected: {
-                    count: 0,
-                    selected: false,
-                },
+                countActive: countActive(dataTasks),
             });
         },
-        toggleSelected: (taskId: number) => {
+        toggleSelectedTask: (task: Task) => {
             update((current: TasksFrame) => {
-                const updatedTasks = current.tasks.map((task: Task) => {
-                    if (task.id === taskId) return { ...task, selected: !task.selected };
-                    return task;
+                const updatedTasks = current.tasks.map((currentTask: Task) => {
+                    if (currentTask.id === task.id) return { ...currentTask, selected: !task.selected };
+                    return currentTask;
                 });
-                const updatedCount = countSelected(updatedTasks);
-                const updatedSelectedAll = current.tasksSelected.selected && updatedCount === current.tasks.length ? true : false;
                 return {
+                    ...current,
                     tasks: updatedTasks,
-                    tasksSelected: {
-                        count: updatedCount,
-                        selected: updatedSelectedAll,
-                    },
                 };
             });
         },
-        toggleAllSelected: () => {
+        toggleSelectedTasks: (tasks: Task[], state: boolean) => {
             update((current: TasksFrame) => {
-                const updatedTasks = current.tasks.map((task: Task) => {
-                    return { ...task, selected: !current.tasksSelected.selected };
+                const updatedTasks = current.tasks.map((currentTask: Task) => {
+                    if (tasks.includes(currentTask)) {
+                        return { ...currentTask, selected: state };
+                    }
+                    return currentTask;
                 });
                 return {
+                    ...current,
                     tasks: updatedTasks,
-                    tasksSelected: {
-                        count: countSelected(updatedTasks),
-                        selected: !current.tasksSelected.selected,
-                    },
                 };
             });
         },
         resetSelected: () => {
             update((current: TasksFrame) => {
                 return {
-                    tasks: current.tasks.map((task: Task) => {
-                        return { ...task, selected: false };
+                    ...defaultValues,
+                    tasks: current.tasks.map((currentTask: Task) => {
+                        return { ...currentTask, selected: false };
                     }),
-                    tasksSelected: {
-                        count: 0,
-                        selected: false,
-                    },
                 };
             });
+        },
+        setCountToday: (count: number) => {
+            update((current: TasksFrame) => current = { ...current, countToday: count });
+        },
+        setCountTomorrow: (count: number) => {
+            update((current: TasksFrame) => current = { ...current, countTomorrow: count });
+        },
+        setCountWeek: (count: number) => {
+            update((current: TasksFrame) => current = { ...current, countWeek: count });
+        },
+        setCountFuture: (count: number) => {
+            update((current: TasksFrame) => current = { ...current, countFuture: count });
         },
         reset: () => set(defaultValues),
     }

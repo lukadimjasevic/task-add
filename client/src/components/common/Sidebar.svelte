@@ -1,53 +1,74 @@
 <script lang="ts">
     import { sidebar } from "../../stores/sidebar";
     import { slide } from "svelte/transition";
-    import { ButtonClose } from "./buttons";
-    import { ButtonCollapse } from "./buttons";
-    import SidebarLink from "./SidebarLink.svelte";
-    import { home, profile, security, taskDashboard, signout } from "../../pages/pages";
+    import { ButtonMenu, ButtonClose } from "./buttons";
+    import { security, taskUpcoming, signout } from "../../pages/pages";
+    import SidebarSection from "./SidebarSection.svelte";
+    import SidebarSectionItem from "./SidebarSectionItem.svelte";
 </script>
 
 {#if $sidebar}
-    <div transition:slide={{ axis: "x", duration: 300 }} class="sidebar bg-dark border-end border-light border-opacity-10 text-light p-3">
-        <div class="d-flex flex-row-reverse">
-            <ButtonClose on:click={() => sidebar.set(false)} className="btn-close-white" />
-        </div>
-        <hr class="hr" />
+    <div transition:slide={{ axis: "x", duration: 300 }} class="sidebar bg-secondary rounded-3 p-3">
         <div>
-            <ButtonCollapse className="w-100 text-start">
-                <span slot="name">Home</span>
-                <SidebarLink on:click={home.beforeNavigate}>Overview</SidebarLink>
-            </ButtonCollapse>
-            <ButtonCollapse className="w-100 text-start">
-                <span slot="name">Tasks</span>
-                <SidebarLink on:click={taskDashboard.beforeNavigate}>
-                    <i class="bi bi-bar-chart me-2"></i> {taskDashboard.name}
-                </SidebarLink>
-            </ButtonCollapse>
-            <hr class="hr" />
-            <ButtonCollapse className="w-100 text-start">
-                <span slot="name">Account</span>
-                <SidebarLink on:click={profile.beforeNavigate}>
-                    <i class="bi bi-person me-2"></i> {profile.name}
-                </SidebarLink>
-                <SidebarLink on:click={security.beforeNavigate}>
-                    <i class="bi bi-lock me-2"></i> {security.name}
-                </SidebarLink>
-                <SidebarLink on:click={signout.beforeNavigate}>
-                    <i class="bi bi-box-arrow-left me-2"></i> {signout.name}
-                </SidebarLink>
-            </ButtonCollapse>
+            <div class="d-flex justify-content-between">
+                <h4>Menu</h4>
+                <ButtonClose on:click={() => sidebar.setValues(false)} className="btn-close" />
+            </div>
+
+            <div>
+                <hr class="hr" />
+                <SidebarSection>
+                    <small slot="label"><b>Tasks</b></small>
+                    <SidebarSectionItem on:click={taskUpcoming.beforeNavigate}>
+                        <i slot="icon" class="bi bi-chevron-double-right"></i>
+                        <span slot="label">{taskUpcoming.name}</span>
+                    </SidebarSectionItem>
+                    <SidebarSectionItem>
+                        <i slot="icon" class="bi bi-list-check"></i>
+                        <span slot="label">Today</span>
+                    </SidebarSectionItem>
+                    <SidebarSectionItem>
+                        <i slot="icon" class="bi bi-calendar3"></i>
+                        <span slot="label">Calendar</span>
+                    </SidebarSectionItem>
+                </SidebarSection>
+                <hr class="hr" />
+                <SidebarSection>
+                    <small slot="label"><b>Categories</b></small>
+                    <SidebarSectionItem>
+                        <i slot="icon" class="bi bi-plus-lg"></i>
+                        <span slot="label">Add New Category</span>
+                    </SidebarSectionItem>
+                </SidebarSection>
+                <hr class="hr" />
+            </div>
+        </div>
+
+        <div>
+            <SidebarSection>
+                <!-- TODO: Merge security and profile pages to settings page -->
+                <SidebarSectionItem on:click={security.beforeNavigate}>
+                    <i slot="icon" class="bi bi-sliders2"></i>
+                    <span slot="label">Settings</span>
+                </SidebarSectionItem>
+                <SidebarSectionItem on:click={signout.beforeNavigate}>
+                    <i slot="icon" class="bi bi-box-arrow-right"></i>
+                    <span slot="label">Sign out</span>
+                </SidebarSectionItem>
+            </SidebarSection>
         </div>
     </div>
+{:else}
+    <ButtonMenu on:click={() => sidebar.setValues(true)}/>
 {/if}
 
-<style>
+<style lang="scss">
     .sidebar {
         width: 20rem;
-        height: 100vh;
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 100;
+        min-height: calc(100vh - 2 * $spacer);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 </style>

@@ -1,7 +1,6 @@
 <script lang="ts">
     import { user } from "../stores/user";
     import { api } from "../api";
-    import { LayoutPage } from "../components/common/layouts";
     import Card from "../components/common/Card.svelte";
     import { FormCard, FormFloating, FormInput, FormFile, FormSubmit } from "../components/common/forms"
 
@@ -39,36 +38,34 @@
 
 </script>
 
-<LayoutPage>
-    <Card>
-        <span slot="header">Account Profile</span>
-        <div slot="body">
-            <FormCard on:submit={handleUpdate} className="row g-2 m-0">
-                <div class="col-md-4 d-flex flex-column text-center mb-3">
-                    <FormFile on:change={(event) => handleAvatarChange(event)}>
-                        {#if !avatarUrl} 
-                            <div class="bi bi-person-circle" style="font-size: 100px" />
-                        {:else}
-                            <img src={avatarUrl} alt="Profile" />
-                        {/if}
-                    </FormFile>
-                    <button type="button" class="btn btn-danger" on:click={handleAvatarRemove}>Remove</button>
-                </div>
-                <div class="col-md-8 d-flex flex-column justify-content-center gap-3 mb-3">
-                    <FormFloating id="firstname">
-                        <FormInput bind:value={firstname} placeholder="Firstname" />
-                        <span slot="label">Firstname</span>
-                    </FormFloating>
-                    <FormFloating id="lastname">
-                        <FormInput bind:value={lastname} placeholder="Lastname" />
-                        <span slot="label">Lastname</span>
-                    </FormFloating>
-                </div>
-                <FormSubmit>Update Profile</FormSubmit>
-            </FormCard>
-        </div>
-    </Card>
-</LayoutPage>
+<Card>
+    <span slot="header">Account Profile</span>
+    <div slot="body">
+        <FormCard on:submit={handleUpdate} className="row g-2 m-0">
+            <div class="col-md-4 d-flex flex-column text-center mb-3">
+                <FormFile on:change={(event) => handleAvatarChange(event)}>
+                    {#if !avatarUrl} 
+                        <div class="bi bi-person-circle" style="font-size: 100px" />
+                    {:else}
+                        <img src={avatarUrl} alt="Profile" />
+                    {/if}
+                </FormFile>
+                <button type="button" class="btn btn-danger" on:click={handleAvatarRemove}>Remove</button>
+            </div>
+            <div class="col-md-8 d-flex flex-column justify-content-center gap-3 mb-3">
+                <FormFloating id="firstname">
+                    <FormInput bind:value={firstname} placeholder="Firstname" />
+                    <span slot="label">Firstname</span>
+                </FormFloating>
+                <FormFloating id="lastname">
+                    <FormInput bind:value={lastname} placeholder="Lastname" />
+                    <span slot="label">Lastname</span>
+                </FormFloating>
+            </div>
+            <FormSubmit>Update Profile</FormSubmit>
+        </FormCard>
+    </div>
+</Card>
 
 <style>
     img {

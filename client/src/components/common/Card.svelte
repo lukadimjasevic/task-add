@@ -4,7 +4,7 @@
 </script>
 
 
-<div class="col-md-10 card {className}">
+<div class="card {className}">
     {#if useHeader}
         <div class="card-header"><slot name="header"/></div>
     {/if}

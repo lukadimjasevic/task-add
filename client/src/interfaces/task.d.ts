@@ -1,12 +1,11 @@
 declare module "taskadd/task" {
     export interface TasksFrame {
         tasks: Task[];
-        tasksSelected: TasksSelected;
-    }
-
-    export interface TasksSelected {
-        count: number;
-        selected: boolean;
+        countActive: number;
+        countToday: number;
+        countTomorrow: number;
+        countWeek: number;
+        countFuture: number;
     }
 
     export interface Task {

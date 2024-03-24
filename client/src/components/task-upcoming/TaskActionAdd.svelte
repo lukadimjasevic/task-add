@@ -4,12 +4,33 @@
     import Modal from "../common/Modal.svelte";
     import { FormCard, FormFloating, FormInput, FormTextarea, FormSubmit } from "../common/forms";
 
+    export let defaultDate: Date = new Date(Date.now() + 60 * 1000);
+
+    const getDefaultDate = (date: Date): string => {
+        return date.toISOString().split("T")[0];
+    }
+
+    const getDefaultTime = (date: Date): string => {
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        return `${hours}:${minutes}`;
+    }
+
+    const computeDeadlineDate = (date: string, time: string) => {
+        const deadlineDate = new Date(date);
+        const [hours, minutes] = time.split(":");
+        deadlineDate.setHours(parseInt(hours));
+        deadlineDate.setMinutes(parseInt(minutes));
+        return deadlineDate;
+    }
+
     let showModal: boolean = false;
 
     let taskName: string;
     let taskDescription: string;
-    let taskDeadlineDateStr: string;
-    $: taskDeadlineDate = new Date(taskDeadlineDateStr);
+    let taskDeadlineDateStr: string = getDefaultDate(defaultDate);
+    let taskDeadlineDateTime: string = getDefaultTime(defaultDate); 
+    $: taskDeadlineDate = computeDeadlineDate(taskDeadlineDateStr, taskDeadlineDateTime);
 
     const handleAdd = async() => {
         const response = await api.task.create(taskName, taskDescription, taskDeadlineDate);
@@ -23,12 +44,12 @@
     }
 </script>
 
-<div class="d-flex align-items-center justify-content-between">
-    <span>What do you need to do?</span>
-    <button type="button" class="btn btn-primary" on:click={() => showModal = true}>
-        Add Task
-    </button>
-</div>
+<button type="button" 
+        class="btn btn-outline-tertiary w-100 text-start text-dark add-task"
+        on:click={() => showModal = true}>
+    <i class="bi bi-plus-lg"></i>
+    <span>Add New Task</span>
+</button>
 
 <Modal bind:show={showModal}>
     <span slot="title">Add Task</span>
@@ -47,6 +68,10 @@
                     <FormInput type="date" bind:value={taskDeadlineDateStr} placeholder="Deadline Date" required={true} />
                     <span slot="label">Deadline Date</span>
                 </FormFloating>
+                <FormFloating id="taskDeadlineTime">
+                    <FormInput type="time" bind:value={taskDeadlineDateTime} placeholder="Deadline Time" required={true} />
+                    <span slot="label">Deadline Time</span>
+                </FormFloating>
             </FormCard>
         </div>
     </div>
@@ -54,3 +79,9 @@
         <FormSubmit form="formTaskAdd">Add</FormSubmit>
     </div>
 </Modal>
+
+<style>
+    .add-task {
+        height: 3rem;
+    }
+</style>
