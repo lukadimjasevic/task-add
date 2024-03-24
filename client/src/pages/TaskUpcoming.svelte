@@ -57,11 +57,25 @@
     $: tasksTomorrow = computeTasksTomorrow($tasks.tasks);
     $: tasksWeek = computeTasksWeek($tasks.tasks);
     $: tasksFuture = computeTasksFuture($tasks.tasks);
+
+    const getDefaultDate = (date: Date) => {
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        date.setHours(hours, minutes, 0, 0);
+        return date;
+    }
+
+    const dayTime = 24 * 3600 * 1000;
+    $: defaultDateToday = getDefaultDate(new Date());
+    $: defaultDateTomorrow = getDefaultDate(new Date(Date.now() + dayTime));
+    const defaultDateWeek: Date = getDefaultDate(new Date(Date.now() + 2 * dayTime));
+    const defaultDateFuture: Date = getDefaultDate(new Date(Date.now() + 7 * dayTime));
 </script>
 
-<h2>Upcoming <span class="badge bg-secondary text-dark">{$tasks.countActive}</span></h2>
+<h2>Upcoming <span class="badge bg-secondary text-dark">{$tasks.countUpcoming}</span></h2>
 <div class="d-flex flex-column gap-3">
-    <TaskList tasksFiltered={tasksToday}>
+    <TaskList tasksFiltered={tasksToday} defaultDate={defaultDateToday}>
         <span slot="title">Today 
             <span class="badge bg-secondary text-dark">
                 {$tasks.countToday}
@@ -70,7 +84,7 @@
     </TaskList>
     <div class="row g-0 gap-3 ">
         <div class="col">
-            <TaskList tasksFiltered={tasksTomorrow}>
+            <TaskList tasksFiltered={tasksTomorrow} defaultDate={defaultDateTomorrow}>
                 <span slot="title">Tomorrow
                     <span class="badge bg-secondary text-dark">
                         {$tasks.countTomorrow}
@@ -79,7 +93,7 @@
             </TaskList>
         </div>
         <div class="col">
-            <TaskList tasksFiltered={tasksWeek}>
+            <TaskList tasksFiltered={tasksWeek} defaultDate={defaultDateWeek}>
                 <span slot="title">This Week
                     <span class="badge bg-secondary text-dark">
                         {$tasks.countWeek}
@@ -88,7 +102,7 @@
             </TaskList>
         </div>
     </div>
-    <TaskList tasksFiltered={tasksFuture}>
+    <TaskList tasksFiltered={tasksFuture} defaultDate={defaultDateFuture}>
         <span slot="title">In Future
             <span class="badge bg-secondary text-dark">
                 {$tasks.countFuture}

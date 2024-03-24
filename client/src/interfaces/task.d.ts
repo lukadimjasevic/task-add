@@ -2,6 +2,7 @@ declare module "taskadd/task" {
     export interface TasksFrame {
         tasks: Task[];
         countActive: number;
+        countUpcoming: number;
         countToday: number;
         countTomorrow: number;
         countWeek: number;

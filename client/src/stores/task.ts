@@ -5,6 +5,7 @@ import type { TasksFrame, Task, TaskCategory } from "taskadd/task";
 const defaultValues: TasksFrame = {
     tasks: [],
     countActive: 0,
+    countUpcoming: 0,
     countToday: 0,
     countTomorrow: 0,
     countWeek: 0,
@@ -49,8 +50,14 @@ const createTasks = (): TaskStore => {
         return dataTask;
     }
 
-    const countActive = (tasks: Task[]) => {
+    const countActive = (tasks: Task[]): number => {
         return tasks.filter((task: Task) => task.status.name.toLowerCase() === "active").length;
+    }
+
+    const countUpcoming = (tasks: Task[]): number => {
+        const todayStart = new Date();
+        todayStart.setHours(0, 0, 0, 0);
+        return tasks.filter((task: Task) => task.deadlineDate.getTime() >= todayStart.getTime()).length;
     }
 
     return {
@@ -67,6 +74,7 @@ const createTasks = (): TaskStore => {
                 ...defaultValues,
                 tasks: dataTasks,
                 countActive: countActive(dataTasks),
+                countUpcoming: countUpcoming(dataTasks),
             });
         },
         toggleSelectedTask: (task: Task) => {

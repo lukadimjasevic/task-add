@@ -8,6 +8,7 @@
     import TaskActionAdd from "./TaskActionAdd.svelte";
 
     export let tasksFiltered: Task[];
+    export let defaultDate: Date;
 
     let checked: boolean = false;
 </script>
@@ -22,7 +23,7 @@
         </div>
     </div>
     <div slot="body">
-        <TaskActionAdd />
+        <TaskActionAdd {defaultDate} />
 
         <div class="table-tasks">
             <table class="table table-hover">

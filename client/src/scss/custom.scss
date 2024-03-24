@@ -5,12 +5,14 @@
 $primary: $gray-100;
 $secondary: $gray-200;
 $tertiary: $gray-300;
+$quaternary: $gray-400;
 
 // Merge with existing $theme-colors map
 $theme-colors: map-merge($theme-colors, (
     "primary": $primary,
     "secondary": $secondary,
     "tertiary": $tertiary,
+    "quaternary": $quaternary,
 ));
 
 // Set changes
