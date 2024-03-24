@@ -1,6 +1,6 @@
 <script lang="ts">
     import { auth } from "../../../stores/auth";
-    import Sidebar from "../Sidebar.svelte";
+    import { Sidebar } from "../sidebars";
     export let className: string = "";
 </script>
 

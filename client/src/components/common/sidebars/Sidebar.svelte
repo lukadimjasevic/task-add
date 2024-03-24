@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { tasks } from "../../stores/task";
-    import { sidebar } from "../../stores/sidebar";
+    import { tasks } from "../../../stores/task";
+    import { sidebar } from "../../../stores/sidebar";
     import { slide } from "svelte/transition";
-    import { ButtonMenu, ButtonClose } from "./buttons";
-    import { security, taskUpcoming, signout } from "../../pages/pages";
+    import { ButtonMenu, ButtonClose } from "../buttons";
+    import { security, taskUpcoming, signout } from "../../../pages/pages";
     import SidebarSection from "./SidebarSection.svelte";
     import SidebarSectionItem from "./SidebarSectionItem.svelte";
 </script>

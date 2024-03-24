@@ -5,6 +5,13 @@
     import { FormCard, FormFloating, FormInput, FormTextarea, FormSubmit } from "../common/forms";
     import Modal from "../common/Modal.svelte";
 
+    const getDefaultDate = (date: Date): string => {
+        const year = date.getFullYear().toString();
+        const month = (date.getMonth() + 1).toString().padStart(2, "0");
+        const day = date.getDate().toString().padStart(2, "0");
+        return `${year}-${month}-${day}`;
+    }
+
     const handleEdit = async() => {
         const response = await api.task.update(task.id, taskName, taskDescription, taskDeadlineDate);
         if (response.statusCode === 200) {
@@ -21,7 +28,7 @@
 
     let taskName: string = task.name;
     let taskDescription: string = task.description;
-    let taskDeadlineDateStr: string = task.deadlineDate.toISOString().split("T")[0];
+    let taskDeadlineDateStr: string = getDefaultDate(task.deadlineDate);
     $: taskDeadlineDate = new Date(taskDeadlineDateStr);
 </script>
 

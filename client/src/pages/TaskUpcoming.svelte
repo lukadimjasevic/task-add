@@ -67,8 +67,8 @@
     }
 
     const dayTime = 24 * 3600 * 1000;
-    $: defaultDateToday = getDefaultDate(new Date());
-    $: defaultDateTomorrow = getDefaultDate(new Date(Date.now() + dayTime));
+    const defaultDateToday = getDefaultDate(new Date());
+    const defaultDateTomorrow = getDefaultDate(new Date(Date.now() + dayTime));
     const defaultDateWeek: Date = getDefaultDate(new Date(Date.now() + 2 * dayTime));
     const defaultDateFuture: Date = getDefaultDate(new Date(Date.now() + 7 * dayTime));
 </script>
