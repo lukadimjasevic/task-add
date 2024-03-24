@@ -82,7 +82,7 @@
             </span>
         </span>
     </TaskList>
-    <div class="row g-0 gap-3 ">
+    <div class="row g-0 gap-3">
         <div class="col">
             <TaskList tasksFiltered={tasksTomorrow} defaultDate={defaultDateTomorrow}>
                 <span slot="title">Tomorrow
