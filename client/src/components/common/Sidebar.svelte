@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { tasks } from "../../stores/task";
     import { sidebar } from "../../stores/sidebar";
     import { slide } from "svelte/transition";
     import { ButtonMenu, ButtonClose } from "./buttons";
@@ -22,6 +23,7 @@
                     <SidebarSectionItem on:click={taskUpcoming.beforeNavigate}>
                         <i slot="icon" class="bi bi-chevron-double-right"></i>
                         <span slot="label">{taskUpcoming.name}</span>
+                        <span slot="count">{$tasks.countUpcoming}</span>
                     </SidebarSectionItem>
                     <SidebarSectionItem>
                         <i slot="icon" class="bi bi-list-check"></i>
