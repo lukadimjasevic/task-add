@@ -3,7 +3,7 @@
     import { sidebar } from "../../../stores/sidebar";
     import { slide } from "svelte/transition";
     import { ButtonMenu, ButtonClose } from "../buttons";
-    import { security, taskUpcoming, signout } from "../../../pages/pages";
+    import { taskUpcoming, settings, signout } from "../../../pages/pages";
     import SidebarSection from "./SidebarSection.svelte";
     import SidebarSectionItem from "./SidebarSectionItem.svelte";
 </script>
@@ -48,14 +48,13 @@
 
         <div>
             <SidebarSection>
-                <!-- TODO: Merge security and profile pages to settings page -->
-                <SidebarSectionItem on:click={security.beforeNavigate}>
+                <SidebarSectionItem on:click={settings.beforeNavigate}>
                     <i slot="icon" class="bi bi-sliders2"></i>
-                    <span slot="label">Settings</span>
+                    <span slot="label">{settings.name}</span>
                 </SidebarSectionItem>
                 <SidebarSectionItem on:click={signout.beforeNavigate}>
                     <i slot="icon" class="bi bi-box-arrow-right"></i>
-                    <span slot="label">Sign out</span>
+                    <span slot="label">{signout.name}</span>
                 </SidebarSectionItem>
             </SidebarSection>
         </div>

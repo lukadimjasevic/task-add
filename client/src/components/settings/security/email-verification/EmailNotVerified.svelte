@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { user } from "../../../stores/user";
-    import { FormSwitch } from "../../common/forms";
+    import { user } from "../../../../stores/user";
+    import { FormSwitch } from "../../../common/forms";
 </script>
 
 <div class="alert alert-info my-3" role="alert">

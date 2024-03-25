@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { userOTP } from "../../../stores/user-otp";
-    import { api } from "../../../api";
-    import Modal from "../../common/Modal.svelte";
+    import { userOTP } from "../../../../stores/user-otp";
+    import { api } from "../../../../api";
+    import Modal from "../../../common/Modal.svelte";
 
     let showModal: boolean = false;
 

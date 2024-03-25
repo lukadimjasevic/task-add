@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { user } from "../stores/user";
-    import { api } from "../api";
-    import Card from "../components/common/Card.svelte";
-    import { FormCard, FormFloating, FormInput, FormFile, FormSubmit } from "../components/common/forms"
+    import { user } from "../../../stores/user";
+    import { api } from "../../../api";
+    import Card from "../../common/Card.svelte";
+    import { FormCard, FormFloating, FormInput, FormFile, FormSubmit } from "../../common/forms"
 
     let avatar: File | null = null;
     let avatarUrl: string | null = $user.avatar ? `data:image/jpg;base64,${$user.avatar}` : null;

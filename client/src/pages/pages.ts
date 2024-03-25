@@ -6,9 +6,8 @@ import Home from "./Home.svelte";
 import Signup from "./Signup.svelte";
 import Signin from "./Signin.svelte";
 import Signout from "./Signout.svelte";
-import Profile from "./Profile.svelte";
-import Security from "./Security.svelte";
 import TaskUpcoming from "./TaskUpcoming.svelte";
+import Settings from "./Settings.svelte";
 import type { Page } from "taskadd/page";
 
 export const home: Page = {
@@ -51,30 +50,6 @@ export const signout: Page = {
     }
 }
 
-export const profile: Page = {
-    name: "Profile",
-    path: "/profile",
-    component: Profile,
-    protected: true,
-    beforeNavigate: async() => {
-        const response = await api.user.get();
-        user.setValues(response.data);
-        navigate(profile.path);
-    },
-}
-
-export const security: Page = {
-    name: "Security",
-    path: "/security",
-    component: Security,
-    protected: true,
-    beforeNavigate: async() => {
-        const responseUser = await api.user.get();
-        user.setValues(responseUser.data);
-        navigate(security.path);
-    },
-}
-
 export const taskUpcoming: Page = {
     name: "Upcoming",
     path: "/task-upcoming",
@@ -88,12 +63,23 @@ export const taskUpcoming: Page = {
     }
 }
 
+export const settings: Page = {
+    name: "Settings",
+    path: "/settings",
+    component: Settings,
+    protected: true,
+    beforeNavigate: async() => {
+        const responseUser = await api.user.get();
+        user.setValues(responseUser.data);
+        navigate(settings.path);
+    }
+}
+
 export const pages = [
     home,
     signup,
     signin,
     signout,
-    profile,
-    security,
     taskUpcoming,
+    settings,
 ];

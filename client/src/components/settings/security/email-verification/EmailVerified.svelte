@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { user } from "../../../stores/user";
-    import { FormSwitch } from "../../common/forms";
+    import { user } from "../../../../stores/user";
+    import { FormSwitch } from "../../../common/forms";
 </script>
 
 <FormSwitch id="verified" checked={$user.verified} disabled={true} className="my-4">

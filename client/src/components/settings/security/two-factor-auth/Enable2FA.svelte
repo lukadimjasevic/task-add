@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { user } from "../../../stores/user";
-    import { userOTP } from "../../../stores/user-otp";
-    import { api } from "../../../api";
-    import { FormCard, FormSubmit } from "../../common/forms";
-    import Modal from "../../common/Modal.svelte";
-    import OTPInput from "../OTPInput.svelte";
+    import { user } from "../../../../stores/user";
+    import { userOTP } from "../../../../stores/user-otp";
+    import { api } from "../../../../api";
+    import { FormCard, FormSubmit } from "../../../common/forms";
+    import Modal from "../../../common/Modal.svelte";
+    import OTPInput from "../../../settings/security/OTPInput.svelte";
 
     let showModal: boolean = false;
 
