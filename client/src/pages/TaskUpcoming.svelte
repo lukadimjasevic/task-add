@@ -1,62 +1,11 @@
 <script lang="ts">
-    import { tasks } from "../stores/task";
-    import { onMount } from "svelte";
-    import type { Task } from "taskadd/task";
-    import TaskList from "../components/task-upcoming/TaskList.svelte";
+    import { tasks } from "@stores/task";
+    import TaskList from "@components/task-upcoming/TaskList.svelte";
 
-    const computeTasksToday = (tasksAll: Task[]): Task[] => {
-        const todayStart = new Date();
-        const todayEnd = new Date();
-        todayStart.setHours(0, 0, 0, 0);
-        todayEnd.setHours(23, 59, 59, 999);
-        const tasksToday = tasksAll.filter((task: Task) => 
-            task.deadlineDate.getTime() >= todayStart.getTime() &&
-            task.deadlineDate.getTime() < todayEnd.getTime()
-        );
-        tasks.setCountToday(tasksToday.length);
-        return tasksToday;
-    }
-
-    const computeTasksTomorrow = (tasksAll: Task[]): Task[] => {
-        const tomorrowStart = new Date();
-        const tomorrowEnd = new Date();
-        tomorrowStart.setHours(24, 0, 0, 0);
-        tomorrowEnd.setHours(47, 59, 59, 999);
-        const tasksTomorrow = tasksAll.filter((task: Task) => 
-            task.deadlineDate.getTime() >= tomorrowStart.getTime() &&
-            task.deadlineDate.getTime() < tomorrowEnd.getTime()
-        );
-        tasks.setCountTomorrow(tasksTomorrow.length);
-        return tasksTomorrow;
-    }
-
-    const computeTasksWeek = (tasksAll: Task[]): Task[] => {
-        const weekStart = new Date();
-        const weekEnd = new Date();
-        weekStart.setHours(48, 0, 0, 0);
-        weekEnd.setHours(167, 59, 59, 999);
-        const tasksWeek = tasksAll.filter((task: Task) => 
-            task.deadlineDate.getTime() >= weekStart.getTime() &&
-            task.deadlineDate.getTime() < weekEnd.getTime()
-        );
-        tasks.setCountWeek(tasksWeek.length);
-        return tasksWeek;
-    }
-
-    const computeTasksFuture = (tasksAll: Task[]): Task[] => {
-        const futureStart = new Date();
-        futureStart.setHours(168, 0, 0, 0);
-        const tasksFuture = tasksAll.filter((task: Task) => 
-            task.deadlineDate.getTime() >= futureStart.getTime()
-        );
-        tasks.setCountFuture(tasksFuture.length);
-        return tasksFuture;
-    }
-
-    $: tasksToday = computeTasksToday($tasks.tasks);
-    $: tasksTomorrow = computeTasksTomorrow($tasks.tasks);
-    $: tasksWeek = computeTasksWeek($tasks.tasks);
-    $: tasksFuture = computeTasksFuture($tasks.tasks);
+    $: tasksToday = tasks.computeTasksToday($tasks.tasks);
+    $: tasksTomorrow = tasks.computeTasksTomorrow($tasks.tasks);
+    $: tasksWeek = tasks.computeTasksWeek($tasks.tasks);
+    $: tasksFuture = tasks.computeTasksFuture($tasks.tasks);
 
     const getDefaultDate = (date: Date) => {
         const now = new Date();

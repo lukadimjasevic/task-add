@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { auth } from "../../../stores/auth";
-    import { Sidebar } from "../sidebars";
+    import { auth } from "@stores/auth";
+    import { Sidebar } from "@components/common/sidebars";
     export let className: string = "";
 </script>
 

@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { tasks } from "../../stores/task";
-    import { api } from "../../api";
+    import { tasks } from "@stores/task";
+    import { api } from "@api";
     import type { Task } from "taskadd/task";
-    import Modal from "../common/Modal.svelte";
+    import Modal from "@components/common/Modal.svelte";
 
     const findSelectedTasks = (tasks: Task[]): Task[] => {
         const tasksToDelete: Task[] = [];

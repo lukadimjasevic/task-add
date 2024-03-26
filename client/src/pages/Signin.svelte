@@ -1,12 +1,12 @@
 <script lang="ts">
-    import { auth } from "../stores/auth";
+    import { auth } from "@stores/auth";
     import { onMount } from "svelte";
     import { navigate } from "svelte-routing";
-    import { api } from "../api";
-    import { home, signup, taskUpcoming } from "./pages";
-    import { FormCard, FormInput, FormSubmit } from "../components/common/forms";
-    import HomeIntroduction from "../components/common/HomeIntroduction.svelte";
-    import Card from "../components/common/Card.svelte";
+    import { api } from "@api";
+    import { home, signup, taskUpcoming } from "@pages/pages";
+    import { FormCard, FormInput, FormSubmit } from "@components/common/forms";
+    import HomeIntroduction from "@components/common/HomeIntroduction.svelte";
+    import Card from "@components/common/Card.svelte";
 
     onMount(() => {
         if ($auth.cookie) {

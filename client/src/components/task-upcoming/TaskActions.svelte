@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { Dropdown, DropdownInner, DropdownItem } from "../common/dropdowns";
+    import { Dropdown, DropdownInner, DropdownItem } from "@components/common/dropdowns";
     import type { Task } from "taskadd/task";
-    import Separator from "../common/Separator.svelte";
+    import Separator from "@components/common/Separator.svelte";
     import TaskActionEdit from "./TaskActionEdit.svelte";
     import TaskActionDelete from "./TaskActionDelete.svelte";
 

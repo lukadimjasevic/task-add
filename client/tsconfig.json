@@ -21,6 +21,14 @@
             "./src/interfaces/user-otp",
             "./src/interfaces/task",
         ],
+        "paths": {
+            "@api": ["./src/api/index.ts"],
+            "@components/*": ["./src/components/*"],
+            "@interfaces/*": ["./src/interfaces/*"],
+            "@pages/*": ["./src/pages/*"],
+            "@scss/*": ["./src/scss/*"],
+            "@stores/*": ["./src/stores/*"],
+        }
     },
     "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte"],
     "references": [{ "path": "./tsconfig.node.json" }]

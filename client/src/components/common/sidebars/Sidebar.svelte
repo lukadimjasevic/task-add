@@ -1,11 +1,10 @@
 <script lang="ts">
-    import { tasks } from "../../../stores/task";
-    import { sidebar } from "../../../stores/sidebar";
+    import { tasks } from "@stores/task";
+    import { sidebar } from "@stores/sidebar";
     import { slide } from "svelte/transition";
-    import { ButtonMenu, ButtonClose } from "../buttons";
-    import { taskUpcoming, settings, signout } from "../../../pages/pages";
-    import SidebarSection from "./SidebarSection.svelte";
-    import SidebarSectionItem from "./SidebarSectionItem.svelte";
+    import { ButtonMenu, ButtonClose } from "@components/common/buttons";
+    import { taskUpcoming, taskToday, settings, signout } from "@pages/pages";
+    import { SidebarSection, SidebarSectionItem } from "@components/common/sidebars";
 </script>
 
 {#if $sidebar}
@@ -25,9 +24,10 @@
                         <span slot="label">{taskUpcoming.name}</span>
                         <span slot="count">{$tasks.countUpcoming}</span>
                     </SidebarSectionItem>
-                    <SidebarSectionItem>
+                    <SidebarSectionItem on:click={taskToday.beforeNavigate}>
                         <i slot="icon" class="bi bi-list-check"></i>
-                        <span slot="label">Today</span>
+                        <span slot="label">{taskToday.name}</span>
+                        <span slot="count">{$tasks.countToday}</span>
                     </SidebarSectionItem>
                     <SidebarSectionItem>
                         <i slot="icon" class="bi bi-calendar3"></i>

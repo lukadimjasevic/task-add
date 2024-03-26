@@ -1,19 +1,20 @@
 <script lang="ts">
-    import { tasks } from "../../stores/task";
+    import { tasks } from "@stores/task";
     import type { Task } from "taskadd/task";
-    import Card from "../common/Card.svelte";
+    import { FormCheckbox } from "@components/common/forms";
+    import Card from "@components/common/Card.svelte";
     import TaskListRow from "./TaskListRow.svelte";
-    import FormCheckbox from "../common/forms/FormCheckbox.svelte";
     import TaskActions from "./TaskActions.svelte";
     import TaskActionAdd from "./TaskActionAdd.svelte";
 
     export let tasksFiltered: Task[];
     export let defaultDate: Date;
+    export let useHeader: boolean = true;
 
     let checked: boolean = false;
 </script>
 
-<Card>
+<Card {useHeader}>
     <div slot="header" class="d-flex align-items-center justify-content-between task-list-header">
         <div>
             <h4 class="m-0"><slot name="title"/></h4>

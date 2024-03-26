@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { tasks } from "../../stores/task";
+    import { tasks } from "@stores/task";
     import type { Task } from "taskadd/task";
-    import FormCheckbox from "../common/forms/FormCheckbox.svelte";
+    import { FormCheckbox } from "@components/common/forms";
     import TaskActionEdit from "./TaskActionEdit.svelte";
     
     export let task: Task;

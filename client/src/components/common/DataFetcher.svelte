@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { user } from "../../stores/user";
-    import { tasks } from "../../stores/task";
+    import { user } from "@stores/user";
+    import { tasks } from "@stores/task";
     import { onMount } from "svelte";
-    import { api } from "../../api";
+    import { api } from "@api";
 
     let isLoaded: boolean = false;
     let errors: { errorName: string, message: string }[] = [];

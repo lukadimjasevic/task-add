@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { signup, signin } from "./pages";
-    import HomeIntroduction from "../components/common/HomeIntroduction.svelte";
-    import Card from "../components/common/Card.svelte";
+    import { signup, signin } from "@pages/pages";
+    import HomeIntroduction from "@components/common/HomeIntroduction.svelte";
+    import Card from "@components/common/Card.svelte";
 </script>
 
 <HomeIntroduction>

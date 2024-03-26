@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { user } from "../../../../stores/user";
+    import { user } from "@stores/user";
     import EmailNotVerified from "./EmailNotVerified.svelte";
     import EmailVerify from "./EmailVerify.svelte";
     import EmailVerified from "./EmailVerified.svelte";

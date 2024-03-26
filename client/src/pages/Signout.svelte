@@ -1,12 +1,11 @@
 <script lang="ts">
-    import { user } from "../stores/user";
-    import { userOTP } from "../stores/user-otp";
-    import { auth } from "../stores/auth";
-    import { api } from "../api";
+    import { user } from "@stores/user";
+    import { userOTP } from "@stores/user-otp";
+    import { auth } from "@stores/auth";
+    import { api } from "@api";
     import { navigate } from "svelte-routing";
-    import { home } from "../pages/pages";
-    import { LayoutPage } from "../components/common/layouts";
-    import Card from "../components/common/Card.svelte";
+    import { home } from "@pages/pages";
+    import Card from "@components/common/Card.svelte";
 
     const handleSignOut = async() => {
         const response = await api.auth.signout();

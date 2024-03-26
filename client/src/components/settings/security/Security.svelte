@@ -1,7 +1,7 @@
 <script lang="ts">
-    import Card from "../../common/Card.svelte";
-    import EmailVerification from "../security/email-verification";
-    import TwoFactorAuth from "../security/two-factor-auth";
+    import Card from "@components/common/Card.svelte";
+    import EmailVerification from "@components/settings/security/email-verification";
+    import TwoFactorAuth from "@components/settings/security/two-factor-auth";
 </script>
 
 <Card>

@@ -1,12 +1,13 @@
-import { user } from "../stores/user";
-import { tasks } from "../stores/task";
-import { api } from "../api";
+import { user } from "@stores/user";
+import { tasks } from "@stores/task";
+import { api } from "@api";
 import { navigate } from "svelte-routing";
 import Home from "./Home.svelte";
 import Signup from "./Signup.svelte";
 import Signin from "./Signin.svelte";
 import Signout from "./Signout.svelte";
 import TaskUpcoming from "./TaskUpcoming.svelte";
+import TaskToday from "./TaskToday.svelte";
 import Settings from "./Settings.svelte";
 import type { Page } from "taskadd/page";
 
@@ -63,6 +64,19 @@ export const taskUpcoming: Page = {
     }
 }
 
+export const taskToday: Page = {
+    name: "Today",
+    path: "/task-today",
+    component: TaskToday,
+    protected: true,
+    beforeNavigate: async() => {
+        const responseTasks = await api.task.getAll();
+        tasks.resetSelected();
+        tasks.setValues(responseTasks.data);
+        navigate(taskToday.path);
+    }
+}
+
 export const settings: Page = {
     name: "Settings",
     path: "/settings",
@@ -81,5 +95,6 @@ export const pages = [
     signin,
     signout,
     taskUpcoming,
+    taskToday,
     settings,
 ];

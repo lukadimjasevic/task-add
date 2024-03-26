@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { user } from "../../../../stores/user";
+    import { user } from "@stores/user";
     import Enable2FA from "./Enable2FA.svelte";
     import Edit2FA from "./Edit2FA.svelte";
     import Disable2FA from "./Disable2FA.svelte";

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { userOTP } from "../../../stores/user-otp";
+    import { userOTP } from "@stores/user-otp";
 
     interface OTPInput {
         name: string;

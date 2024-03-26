@@ -103,6 +103,51 @@ const createTasks = (): TaskStore => {
                 };
             });
         },
+        computeTasksToday: (tasks: Task[]) => {
+            const todayStart = new Date();
+            const todayEnd = new Date();
+            todayStart.setHours(0, 0, 0, 0);
+            todayEnd.setHours(23, 59, 59, 999);
+            const tasksToday = tasks.filter((task: Task) => 
+                task.deadlineDate.getTime() >= todayStart.getTime() &&
+                task.deadlineDate.getTime() < todayEnd.getTime()
+            );
+            update((current: TasksFrame) => current = { ...current, countToday: tasksToday.length });
+            return tasksToday;
+        },
+        computeTasksTomorrow: (tasks: Task[]) => {
+            const tomorrowStart = new Date();
+            const tomorrowEnd = new Date();
+            tomorrowStart.setHours(24, 0, 0, 0);
+            tomorrowEnd.setHours(47, 59, 59, 999);
+            const tasksTomorrow = tasks.filter((task: Task) => 
+                task.deadlineDate.getTime() >= tomorrowStart.getTime() &&
+                task.deadlineDate.getTime() < tomorrowEnd.getTime()
+            );
+            update((current: TasksFrame) => current = { ...current, countTomorrow: tasksTomorrow.length });
+            return tasksTomorrow;
+        },
+        computeTasksWeek: (tasks: Task[]) => {
+            const weekStart = new Date();
+            const weekEnd = new Date();
+            weekStart.setHours(48, 0, 0, 0);
+            weekEnd.setHours(167, 59, 59, 999);
+            const tasksWeek = tasks.filter((task: Task) => 
+                task.deadlineDate.getTime() >= weekStart.getTime() &&
+                task.deadlineDate.getTime() < weekEnd.getTime()
+            );
+            update((current: TasksFrame) => current = { ...current, countWeek: tasksWeek.length });
+            return tasksWeek;
+        },
+        computeTasksFuture: (tasks: Task[]) => {
+            const futureStart = new Date();
+            futureStart.setHours(168, 0, 0, 0);
+            const tasksFuture = tasks.filter((task: Task) => 
+                task.deadlineDate.getTime() >= futureStart.getTime()
+            );
+            update((current: TasksFrame) => current = { ...current, countFuture: tasksFuture.length });
+            return tasksFuture;
+        },
         resetSelected: () => {
             update((current: TasksFrame) => {
                 return {
@@ -112,18 +157,6 @@ const createTasks = (): TaskStore => {
                     }),
                 };
             });
-        },
-        setCountToday: (count: number) => {
-            update((current: TasksFrame) => current = { ...current, countToday: count });
-        },
-        setCountTomorrow: (count: number) => {
-            update((current: TasksFrame) => current = { ...current, countTomorrow: count });
-        },
-        setCountWeek: (count: number) => {
-            update((current: TasksFrame) => current = { ...current, countWeek: count });
-        },
-        setCountFuture: (count: number) => {
-            update((current: TasksFrame) => current = { ...current, countFuture: count });
         },
         reset: () => set(defaultValues),
     }

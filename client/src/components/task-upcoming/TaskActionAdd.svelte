@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { tasks } from "../../stores/task";
-    import { api } from "../../api";
-    import Modal from "../common/Modal.svelte";
-    import { FormCard, FormFloating, FormInput, FormTextarea, FormSubmit } from "../common/forms";
+    import { tasks } from "@stores/task";
+    import { api } from "@api";
+    import Modal from "@components/common/Modal.svelte";
+    import { FormCard, FormFloating, FormInput, FormTextarea, FormSubmit } from "@components/common/forms";
 
     export let defaultDate: Date = new Date(Date.now() + 60 * 1000);
     

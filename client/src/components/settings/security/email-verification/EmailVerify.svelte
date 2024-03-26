@@ -1,12 +1,12 @@
 <script lang="ts">
-    import { user } from "../../../../stores/user";
-    import { userOTP } from "../../../../stores/user-otp";
-    import { verificationCodeTimer } from "../../../../stores/countdown-timer";
-    import { api } from "../../../../api";
-    import { FormCard, FormSubmit } from "../../../common/forms";
-    import { ButtonLink } from "../../../common/buttons";
-    import Modal from "../../../common/Modal.svelte";
-    import OTPInput from "../../../settings/security/OTPInput.svelte";
+    import { user } from "@stores/user";
+    import { userOTP } from "@stores/user-otp";
+    import { verificationCodeTimer } from "@stores/countdown-timer";
+    import { api } from "@api";
+    import { FormCard, FormSubmit } from "@components/common/forms";
+    import { ButtonLink } from "@components/common/buttons";
+    import Modal from "@components/common/Modal.svelte";
+    import OTPInput from "@components/settings/security/OTPInput.svelte";
 
     let showModal: boolean = false;
 

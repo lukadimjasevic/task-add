@@ -1,10 +1,6 @@
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-
-const filePath = dirname(fileURLToPath(import.meta.url));
-const bootstrapPath = `${filePath}/node_modules/bootstrap`;
+import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -12,4 +8,14 @@ export default defineConfig({
     server: {
         port: 8081,
     },
-})
+    resolve: {
+        alias: {
+            "@api": path.resolve(__dirname, "src/api"),
+            "@components": path.resolve(__dirname, "src/components"),
+            "@interfaces": path.resolve(__dirname, "src/interfaces"),
+            "@pages": path.resolve(__dirname, "src/pages"),
+            "@scss": path.resolve(__dirname, "src/scss"),
+            "@stores": path.resolve(__dirname, "src/stores"),
+        },
+    },
+});

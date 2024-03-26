@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { tasks } from "../../stores/task";
-    import { api } from "../../api";
+    import { tasks } from "@stores/task";
+    import { api } from "@api";
     import type { Task } from "taskadd/task";
-    import { FormCard, FormFloating, FormInput, FormTextarea, FormSubmit } from "../common/forms";
-    import Modal from "../common/Modal.svelte";
+    import { FormCard, FormFloating, FormInput, FormTextarea, FormSubmit } from "@components/common/forms";
+    import Modal from "@components/common/Modal.svelte";
 
     const getDefaultDate = (date: Date): string => {
         const year = date.getFullYear().toString();
