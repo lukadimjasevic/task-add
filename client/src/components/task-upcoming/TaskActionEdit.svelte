@@ -1,16 +1,10 @@
 <script lang="ts">
     import { tasks } from "@stores/task";
     import { api } from "@api";
+    import { helpers } from "@helpers";
     import type { Task } from "taskadd/task";
     import { FormCard, FormFloating, FormInput, FormTextarea, FormSubmit } from "@components/common/forms";
     import Modal from "@components/common/Modal.svelte";
-
-    const getDefaultDate = (date: Date): string => {
-        const year = date.getFullYear().toString();
-        const month = (date.getMonth() + 1).toString().padStart(2, "0");
-        const day = date.getDate().toString().padStart(2, "0");
-        return `${year}-${month}-${day}`;
-    }
 
     const handleEdit = async() => {
         const response = await api.task.update(task.id, taskName, taskDescription, taskDeadlineDate);
@@ -28,7 +22,7 @@
 
     let taskName: string = task.name;
     let taskDescription: string = task.description;
-    let taskDeadlineDateStr: string = getDefaultDate(task.deadlineDate);
+    let taskDeadlineDateStr: string = helpers.date.getDateToString(task.deadlineDate);
     $: taskDeadlineDate = new Date(taskDeadlineDateStr);
 </script>
 

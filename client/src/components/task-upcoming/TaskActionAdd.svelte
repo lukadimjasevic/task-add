@@ -1,23 +1,11 @@
 <script lang="ts">
     import { tasks } from "@stores/task";
     import { api } from "@api";
+    import { helpers } from "@helpers";
     import Modal from "@components/common/Modal.svelte";
     import { FormCard, FormFloating, FormInput, FormTextarea, FormSubmit } from "@components/common/forms";
 
     export let defaultDate: Date = new Date(Date.now() + 60 * 1000);
-    
-    const getDefaultDate = (date: Date): string => {
-        const year = date.getFullYear().toString();
-        const month = (date.getMonth() + 1).toString().padStart(2, "0");
-        const day = date.getDate().toString().padStart(2, "0");
-        return `${year}-${month}-${day}`;
-    }
-
-    const getDefaultTime = (date: Date): string => {
-        const hours = date.getHours();
-        const minutes = date.getMinutes();
-        return `${hours}:${minutes}`;
-    }
 
     const computeDeadlineDate = (date: string, time: string) => {
         const deadlineDate = new Date(date);
@@ -31,8 +19,8 @@
 
     let taskName: string;
     let taskDescription: string;
-    let taskDeadlineDateStr: string = getDefaultDate(defaultDate);
-    let taskDeadlineDateTime: string = getDefaultTime(defaultDate); 
+    let taskDeadlineDateStr: string = helpers.date.getDateToString(defaultDate);
+    let taskDeadlineDateTime: string = helpers.date.getTimeToString(defaultDate); 
     $: taskDeadlineDate = computeDeadlineDate(taskDeadlineDateStr, taskDeadlineDateTime);
 
     const handleAdd = async() => {

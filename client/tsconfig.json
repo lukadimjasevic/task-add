@@ -24,6 +24,7 @@
         "paths": {
             "@api": ["./src/api/index.ts"],
             "@components/*": ["./src/components/*"],
+            "@helpers": ["./src/helpers/index.ts"],
             "@interfaces/*": ["./src/interfaces/*"],
             "@pages/*": ["./src/pages/*"],
             "@scss/*": ["./src/scss/*"],

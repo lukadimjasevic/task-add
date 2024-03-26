@@ -1,5 +1,6 @@
 <script lang="ts">
     import { tasks } from "@stores/task";
+    import { helpers } from "@helpers";
     import TaskList from "@components/task-upcoming/TaskList.svelte";
 
     $: tasksToday = tasks.computeTasksToday($tasks.tasks);
@@ -7,19 +8,11 @@
     $: tasksWeek = tasks.computeTasksWeek($tasks.tasks);
     $: tasksFuture = tasks.computeTasksFuture($tasks.tasks);
 
-    const getDefaultDate = (date: Date) => {
-        const now = new Date();
-        const hours = now.getHours();
-        const minutes = now.getMinutes();
-        date.setHours(hours, minutes, 0, 0);
-        return date;
-    }
-
     const dayTime = 24 * 3600 * 1000;
-    const defaultDateToday = getDefaultDate(new Date());
-    const defaultDateTomorrow = getDefaultDate(new Date(Date.now() + dayTime));
-    const defaultDateWeek: Date = getDefaultDate(new Date(Date.now() + 2 * dayTime));
-    const defaultDateFuture: Date = getDefaultDate(new Date(Date.now() + 7 * dayTime));
+    const defaultDateToday: Date = helpers.date.getDefaultDate();
+    const defaultDateTomorrow: Date = helpers.date.getDefaultDate(new Date(Date.now() + dayTime));
+    const defaultDateWeek: Date = helpers.date.getDefaultDate(new Date(Date.now() + 2 * dayTime));
+    const defaultDateFuture: Date = helpers.date.getDefaultDate(new Date(Date.now() + 7 * dayTime));
 </script>
 
 <h2>Upcoming <span class="badge bg-secondary text-dark">{$tasks.countUpcoming}</span></h2>
