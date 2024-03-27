@@ -3,7 +3,7 @@
     import { sidebar } from "@stores/sidebar";
     import { slide } from "svelte/transition";
     import { ButtonMenu, ButtonClose } from "@components/common/buttons";
-    import { taskUpcoming, taskToday, settings, signout } from "@pages/pages";
+    import { taskUpcoming, taskToday, taskCalendar, settings, signout } from "@pages/pages";
     import { SidebarSection, SidebarSectionItem } from "@components/common/sidebars";
 </script>
 
@@ -29,9 +29,9 @@
                         <span slot="label">{taskToday.name}</span>
                         <span slot="count">{$tasks.countToday}</span>
                     </SidebarSectionItem>
-                    <SidebarSectionItem>
+                    <SidebarSectionItem on:click={taskCalendar.beforeNavigate}>
                         <i slot="icon" class="bi bi-calendar3"></i>
-                        <span slot="label">Calendar</span>
+                        <span slot="label">{taskCalendar.name}</span>
                     </SidebarSectionItem>
                 </SidebarSection>
                 <hr class="hr" />

@@ -2,12 +2,13 @@ import { user } from "@stores/user";
 import { tasks } from "@stores/task";
 import { api } from "@api";
 import { navigate } from "svelte-routing";
-import Home from "./Home.svelte";
-import Signup from "./Signup.svelte";
-import Signin from "./Signin.svelte";
-import Signout from "./Signout.svelte";
-import TaskUpcoming from "./TaskUpcoming.svelte";
-import TaskToday from "./TaskToday.svelte";
+import Home from "@pages/Home.svelte";
+import Signup from "@pages/Signup.svelte";
+import Signin from "@pages/Signin.svelte";
+import Signout from "@pages/Signout.svelte";
+import TaskUpcoming from "@pages/TaskUpcoming.svelte";
+import TaskToday from "@pages/TaskToday.svelte";
+import TaskCalendar from "@pages/TaskCalendar.svelte";
 import Settings from "./Settings.svelte";
 import type { Page } from "taskadd/page";
 
@@ -77,6 +78,19 @@ export const taskToday: Page = {
     }
 }
 
+export const taskCalendar: Page = {
+    name: "Calendar",
+    path: "/task-calendar",
+    component: TaskCalendar,
+    protected: true,
+    beforeNavigate: async() => {
+        const responseTasks = await api.task.getAll();
+        tasks.resetSelected();
+        tasks.setValues(responseTasks.data);
+        navigate(taskCalendar.path);
+    }
+}
+
 export const settings: Page = {
     name: "Settings",
     path: "/settings",
@@ -96,5 +110,6 @@ export const pages = [
     signout,
     taskUpcoming,
     taskToday,
+    taskCalendar,
     settings,
 ];
