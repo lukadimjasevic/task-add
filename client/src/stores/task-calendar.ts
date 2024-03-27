@@ -1,43 +1,39 @@
 import { writable, get } from "svelte/store";
 import type { TaskCalendarStore } from "taskadd/store";
-import type { TaskCalendar, TaskCalendarOffset, TaskCalendarDates } from "taskadd/task-calendar";
+import type { TaskCalendar, TaskCalendarOffset } from "taskadd/task-calendar";
 import { helpers } from "@helpers";
 
 const defaultDateDay = new Date();
-const defaultDateWeek = new Date(defaultDateDay.getFullYear(), defaultDateDay.getMonth(), defaultDateDay.getDate() - defaultDateDay.getDay() + 1);
-const defaultDateMonth = new Date(new Date().setDate(1));
+defaultDateDay.setHours(0, 0, 0, 0);
 
 const defaultValues: TaskCalendar = {
     selector: "day",
-    dateDay: defaultDateDay,
-    dateWeek: defaultDateWeek,
-    dateMonth: defaultDateMonth,
-    labelDay: helpers.date.getCalendarLabel(defaultDateDay, "day"),
-    labelWeek: helpers.date.getCalendarLabel(defaultDateWeek, "week"),
-    labelMonth: helpers.date.getCalendarLabel(defaultDateMonth, "month"),
+    date: defaultDateDay,
+    label: helpers.date.getCalendarLabel(defaultDateDay, "day"),
 };
 
 const createCalendar = (): TaskCalendarStore => {
     const { subscribe, set, update } = writable(defaultValues);
 
-    const computeSelectorDate = (selector: TaskCalendar["selector"], { dayOffset = 0, weekOffset = 0, monthOffset = 0}: TaskCalendarOffset = {}): TaskCalendarDates => {
+    const computeSelectorDate = (selector: TaskCalendar["selector"], { dayOffset = 0, weekOffset = 0, monthOffset = 0}: TaskCalendarOffset = {}): Date => {
         const calendarData: TaskCalendar = get(calendar);
-        let { dateDay, dateWeek, dateMonth } = calendarData;
+        let { date } = calendarData;
 
         if (selector === "day") {
-            dateDay.setDate(dateDay.getDate() + dayOffset);
+            date.setDate(date.getDate() + dayOffset);
         }
 
         if (selector === "week") {
-            const currentWeek = dateWeek.getDate() - dateWeek.getDay() + 1;
-            dateWeek.setDate(currentWeek + 7 * weekOffset);
+            const currentWeek = date.getDate() - date.getDay() + 1;
+            date.setDate(currentWeek + 7 * weekOffset);
         }
 
         if (selector === "month") {
-            dateMonth.setMonth(dateMonth.getMonth() + monthOffset);
+            date.setMonth(date.getMonth() + monthOffset);
+            date.setDate(1);
         }
 
-        return { dateDay, dateWeek, dateMonth };
+        return date;
     }
 
     return {
@@ -45,37 +41,20 @@ const createCalendar = (): TaskCalendarStore => {
         set,
         update,
         setValues: (selector: TaskCalendar["selector"]) => {
-            let { dateDay, dateWeek, dateMonth } = computeSelectorDate(selector);
+            const date = computeSelectorDate(selector);
             set({
                 selector,
-                dateDay,
-                dateWeek,
-                dateMonth,
-                labelDay: helpers.date.getCalendarLabel(dateDay, "day"),
-                labelWeek: helpers.date.getCalendarLabel(dateWeek, "week"),
-                labelMonth: helpers.date.getCalendarLabel(dateMonth, "month"),
+                date,
+                label: helpers.date.getCalendarLabel(date, selector)
             });
         },
         toggleDate: (offset: number) => {
-            let { selector, dateDay, dateWeek, dateMonth }: TaskCalendar = get(calendar);
-            let computedDates: TaskCalendarDates = { dateDay: defaultDateDay, dateWeek: defaultDateWeek, dateMonth: defaultDateMonth };
-            if (selector === "day") {
-                computedDates = computeSelectorDate(selector, { dayOffset: offset });
-            }
-            if (selector === "week") {
-                computedDates = computeSelectorDate(selector, { weekOffset: offset });
-            }
-            if (selector === "month") {
-                computedDates = computeSelectorDate(selector, { monthOffset: offset });
-            }
+        const { selector }: TaskCalendar = get(calendar);
+            const date: Date = computeSelectorDate(selector, { dayOffset: offset, weekOffset: offset, monthOffset: offset });;
             update((current: TaskCalendar) => current = {
                 ...current,
-                dateDay: computedDates.dateDay,
-                dateWeek: computedDates.dateWeek,
-                dateMonth: computedDates.dateMonth,
-                labelDay: helpers.date.getCalendarLabel(dateDay, "day"),
-                labelWeek: helpers.date.getCalendarLabel(dateWeek, "week"),
-                labelMonth: helpers.date.getCalendarLabel(dateMonth, "month"),
+                date,
+                label: helpers.date.getCalendarLabel(date, selector),
             });
         },
         reset: () => set(defaultValues),
