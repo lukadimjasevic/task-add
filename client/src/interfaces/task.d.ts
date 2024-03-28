@@ -40,7 +40,27 @@ declare module "taskadd/task" {
         checked: boolean;
     }
 
-    export interface GroupTasks {
-        [key: string]: Task[];
+    export interface GroupDayTasks {
+        [key: string]: {
+            date: Date;
+            tasks: Task[];
+        };
+    }
+
+    export interface GroupWeekTasks {
+        [key: string]: {
+            date: Date;
+            days: TaskDays;
+        };
+    }
+
+    export interface TaskDays {
+        mon: Task[];
+        tue: Task[];
+        wed: Task[];
+        thu: Task[];
+        fri: Task[];
+        sat: Task[];
+        sun: Task[];
     }
 }

@@ -30,6 +30,10 @@ const getHourToString = (date: Date): string => {
     return date.toLocaleString("default", { hour: "2-digit", minute: "2-digit" });
 }
 
+const getShortWeekday = (date: Date): string => {
+    return date.toLocaleString("default", { weekday: "short" }).toLowerCase();
+}
+
 const getCalendarLabel = (date: Date, selector: TaskCalendar["selector"]): string => {
     if (selector === "day") {
         return date.toLocaleString("default", { day: "2-digit", month: "long", year: "numeric" });
@@ -56,5 +60,6 @@ export const date = {
     getTimeToString,
     getDayToString,
     getHourToString,
+    getShortWeekday,
     getCalendarLabel,
 };
