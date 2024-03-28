@@ -10,7 +10,6 @@
     const filterTasksByDate = (tasksAll: Task[], dayStart: Date): Task[] => {
         let dayEnd = new Date(dayStart.getTime());
         dayEnd.setHours(23, 59, 59, 999);
-        console.log(dayStart, dayEnd);
         return tasksAll.filter((task: Task) => 
             task.deadlineDate.getTime() >= dayStart.getTime() &&
             task.deadlineDate.getTime() <= dayEnd.getTime()
