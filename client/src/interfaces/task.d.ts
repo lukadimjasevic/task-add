@@ -39,4 +39,8 @@ declare module "taskadd/task" {
         id: number;
         checked: boolean;
     }
+
+    export interface GroupTasks {
+        [key: string]: Task[];
+    }
 }

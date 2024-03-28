@@ -17,6 +17,6 @@
 
 <style>
     .layout-page {
-        min-height: 100vh;
+        min-height: 100vh !important;
     }
 </style>

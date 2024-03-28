@@ -21,6 +21,15 @@ const getTimeToString = (date: Date): string => {
     return `${hours}:${minutes}`;
 }
 
+const getDayToString = (date: Date): string => {
+    return date.toLocaleString("default", { weekday: "long" });
+}
+
+const getHourToString = (date: Date): string => {
+    date.setMinutes(0);
+    return date.toLocaleString("default", { hour: "2-digit", minute: "2-digit" });
+}
+
 const getCalendarLabel = (date: Date, selector: TaskCalendar["selector"]): string => {
     if (selector === "day") {
         return date.toLocaleString("default", { day: "2-digit", month: "long", year: "numeric" });
@@ -45,5 +54,7 @@ export const date = {
     getDefaultDate,
     getDateToString,
     getTimeToString,
+    getDayToString,
+    getHourToString,
     getCalendarLabel,
 };
