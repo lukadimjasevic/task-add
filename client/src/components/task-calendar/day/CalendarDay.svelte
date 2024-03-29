@@ -6,18 +6,9 @@
     import CalendarTable from "@components/task-calendar/CalendarTable.svelte";
     import CalendarHourTasks from "@components/task-calendar/CalendarHourTasks.svelte";
     import CalendarWeekdayTasks from "@components/task-calendar/CalendarWeekdayTasks.svelte";
-    
-    const filterTasksByDate = (tasksAll: Task[], dayStart: Date): Task[] => {
-        let dayEnd = new Date(dayStart.getTime());
-        dayEnd.setHours(23, 59, 59, 999);
-        return tasksAll.filter((task: Task) => 
-            task.deadlineDate.getTime() >= dayStart.getTime() &&
-            task.deadlineDate.getTime() <= dayEnd.getTime()
-        );
-    }
 
     const groupTasksByDate = (tasksAll: Task[], dayStart: Date): GroupDayTasks => {
-        const dayTasks = filterTasksByDate(tasksAll, dayStart);
+        const dayTasks = helpers.task.filterTasksByDate(tasksAll, dayStart);
         const grouped: GroupDayTasks = {};
         dayTasks.forEach((task: Task) => {
             const hour = task.deadlineDate.getHours().toString();
@@ -36,9 +27,9 @@
 </script>
 
 <CalendarTable {dayTasks} view="day">
-    <tr slot="thead">
+    <tr slot="thead" class="text-uppercase">
         <th/>
-        <th>{helpers.date.getDayToString($calendar.date)}</th>
+        <th>{helpers.date.getShortWeekday($calendar.date)}</th>
     </tr>
     {#each Object.entries(dayTasks) as [hour, { date, tasks }] (hour)}
         <tr>

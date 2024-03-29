@@ -18,22 +18,26 @@ const createCalendar = (): TaskCalendarStore => {
     const computeSelectorDate = (selector: TaskCalendar["selector"], { dayOffset = 0, weekOffset = 0, monthOffset = 0}: TaskCalendarOffset = {}): Date => {
         const calendarData: TaskCalendar = get(calendar);
         let { date } = calendarData;
+        const computedDate = new Date(date);
 
         if (selector === "day") {
-            date.setDate(date.getDate() + dayOffset);
+            computedDate.setDate(computedDate.getDate() + dayOffset);
+            return computedDate;
         }
 
         if (selector === "week") {
-            const currentWeek = date.getDate() - date.getDay() + 1;
-            date.setDate(currentWeek + 7 * weekOffset);
+            const currentWeek = computedDate.getDate() - computedDate.getDay() + 1;
+            computedDate.setDate(currentWeek + 7 * weekOffset);
+            return computedDate;
         }
 
         if (selector === "month") {
-            date.setMonth(date.getMonth() + monthOffset);
-            date.setDate(1);
+            computedDate.setMonth(computedDate.getMonth() + monthOffset);
+            computedDate.setDate(1);
+            return computedDate;
         }
 
-        return date;
+        return computedDate;
     }
 
     return {
@@ -49,7 +53,7 @@ const createCalendar = (): TaskCalendarStore => {
             });
         },
         toggleDate: (offset: number) => {
-        const { selector }: TaskCalendar = get(calendar);
+            const { selector }: TaskCalendar = get(calendar);
             const date: Date = computeSelectorDate(selector, { dayOffset: offset, weekOffset: offset, monthOffset: offset });;
             update((current: TaskCalendar) => current = {
                 ...current,

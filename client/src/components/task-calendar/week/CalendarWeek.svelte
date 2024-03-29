@@ -7,18 +7,8 @@
     import CalendarHourTasks from "@components/task-calendar/CalendarHourTasks.svelte";
     import CalendarWeekdayTasks from "@components/task-calendar/CalendarWeekdayTasks.svelte";
 
-    const filterTasksByWeek = (tasksAll: Task[], weekStart: Date): Task[] => {
-        let weekEnd = new Date(weekStart.getTime());
-        weekEnd.setDate(weekEnd.getDate() + 6);
-        weekEnd.setHours(23, 59, 59, 999);
-        return tasksAll.filter((task: Task) => 
-            task.deadlineDate.getTime() >= weekStart.getTime() &&
-            task.deadlineDate.getTime() <= weekEnd.getTime()
-        );
-    }
-
     const groupTasksByWeekday = (tasksAll: Task[], weekStart: Date): GroupWeekTasks => {
-        const weekTasks = filterTasksByWeek(tasksAll, weekStart);
+        const weekTasks = helpers.task.filterTasksByWeek(tasksAll, weekStart);
         // Sort week tasks by hours
         weekTasks.sort((a: Task, b: Task) => a.deadlineDate.getHours() - b.deadlineDate.getHours());
         const grouped: GroupWeekTasks = {};
@@ -48,15 +38,15 @@
 </script>
 
 <CalendarTable {weekTasks} view="week">
-    <tr slot="thead">
+    <tr slot="thead" class="text-uppercase">
         <th/>
-        <th>Monday</th>
-        <th>Tuesday</th>
-        <th>Wednesday</th>
-        <th>Thursday</th>
-        <th>Friday</th>
-        <th>Saturday</th>
-        <th>Sunday</th>
+        <th>Mon</th>
+        <th>Tue</th>
+        <th>Wed</th>
+        <th>Thu</th>
+        <th>Fri</th>
+        <th>Sat</th>
+        <th>Sun</th>
     </tr>
     {#each Object.entries(weekTasks) as [hour, { date, days }] (hour)}
         <tr>

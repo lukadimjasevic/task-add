@@ -63,4 +63,19 @@ declare module "taskadd/task" {
         sat: Task[];
         sun: Task[];
     }
+
+    export interface MonthView {
+        mon: MonthWeekdayView | null;
+        tue: MonthWeekdayView | null;
+        wed: MonthWeekdayView | null;
+        thu: MonthWeekdayView | null;
+        fri: MonthWeekdayView | null;
+        sat: MonthWeekdayView | null;
+        sun: MonthWeekdayView | null;
+    }
+
+    export interface MonthWeekdayView {
+        date: Date;
+        tasks: Task[];
+    }
 }

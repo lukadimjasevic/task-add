@@ -4,6 +4,7 @@
     import CalendarPreviousNext from "@components/task-calendar/CalendarPreviousNext.svelte";
     import CalendarDay from "@components/task-calendar/day/CalendarDay.svelte";
     import CalendarWeek from "@components/task-calendar/week/CalendarWeek.svelte";
+    import CalendarMonth from "@components/task-calendar/month/CalendarMonth.svelte";
 </script>
 
 <h2>{$calendar.label}</h2>
@@ -17,4 +18,7 @@
 {/if}
 {#if $calendar.selector === "week"}
     <CalendarWeek/>
+{/if}
+{#if $calendar.selector === "month"}
+    <CalendarMonth/>
 {/if}

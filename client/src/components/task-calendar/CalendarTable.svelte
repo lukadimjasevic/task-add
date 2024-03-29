@@ -3,11 +3,11 @@
 
     export let dayTasks: GroupDayTasks = {};
     export let weekTasks: GroupWeekTasks = {};
-    export let view: "day" | "week";
+    export let view: "day" | "week" | "month";
 </script>
 
-<div>
-    <table class="table table-hover">
+<div class="calendar-table">
+    <table class="table table-hover" class:table-fixed={view !== "day"}>
         <thead>
             <slot name="thead"/>
         </thead>
@@ -37,6 +37,15 @@
 </div>
 
 <style>
+    .calendar-table {
+        overflow-x: auto;
+    }
+
+    .table-fixed {
+        table-layout: fixed;
+        min-width: 30rem;
+    }
+
     .td-hour {
         width: 7rem;
     }
