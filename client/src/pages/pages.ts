@@ -1,11 +1,15 @@
-import { user } from "../stores/user";
-import { api } from "../api";
+import { user } from "@stores/user";
+import { tasks } from "@stores/task";
+import { api } from "@api";
 import { navigate } from "svelte-routing";
-import Home from "./Home.svelte";
-import Signup from "./Signup.svelte";
-import Signin from "./Signin.svelte";
-import Profile from "./Profile.svelte";
-import Security from "./Security.svelte";
+import Home from "@pages/Home.svelte";
+import Signup from "@pages/Signup.svelte";
+import Signin from "@pages/Signin.svelte";
+import Signout from "@pages/Signout.svelte";
+import TaskUpcoming from "@pages/TaskUpcoming.svelte";
+import TaskToday from "@pages/TaskToday.svelte";
+import TaskCalendar from "@pages/TaskCalendar.svelte";
+import Settings from "./Settings.svelte";
 import type { Page } from "taskadd/page";
 
 export const home: Page = {
@@ -38,34 +42,74 @@ export const signin: Page = {
     },
 };
 
-export const profile: Page = {
-    name: "Profile",
-    path: "/profile",
-    component: Profile,
+export const signout: Page = {
+    name: "Sign out",
+    path: "/signout",
+    component: Signout,
     protected: true,
     beforeNavigate: async() => {
-        const response = await api.user.get();
-        user.setValues(response.data);
-        navigate(profile.path);
-    },
+        navigate(signout.path);
+    }
 }
 
-export const security: Page = {
-    name: "Security",
-    path: "/security",
-    component: Security,
+export const taskUpcoming: Page = {
+    name: "Upcoming",
+    path: "/task-upcoming",
+    component: TaskUpcoming,
+    protected: true,
+    beforeNavigate: async() => {
+        const responseTasks = await api.task.getAll();
+        tasks.resetSelected();
+        tasks.setValues(responseTasks.data);
+        navigate(taskUpcoming.path);
+    }
+}
+
+export const taskToday: Page = {
+    name: "Today",
+    path: "/task-today",
+    component: TaskToday,
+    protected: true,
+    beforeNavigate: async() => {
+        const responseTasks = await api.task.getAll();
+        tasks.resetSelected();
+        tasks.setValues(responseTasks.data);
+        navigate(taskToday.path);
+    }
+}
+
+export const taskCalendar: Page = {
+    name: "Calendar",
+    path: "/task-calendar",
+    component: TaskCalendar,
+    protected: true,
+    beforeNavigate: async() => {
+        const responseTasks = await api.task.getAll();
+        tasks.resetSelected();
+        tasks.setValues(responseTasks.data);
+        navigate(taskCalendar.path);
+    }
+}
+
+export const settings: Page = {
+    name: "Settings",
+    path: "/settings",
+    component: Settings,
     protected: true,
     beforeNavigate: async() => {
         const responseUser = await api.user.get();
         user.setValues(responseUser.data);
-        navigate(security.path);
-    },
+        navigate(settings.path);
+    }
 }
 
 export const pages = [
     home,
     signup,
     signin,
-    profile,
-    security,
+    signout,
+    taskUpcoming,
+    taskToday,
+    taskCalendar,
+    settings,
 ];

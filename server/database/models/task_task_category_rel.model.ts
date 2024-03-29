@@ -6,8 +6,8 @@ import TaskCategory from "./task_category.model";
     timestamps: true,
     tableName: "task_task_category_rel",
     modelName: "TaskTaskCategoryRel",
-    createdAt: "create_date",
-    updatedAt: "update_date",
+    createdAt: "createDate",
+    updatedAt: "updateDate",
 })
 class TaskTaskCategoryRel extends Model {
     @ForeignKey(() => Task)

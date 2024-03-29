@@ -5,8 +5,8 @@ import User from "./user.model";
     timestamps: true,
     tableName: "user_otp",
     modelName: "UserOtp",
-    createdAt: "create_date",
-    updatedAt: "update_date",
+    createdAt: "createDate",
+    updatedAt: "updateDate",
 })
 class UserOtp extends Model {
     @Column({

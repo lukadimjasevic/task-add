@@ -5,8 +5,8 @@ import Task from "./task.model";
     timestamps: true,
     tableName: "task_status",
     modelName: "TaskStatus",
-    createdAt: "create_date",
-    updatedAt: "update_date",
+    createdAt: "createDate",
+    updatedAt: "updateDate",
     defaultScope: {
         attributes: { 
             exclude: ["id", "create_date", "update_date"]

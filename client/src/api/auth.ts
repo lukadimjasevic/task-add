@@ -1,6 +1,6 @@
 import { request } from "./request";
 
-const signUp = async(email: string, username: string, password: string, passwordRetype: string) => {
+const signup = async(email: string, username: string, password: string, passwordRetype: string) => {
     const data = { email, username, password, passwordRetype };
     return await request("/user/signup", {
         method: "POST",
@@ -8,7 +8,7 @@ const signUp = async(email: string, username: string, password: string, password
     });
 };
 
-const signIn = async(email: string, password: string) => {
+const signin = async(email: string, password: string) => {
     const data = { email, password };
     return await request("/user/signin", {
         method: "POST",
@@ -16,7 +16,14 @@ const signIn = async(email: string, password: string) => {
     });
 };
 
+const signout = async() => {
+    return await request("/user/signout", {
+        method: "POST",
+    });
+};
+
 export const auth = {
-    signUp,
-    signIn,
+    signup,
+    signin,
+    signout,
 };

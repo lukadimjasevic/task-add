@@ -1,7 +1,22 @@
 <script lang="ts">
+    import { auth } from "@stores/auth";
+    import { Sidebar } from "@components/common/sidebars";
     export let className: string = "";
 </script>
 
-<div class="row g-0 m-0 pt-5 d-flex justify-content-center {className}">
-    <slot/>
+<div class="d-flex align-items-stretch p-3 gap-3 layout-page {className}">
+    {#if $auth.cookie}
+        <div>
+            <Sidebar />
+        </div>
+    {/if}
+    <div class="w-100">
+        <slot/>
+    </div>
 </div>
+
+<style>
+    .layout-page {
+        min-height: 100vh !important;
+    }
+</style>

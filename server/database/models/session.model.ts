@@ -5,8 +5,8 @@ import { Table, Column, Model, DataType } from "sequelize-typescript";
     timestamps: true,
     tableName: "session",
     modelName: "Session",
-    createdAt: "create_date",
-    updatedAt: "update_date",
+    createdAt: "createDate",
+    updatedAt: "updateDate",
 })
 class Session extends Model {
     @Column({

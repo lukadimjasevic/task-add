@@ -1,7 +1,8 @@
 <script lang="ts">
-    import { user } from "../../stores/user";
+    import { user } from "@stores/user";
+    import { tasks } from "@stores/task";
     import { onMount } from "svelte";
-    import { api } from "../../api";
+    import { api } from "@api";
 
     let isLoaded: boolean = false;
     let errors: { errorName: string, message: string }[] = [];
@@ -14,6 +15,13 @@
             return;
         }
         user.setValues(responseUser.data);
+        const responseTasks = await api.task.getAll();
+        if (responseTasks.errorName) {
+            errors.push({ errorName: responseTasks.errorName, message: responseTasks.message });
+            isLoaded = true;
+            return;
+        }
+        tasks.setValues(responseTasks.data);
         isLoaded = true;
         return;
     });

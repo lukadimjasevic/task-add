@@ -7,8 +7,8 @@ import TaskCategory from "./task_category.model";
     timestamps: true,
     tableName: "user",
     modelName: "User",
-    createdAt: "create_date",
-    updatedAt: "update_date",
+    createdAt: "createDate",
+    updatedAt: "updateDate",
     defaultScope: {
         attributes: {
             exclude: ["id", "password", "verificationCode"]

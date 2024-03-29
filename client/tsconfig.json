@@ -19,7 +19,18 @@
             "./src/interfaces/store", 
             "./src/interfaces/user",
             "./src/interfaces/user-otp",
+            "./src/interfaces/task",
+            "./src/interfaces/task-calendar",
         ],
+        "paths": {
+            "@api": ["./src/api/index.ts"],
+            "@components/*": ["./src/components/*"],
+            "@helpers": ["./src/helpers/index.ts"],
+            "@interfaces/*": ["./src/interfaces/*"],
+            "@pages/*": ["./src/pages/*"],
+            "@scss/*": ["./src/scss/*"],
+            "@stores/*": ["./src/stores/*"],
+        }
     },
     "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte"],
     "references": [{ "path": "./tsconfig.node.json" }]

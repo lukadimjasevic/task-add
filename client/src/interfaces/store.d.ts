@@ -1,5 +1,7 @@
 declare module "taskadd/store" {
     import type { Writable } from "svelte/store";
+    import type { Task } from "taskadd/task";
+    import type { TaskCalendar } from "taskadd/task-calendar";
 
     export interface CustomStore extends Writable<T> {
         setValues(values: any): void;
@@ -15,5 +17,20 @@ declare module "taskadd/store" {
 
     export interface UserOTPStore extends CustomStore {
         setToken(token: string): void;
+    }
+
+    export interface TaskStore extends CustomStore {
+        toggleSelectedTask(task: Task): void;
+        toggleSelectedTasks(tasks: Task[], state: boolean): void;
+        computeTasksToday(tasks: Task[]): Task[];
+        computeTasksTomorrow(tasks: Task[]): Task[];
+        computeTasksWeek(tasks: Task[]): Task[];
+        computeTasksFuture(tasks: Task[]): Task[];
+        resetSelected(): void;
+    }
+
+    export interface TaskCalendarStore extends CustomStore {
+        setValues(selector: TaskCalendar["selector"]): void;
+        toggleDate(offset: number): void;
     }
 }
