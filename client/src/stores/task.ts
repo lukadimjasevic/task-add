@@ -1,6 +1,7 @@
 import { writable } from "svelte/store";
 import type { TaskStore } from "taskadd/store";
 import type { TasksFrame, Task, TaskCategory } from "taskadd/task";
+import { helpers } from "@helpers";
 
 const defaultValues: TasksFrame = {
     tasks: [],
@@ -60,6 +61,26 @@ const createTasks = (): TaskStore => {
         return tasks.filter((task: Task) => task.deadlineDate.getTime() >= todayStart.getTime()).length;
     }
 
+    const countToday = (tasks: Task[]): number => {
+        const { count } = helpers.task.filterTasksToday(tasks);
+        return count;
+    }
+
+    const countTomorrow = (tasks: Task[]): number => {
+        const { count } = helpers.task.filterTasksTomorrow(tasks);
+        return count;
+    }
+
+    const countWeek = (tasks: Task[]): number => {
+        const { count } = helpers.task.filterTasksWeek(tasks);
+        return count;
+    }
+
+    const countFuture = (tasks: Task[]): number => {
+        const { count } = helpers.task.filterTasksFuture(tasks);
+        return count;
+    }
+
     return {
         subscribe,
         set,
@@ -71,10 +92,13 @@ const createTasks = (): TaskStore => {
                 dataTasks.push(dataTask);
             });
             set({
-                ...defaultValues,
                 tasks: dataTasks,
                 countActive: countActive(dataTasks),
                 countUpcoming: countUpcoming(dataTasks),
+                countToday: countToday(dataTasks),
+                countTomorrow: countTomorrow(dataTasks),
+                countWeek: countWeek(dataTasks),
+                countFuture: countFuture(dataTasks),
             });
         },
         toggleSelectedTask: (task: Task) => {
@@ -104,48 +128,23 @@ const createTasks = (): TaskStore => {
             });
         },
         computeTasksToday: (tasks: Task[]) => {
-            const todayStart = new Date();
-            const todayEnd = new Date();
-            todayStart.setHours(0, 0, 0, 0);
-            todayEnd.setHours(23, 59, 59, 999);
-            const tasksToday = tasks.filter((task: Task) => 
-                task.deadlineDate.getTime() >= todayStart.getTime() &&
-                task.deadlineDate.getTime() < todayEnd.getTime()
-            );
-            update((current: TasksFrame) => current = { ...current, countToday: tasksToday.length });
+            const { count, tasksToday } = helpers.task.filterTasksToday(tasks);
+            update((current: TasksFrame) => current = { ...current, countToday: count });
             return tasksToday;
         },
         computeTasksTomorrow: (tasks: Task[]) => {
-            const tomorrowStart = new Date();
-            const tomorrowEnd = new Date();
-            tomorrowStart.setHours(24, 0, 0, 0);
-            tomorrowEnd.setHours(47, 59, 59, 999);
-            const tasksTomorrow = tasks.filter((task: Task) => 
-                task.deadlineDate.getTime() >= tomorrowStart.getTime() &&
-                task.deadlineDate.getTime() < tomorrowEnd.getTime()
-            );
-            update((current: TasksFrame) => current = { ...current, countTomorrow: tasksTomorrow.length });
+            const { count, tasksTomorrow } = helpers.task.filterTasksTomorrow(tasks);
+            update((current: TasksFrame) => current = { ...current, countTomorrow: count });
             return tasksTomorrow;
         },
         computeTasksWeek: (tasks: Task[]) => {
-            const weekStart = new Date();
-            const weekEnd = new Date();
-            weekStart.setHours(48, 0, 0, 0);
-            weekEnd.setHours(167, 59, 59, 999);
-            const tasksWeek = tasks.filter((task: Task) => 
-                task.deadlineDate.getTime() >= weekStart.getTime() &&
-                task.deadlineDate.getTime() < weekEnd.getTime()
-            );
-            update((current: TasksFrame) => current = { ...current, countWeek: tasksWeek.length });
+            const { count, tasksWeek } = helpers.task.filterTasksWeek(tasks);
+            update((current: TasksFrame) => current = { ...current, countWeek: count });
             return tasksWeek;
         },
         computeTasksFuture: (tasks: Task[]) => {
-            const futureStart = new Date();
-            futureStart.setHours(168, 0, 0, 0);
-            const tasksFuture = tasks.filter((task: Task) => 
-                task.deadlineDate.getTime() >= futureStart.getTime()
-            );
-            update((current: TasksFrame) => current = { ...current, countFuture: tasksFuture.length });
+            const { count, tasksFuture } = helpers.task.filterTasksFuture(tasks);
+            update((current: TasksFrame) => current = { ...current, countFuture: count });
             return tasksFuture;
         },
         resetSelected: () => {
