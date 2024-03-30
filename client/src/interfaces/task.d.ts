@@ -1,4 +1,6 @@
 declare module "taskadd/task" {
+    import type { TaskCategory } from "taskadd/task-category";
+
     export interface TasksFrame {
         tasks: Task[];
         countActive: number;
@@ -28,12 +30,6 @@ declare module "taskadd/task" {
         name: string;
     }
 
-    export interface TaskCategory {
-        color: string;
-        name: string;
-        createDate: Date;
-        updateDate: Date;
-    }
 
     export interface TaskList {
         id: number;

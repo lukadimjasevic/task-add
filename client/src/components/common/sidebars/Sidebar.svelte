@@ -5,6 +5,8 @@
     import { ButtonMenu, ButtonClose } from "@components/common/buttons";
     import { taskUpcoming, taskToday, taskCalendar, settings, signout } from "@pages/pages";
     import { SidebarSection, SidebarSectionItem } from "@components/common/sidebars";
+    import CategoriesSidebarList from "@components/task-category/CategoriesSidebarList.svelte";
+    import CategoryAdd from "@components/task-category/CategoryAdd.svelte";
 </script>
 
 {#if $sidebar}
@@ -37,10 +39,8 @@
                 <hr class="hr" />
                 <SidebarSection>
                     <small slot="label"><b>Categories</b></small>
-                    <SidebarSectionItem>
-                        <i slot="icon" class="bi bi-plus-lg"></i>
-                        <span slot="label">Add New Category</span>
-                    </SidebarSectionItem>
+                    <CategoriesSidebarList/>
+                    <CategoryAdd/>
                 </SidebarSection>
                 <hr class="hr" />
             </div>

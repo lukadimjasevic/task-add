@@ -1,6 +1,7 @@
 import { writable } from "svelte/store";
 import type { TaskStore } from "taskadd/store";
-import type { TasksFrame, Task, TaskCategory } from "taskadd/task";
+import type { TasksFrame, Task } from "taskadd/task";
+import type { TaskCategory } from "taskadd/task-category";
 import { helpers } from "@helpers";
 
 const defaultValues: TasksFrame = {
@@ -39,6 +40,7 @@ const createTasks = (): TaskStore => {
         const dataCategories: TaskCategory[] = [];
         task.categories!.forEach((category: TaskCategory) => {
             const dataCategory: TaskCategory = {
+                id: category.id,
                 color: category.color,
                 name: category.name,
                 createDate: category.createDate,

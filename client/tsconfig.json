@@ -21,6 +21,7 @@
             "./src/interfaces/user-otp",
             "./src/interfaces/task",
             "./src/interfaces/task-calendar",
+            "./src/interfaces/task-category",
         ],
         "paths": {
             "@api": ["./src/api/index.ts"],

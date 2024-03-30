@@ -2,6 +2,7 @@ declare module "taskadd/store" {
     import type { Writable } from "svelte/store";
     import type { Task } from "taskadd/task";
     import type { TaskCalendar } from "taskadd/task-calendar";
+    import type { ExtendedTaskCategory } from "taskadd/task-category";
 
     export interface CustomStore extends Writable<T> {
         setValues(values: any): void;
@@ -32,5 +33,9 @@ declare module "taskadd/store" {
     export interface TaskCalendarStore extends CustomStore {
         setValues(selector: TaskCalendar["selector"]): void;
         toggleDate(offset: number): void;
+    }
+
+    export interface TaskCategoryStore extends CustomStore {
+        setValues(categories: ExtendedTaskCategory[], tasks: Task[]): void;
     }
 }
