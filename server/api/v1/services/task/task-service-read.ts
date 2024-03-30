@@ -71,7 +71,7 @@ export class TaskServiceRead extends BaseService {
                 model: TaskCategory,
                 as: "categories",
                 attributes: {
-                    exclude: ["id", "userId"],
+                    exclude: ["userId"],
                 },
             },
         });
