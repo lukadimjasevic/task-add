@@ -1,6 +1,7 @@
 declare module "taskadd/task-category" {
     export interface TaskCategoriesFrame {
         categories: ExtendedTaskCategory[];
+        categorySelected: number;
     }
 
     export interface TaskCategory {

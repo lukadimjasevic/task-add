@@ -14,7 +14,16 @@ const create = async(name: string, color: string) => {
     });
 }
 
+const link = async(taskId: number, categoryId: number) => {
+    const data = { taskId, categoryId };
+    return await request("/task-category-relation", {
+        method: "POST",
+        body: JSON.stringify(data),
+    });
+}
+
 export const category = {
     getAll,
     create,
+    link,
 };

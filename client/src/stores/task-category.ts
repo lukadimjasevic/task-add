@@ -5,6 +5,7 @@ import type { Task } from "taskadd/task";
 
 const defaultValues: TaskCategoriesFrame = {
     categories: [],
+    categorySelected: -1,
 };
 
 const createTaskCategories = (): TaskCategoryStore => {
@@ -34,8 +35,20 @@ const createTaskCategories = (): TaskCategoryStore => {
                     count: countCategories(category, tasks),
                 });
             });
-            set({
+            update((current: TaskCategoriesFrame) => current = {
                 categories: dataCategories,
+                categorySelected:
+                    current.categorySelected !== -1
+                        ? current.categorySelected
+                        : dataCategories[0]
+                            ? dataCategories[0].id
+                            : -1,
+            });
+        },
+        setCategorySelected: (categoryId: number) => {
+            update((current: TaskCategoriesFrame) => current = {
+                ...current,
+                categorySelected: categoryId,
             });
         },
         reset: () => set(defaultValues),
