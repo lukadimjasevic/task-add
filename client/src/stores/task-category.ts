@@ -51,6 +51,17 @@ const createTaskCategories = (): TaskCategoryStore => {
                 categorySelected: categoryId,
             });
         },
+        updateCount: (tasks: Task[]) => {
+            update((current: TaskCategoriesFrame) => current = {
+                ...current,
+                categories: current.categories.map((category: ExtendedTaskCategory) => {
+                    return {
+                        ...category,
+                        count: countCategories(category, tasks),
+                    }
+                }),
+            });
+        },
         reset: () => set(defaultValues),
     }
 }

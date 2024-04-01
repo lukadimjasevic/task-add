@@ -1,14 +1,16 @@
 <script lang="ts">
     import { taskCategories } from "@stores/task-category";
-    import { taskCategoriesForm } from "@stores/task-category-form";
     import type { ExtendedTaskCategory } from "taskadd/task-category";
     import { FormFloating } from "@components/common/forms";
 
     let showCategories: boolean = false;
     let searchValue: string;
     let inputElement: HTMLInputElement;
-    $: categoriesAvailable = getAvailableCategories($taskCategories.categories, $taskCategoriesForm);
-    taskCategoriesForm.set([]);
+    
+    export let categoriesUsed: ExtendedTaskCategory[] = [];
+    export let updateCategories: (categories: ExtendedTaskCategory[]) => void;
+
+    $: categoriesAvailable = getAvailableCategories($taskCategories.categories, categoriesUsed);
 
     const getAvailableCategories = (categoriesAll: ExtendedTaskCategory[], categoriesUsed: ExtendedTaskCategory[]): ExtendedTaskCategory[] => {
         const categoriesAvailable: ExtendedTaskCategory[] = [];
@@ -19,14 +21,14 @@
     }
 
     const onclickAddCategory = (category: ExtendedTaskCategory) => {
-        taskCategoriesForm.toggleCategory(category);
-        categoriesAvailable = categoriesAvailable.filter((categoryAvailable: ExtendedTaskCategory) => categoryAvailable.id !== category.id);
+        updateCategories([...categoriesUsed, category]);
+        categoriesAvailable = getAvailableCategories($taskCategories.categories, categoriesUsed);
         inputElement.focus();
     }
 
     const oninputFilterCategories = (event: Event) => {
         const value = (event.target as HTMLInputElement).value;
-        const categoriesAvailableForm = getAvailableCategories($taskCategories.categories, $taskCategoriesForm);
+        const categoriesAvailableForm = getAvailableCategories($taskCategories.categories, categoriesUsed);
         if (value.length > 0) {
             categoriesAvailable = categoriesAvailableForm.filter((storedCategory: ExtendedTaskCategory) =>
                 storedCategory.name.toLowerCase().indexOf(value.toLowerCase()) > -1

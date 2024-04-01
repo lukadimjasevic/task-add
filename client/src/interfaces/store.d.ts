@@ -38,9 +38,6 @@ declare module "taskadd/store" {
     export interface TaskCategoryStore extends CustomStore {
         setValues(categories: ExtendedTaskCategory[], tasks: Task[]): void;
         setCategorySelected(categoryId: number): void;
-    }
-
-    export interface TaskCategoryFormStore extends Writable<T> {
-        toggleCategory(category: ExtendedTaskCategory): void;
+        updateCount(tasks: Task[]): void;
     }
 }

@@ -1,13 +1,13 @@
 <script lang="ts">
     import { tasks } from "@stores/task";
-    import { taskCategoriesForm } from "@stores/task-category-form";
+    import { taskCategories } from "@stores/task-category";
     import { api } from "@api";
     import { helpers } from "@helpers";
     import type { ExtendedTaskCategory } from "taskadd/task-category";
     import Modal from "@components/common/Modal.svelte";
     import { FormCard, FormFloating, FormInput, FormTextarea, FormSubmit } from "@components/common/forms";
-    import CategoryDropdown from "@components/task-category/link/CategoryDropdown.svelte";
-    import CategoriesList from "@components/task-category/link/CategoriesUnlink.svelte";
+    import CategoriesDropdown from "@components/task-category/CategoriesDropdown.svelte";
+    import CategoriesList from "@components/task-category/CategoriesUnlink.svelte";
 
     export let defaultDate: Date = new Date(Date.now() + 60 * 1000);
 
@@ -26,21 +26,24 @@
     let deadlineDate: string = helpers.date.getDateToString(defaultDate);
     let deadlineTime: string = helpers.date.getTimeToString(defaultDate);
     $: deadline = computeDeadlineDate(deadlineDate, deadlineTime);
+    let categories: ExtendedTaskCategory[] = [];
 
     const handleAdd = async() => {
         const response = await api.task.create(name, description, deadline);
         if (response.statusCode === 201) {
-            $taskCategoriesForm.forEach(async(category: ExtendedTaskCategory) => {
+            categories.forEach(async(category: ExtendedTaskCategory) => {
                 await api.category.link(response.data.id, category.id);
             });
-            taskCategoriesForm.set([]);
             const fetchedTasks = await api.task.getAll();
             if (fetchedTasks.statusCode === 200) {
                 showModal = false;
                 tasks.setValues(fetchedTasks.data);
+                taskCategories.updateCount($tasks.tasks);
             }
         }
     }
+
+    const updateCategories = (updatedCategories: ExtendedTaskCategory[]) => categories = updatedCategories;
 </script>
 
 <button type="button" 
@@ -55,7 +58,7 @@
     <div slot="body" class="row">
         <div class="col-12">
             <FormCard id="formTaskAdd" on:submit={handleAdd} className="d-flex flex-column gap-2">
-                <CategoriesList/>
+                <CategoriesList bind:categories={categories} {updateCategories}/>
                 <FormFloating id="name">
                     <FormInput bind:value={name} placeholder="Name" required={true} min={4} max={64} />
                     <span slot="label">Name</span>
@@ -74,7 +77,7 @@
                         <span slot="label">Deadline Time</span>
                     </FormFloating>
                 </div>
-                <CategoryDropdown/>
+                <CategoriesDropdown bind:categoriesUsed={categories} {updateCategories}/>
             </FormCard>
         </div>
     </div>
