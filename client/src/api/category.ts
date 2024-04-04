@@ -15,10 +15,14 @@ const create = async(name: string, color: string) => {
 }
 
 const link = async(taskId: number, categoryId: number) => {
-    const data = { taskId, categoryId };
-    return await request("/task-category-relation", {
+    return await request(`/task-category-relation?taskId=${taskId}&categoryId=${categoryId}`, {
         method: "POST",
-        body: JSON.stringify(data),
+    });
+}
+
+const unlink = async(taskId: number, categoryId: number) => {
+    return await request(`/task-category-relation?taskId=${taskId}&categoryId=${categoryId}`, {
+        method: "DELETE",
     });
 }
 
@@ -26,4 +30,5 @@ export const category = {
     getAll,
     create,
     link,
+    unlink,
 };

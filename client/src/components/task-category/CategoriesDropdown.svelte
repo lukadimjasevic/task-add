@@ -1,26 +1,33 @@
 <script lang="ts">
     import { taskCategories } from "@stores/task-category";
-    import type { ExtendedTaskCategory } from "taskadd/task-category";
+    import type { TaskCategory } from "taskadd/task-category";
     import { FormFloating } from "@components/common/forms";
 
     let showCategories: boolean = false;
     let searchValue: string;
     let inputElement: HTMLInputElement;
     
-    export let categoriesUsed: ExtendedTaskCategory[] = [];
-    export let updateCategories: (categories: ExtendedTaskCategory[]) => void;
+    export let categoriesUsed: TaskCategory[];
+    export let updateCategories: (categories: TaskCategory[]) => void;
 
     $: categoriesAvailable = getAvailableCategories($taskCategories.categories, categoriesUsed);
 
-    const getAvailableCategories = (categoriesAll: ExtendedTaskCategory[], categoriesUsed: ExtendedTaskCategory[]): ExtendedTaskCategory[] => {
-        const categoriesAvailable: ExtendedTaskCategory[] = [];
-        categoriesAll.forEach((storedCategory: ExtendedTaskCategory) => {
-            if (!categoriesUsed.includes(storedCategory)) return categoriesAvailable.push(storedCategory);
-        })
+    const getAvailableCategories = (categoriesAll: TaskCategory[], categoriesUsed: TaskCategory[]): TaskCategory[] => {
+        const categoriesAvailable: TaskCategory[] = [];
+        for (const storedCategory of categoriesAll) {
+            let isUsed: boolean = false;
+            for (const categoryUsed of categoriesUsed) {
+                if (categoryUsed.id === storedCategory.id) {
+                    isUsed = true;
+                    break;
+                }
+            }
+            if (!isUsed) categoriesAvailable.push(storedCategory);
+        }
         return categoriesAvailable;
     }
 
-    const onclickAddCategory = (category: ExtendedTaskCategory) => {
+    const onclickAddCategory = (category: TaskCategory) => {
         updateCategories([...categoriesUsed, category]);
         categoriesAvailable = getAvailableCategories($taskCategories.categories, categoriesUsed);
         inputElement.focus();
@@ -30,7 +37,7 @@
         const value = (event.target as HTMLInputElement).value;
         const categoriesAvailableForm = getAvailableCategories($taskCategories.categories, categoriesUsed);
         if (value.length > 0) {
-            categoriesAvailable = categoriesAvailableForm.filter((storedCategory: ExtendedTaskCategory) =>
+            categoriesAvailable = categoriesAvailableForm.filter((storedCategory: TaskCategory) =>
                 storedCategory.name.toLowerCase().indexOf(value.toLowerCase()) > -1
             );
         } else {

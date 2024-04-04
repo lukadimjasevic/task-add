@@ -3,7 +3,7 @@
     import { taskCategories } from "@stores/task-category";
     import { api } from "@api";
     import { helpers } from "@helpers";
-    import type { ExtendedTaskCategory } from "taskadd/task-category";
+    import type { TaskCategory } from "taskadd/task-category";
     import Modal from "@components/common/Modal.svelte";
     import { FormCard, FormFloating, FormInput, FormTextarea, FormSubmit } from "@components/common/forms";
     import CategoriesDropdown from "@components/task-category/CategoriesDropdown.svelte";
@@ -11,27 +11,19 @@
 
     export let defaultDate: Date = new Date(Date.now() + 60 * 1000);
 
-    const computeDeadlineDate = (date: string, time: string) => {
-        const deadlineDate = new Date(date);
-        const [hours, minutes] = time.split(":");
-        deadlineDate.setHours(parseInt(hours));
-        deadlineDate.setMinutes(parseInt(minutes));
-        return deadlineDate;
-    }
-
     let showModal: boolean = false;
 
     let name: string;
     let description: string;
     let deadlineDate: string = helpers.date.getDateToString(defaultDate);
     let deadlineTime: string = helpers.date.getTimeToString(defaultDate);
-    $: deadline = computeDeadlineDate(deadlineDate, deadlineTime);
-    let categories: ExtendedTaskCategory[] = [];
+    $: deadline = helpers.date.computeDeadlineDate(deadlineDate, deadlineTime);
+    let categories: TaskCategory[] = [];
 
     const handleAdd = async() => {
         const response = await api.task.create(name, description, deadline);
         if (response.statusCode === 201) {
-            categories.forEach(async(category: ExtendedTaskCategory) => {
+            categories.forEach(async(category: TaskCategory) => {
                 await api.category.link(response.data.id, category.id);
             });
             const fetchedTasks = await api.task.getAll();
@@ -43,7 +35,7 @@
         }
     }
 
-    const updateCategories = (updatedCategories: ExtendedTaskCategory[]) => categories = updatedCategories;
+    const updateCategories = (updatedCategories: TaskCategory[]) => categories = updatedCategories;
 </script>
 
 <button type="button" 
