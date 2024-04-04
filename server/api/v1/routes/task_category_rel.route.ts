@@ -13,7 +13,7 @@ router.post("/", TaskCategoryRelationValidations.setCreateRules(), validate, isA
     const controllerCreate = new TaskCategoryRelationControllerCreate(req, res, next);
     controllerCreate.createRelation();
 });
-router.delete("/:relationId", TaskCategoryRelationValidations.setDeleteRules(), validate, isAuthenticated, (req: Request, res: Response, next: NextFunction) => {
+router.delete("/", TaskCategoryRelationValidations.setDeleteRules(), validate, isAuthenticated, (req: Request, res: Response, next: NextFunction) => {
     const controllerDelete = new TaskCategoryRelationControllerDelete(req, res, next);
     controllerDelete.deleteRelation();
 });
