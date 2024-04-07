@@ -70,9 +70,17 @@
     }
 
     const updateCategories = (updatedCategories: TaskCategory[]) => categories = updatedCategories;
+
+    const resetForm = () => {
+        name = task.name;
+        description = task.description;
+        deadlineDate = helpers.date.getDateToString(task.deadlineDate);
+        deadlineTime = helpers.date.getTimeToString(task.deadlineDate);
+        categories = task.categories;
+    }
 </script>
 
-<Modal bind:show>
+<Modal bind:show on:close={resetForm}>
     <span slot="title">Edit Task - {task.name}</span>
     <div slot="body" class="row">
         <div class="col-12">

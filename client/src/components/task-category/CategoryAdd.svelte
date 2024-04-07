@@ -20,6 +20,11 @@
             }
         }
     }
+
+    const resetForm = () => {
+        name = "";
+        color = "#99c1f1";
+    }
 </script>
 
 <button type="button" 
@@ -29,7 +34,7 @@
     <span>Add New Category</span>
 </button>
 
-<Modal bind:show={showModal}>
+<Modal bind:show={showModal} on:close={resetForm}>
     <span slot="title">Add Category</span>
     <div slot="body" class="row">
         <div class="col-12">

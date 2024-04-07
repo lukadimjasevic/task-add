@@ -26,9 +26,14 @@
             }
         }
     }
+
+    const resetForm = () => {
+        name = category.name;
+        color = category.color;
+    }
 </script>
 
-<Modal bind:show>
+<Modal bind:show on:close={resetForm}>
     <span slot="title">Edit Category - {category.name}</span>
     <div slot="body" class="row">
         <div class="col-12">

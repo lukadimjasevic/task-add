@@ -21,7 +21,12 @@ const create = async(name: string, description: string, deadlineDate: Date) => {
 }
 
 const update = async(id: number, name: string, description: string, deadlineDate: Date) => {
-    const data = { name, description, deadlineDate };
+    let data;
+    if (deadlineDate.getTime() < Date.now()) {
+        data = { name, description };
+    } else {
+        data = { name, description, deadlineDate };
+    }
     return await request(`/task/${id}`, {
         method: "PUT",
         body: JSON.stringify(data),

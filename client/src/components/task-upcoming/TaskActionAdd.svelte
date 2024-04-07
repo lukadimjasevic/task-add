@@ -5,7 +5,7 @@
     import { helpers } from "@helpers";
     import type { TaskCategory } from "taskadd/task-category";
     import Modal from "@components/common/Modal.svelte";
-    import { FormCard, FormFloating, FormInput, FormTextarea, FormSubmit } from "@components/common/forms";
+    import { FormCard, FormFloating, FormInput, FormTextarea, FormReset, FormSubmit } from "@components/common/forms";
     import CategoriesDropdown from "@components/task-category/CategoriesDropdown.svelte";
     import CategoriesList from "@components/task-category/CategoriesUnlink.svelte";
 
@@ -36,6 +36,14 @@
     }
 
     const updateCategories = (updatedCategories: TaskCategory[]) => categories = updatedCategories;
+
+    const resetForm = () => {
+        name = "";
+        description = "";
+        deadlineDate = helpers.date.getDateToString(defaultDate);
+        deadlineTime = helpers.date.getTimeToString(defaultDate);
+        categories = [];
+    }
 </script>
 
 <button type="button" 
@@ -45,7 +53,7 @@
     <span>Add New Task</span>
 </button>
 
-<Modal bind:show={showModal}>
+<Modal bind:show={showModal} on:close={resetForm}>
     <span slot="title">Add Task</span>
     <div slot="body" class="row">
         <div class="col-12">
