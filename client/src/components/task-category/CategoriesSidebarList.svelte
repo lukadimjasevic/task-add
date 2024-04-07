@@ -2,16 +2,11 @@
     import { taskCategories } from "@stores/task-category";
     import { taskCategory } from "@pages/pages";
     import SidebarSectionItem from "@components/common/sidebars/SidebarSectionItem.svelte";
-
-    const handleClickOnCategory = (categoryId: number) => {
-        taskCategories.setCategorySelected(categoryId);
-        taskCategory.beforeNavigate();
-    }
 </script>
 
 <div class="task-categories">
     {#each $taskCategories.categories as category (category)}
-        <SidebarSectionItem on:click={() => handleClickOnCategory(category.id)}>
+        <SidebarSectionItem on:click={() => taskCategory.beforeNavigate({ params: category.id.toString() })}>
             <i slot="icon" class="bi bi-square-fill" style="color: {category.color};"></i>
             <span slot="label">{category.name}</span>
             <span slot="count">{category.count}</span>

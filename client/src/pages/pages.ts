@@ -12,7 +12,7 @@ import TaskToday from "@pages/TaskToday.svelte";
 import TaskCalendar from "@pages/TaskCalendar.svelte";
 import TaskCategory from "@pages/TaskCategory.svelte";
 import Settings from "./Settings.svelte";
-import type { Page } from "taskadd/page";
+import type { Page, NavigateOptions } from "taskadd/page";
 
 export const home: Page = {
     name: "TaskAdd",
@@ -95,16 +95,17 @@ export const taskCalendar: Page = {
 
 export const taskCategory: Page = {
     name: "Task Category",
-    path: "/task-category",
+    path: "/task-category/:categoryId",
     component: TaskCategory,
     protected: true,
-    beforeNavigate: async() => {
+    beforeNavigate: async(options: NavigateOptions) => {
         const responseTasks = await api.task.getAll();
         tasks.resetSelected();
         tasks.setValues(responseTasks.data);
         const responseTaskCategories = await api.category.getAll();
         taskCategories.setValues(responseTaskCategories.data, responseTasks.data);
-        navigate(taskCategory.path);
+        const route = taskCategory.path.replace(":categoryId", options.params);
+        navigate(route);
     }
 }
 

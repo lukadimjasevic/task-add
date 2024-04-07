@@ -37,7 +37,6 @@ declare module "taskadd/store" {
 
     export interface TaskCategoryStore extends CustomStore {
         setValues(categories: ExtendedTaskCategory[], tasks: Task[]): void;
-        setCategorySelected(categoryId: number): void;
         updateCount(tasks: Task[]): void;
     }
 }

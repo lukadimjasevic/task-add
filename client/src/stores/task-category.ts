@@ -5,7 +5,6 @@ import type { Task } from "taskadd/task";
 
 const defaultValues: TaskCategoriesFrame = {
     categories: [],
-    categorySelected: -1,
 };
 
 const createTaskCategories = (): TaskCategoryStore => {
@@ -25,7 +24,7 @@ const createTaskCategories = (): TaskCategoryStore => {
         update,
         setValues: (categories: ExtendedTaskCategory[], tasks: Task[]) => {
             const dataCategories: ExtendedTaskCategory[] = [];
-            categories.forEach((category: ExtendedTaskCategory) => {
+            categories.forEach((category: ExtendedTaskCategory, catIndex) => {
                 dataCategories.push({
                     id: category.id,
                     name: category.name,
@@ -35,20 +34,13 @@ const createTaskCategories = (): TaskCategoryStore => {
                     count: countCategories(category, tasks),
                 });
             });
-            update((current: TaskCategoriesFrame) => current = {
-                categories: dataCategories,
-                categorySelected:
-                    current.categorySelected !== -1
-                        ? current.categorySelected
-                        : dataCategories[0]
-                            ? dataCategories[0].id
-                            : -1,
+            dataCategories.sort((a: ExtendedTaskCategory, b: ExtendedTaskCategory) => {
+                if (a.name < b.name) return -1;
+                if (a.name > b.name) return 1;
+                return 0;
             });
-        },
-        setCategorySelected: (categoryId: number) => {
-            update((current: TaskCategoriesFrame) => current = {
-                ...current,
-                categorySelected: categoryId,
+            set({
+                categories: dataCategories,
             });
         },
         updateCount: (tasks: Task[]) => {

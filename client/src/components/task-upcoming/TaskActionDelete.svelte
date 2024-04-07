@@ -1,5 +1,6 @@
 <script lang="ts">
     import { tasks } from "@stores/task";
+    import { taskCategories } from "@stores/task-category";
     import { api } from "@api";
     import type { Task } from "taskadd/task";
     import Modal from "@components/common/Modal.svelte";
@@ -23,6 +24,7 @@
                 if (fetchedTasks.statusCode === 200) {
                     show = false;
                     tasks.setValues(fetchedTasks.data);
+                    taskCategories.updateCount($tasks.tasks);
                 }
             }
         });
