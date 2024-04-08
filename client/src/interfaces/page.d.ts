@@ -10,7 +10,7 @@ declare module "taskadd/page" {
         path: string;
         component: ComponentType;
         protected: boolean;
-        beforeNavigate: (options: NavigateOptions) => Promise<void>;
+        beforeNavigate: (options: NavigateOptions = {}) => Promise<void>;
     }
 
     export interface RouteParams {

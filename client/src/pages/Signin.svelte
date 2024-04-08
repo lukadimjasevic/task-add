@@ -4,7 +4,7 @@
     import { navigate } from "svelte-routing";
     import { api } from "@api";
     import { home, signup, taskUpcoming } from "@pages/pages";
-    import { FormCard, FormInput, FormSubmit } from "@components/common/forms";
+    import { FormCard, FormFloating, FormInput, FormSubmit } from "@components/common/forms";
     import HomeIntroduction from "@components/common/HomeIntroduction.svelte";
     import Card from "@components/common/Card.svelte";
 
@@ -34,8 +34,14 @@
             </div>
             <div class="w-75">
                 <FormCard id="formSignin" on:submit={handleSignin} className="d-flex flex-column gap-2">
-                    <FormInput bind:value={email} type="email" placeholder="Email" required={true} />
-                    <FormInput bind:value={password} type="password" placeholder="Password" required={true} />
+                    <FormFloating id="email">
+                        <FormInput bind:value={email} type="email" placeholder="Email" required={true} />
+                        <span slot="label">Email</span>
+                    </FormFloating>
+                    <FormFloating id="password">
+                        <FormInput bind:value={password} type="password" placeholder="Password" required={true} />
+                        <span slot="label">Password</span>
+                    </FormFloating>
                 </FormCard>
             </div>
             <div class="w-75">
@@ -43,7 +49,7 @@
             </div>
             <div class="w-75 text-center">
                 <span>Don't have an account?</span>
-                <button type="button" class="btn border-0" on:click={signup.beforeNavigate}>Sign up</button>
+                <button type="button" class="btn border-0" on:click={() => signup.beforeNavigate()}>Sign up</button>
             </div>
         </div>
     </Card>

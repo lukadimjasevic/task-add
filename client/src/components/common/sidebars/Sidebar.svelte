@@ -21,17 +21,17 @@
                 <hr class="hr" />
                 <SidebarSection>
                     <small slot="label"><b>Tasks</b></small>
-                    <SidebarSectionItem on:click={taskUpcoming.beforeNavigate}>
+                    <SidebarSectionItem on:click={() => taskUpcoming.beforeNavigate()}>
                         <i slot="icon" class="bi bi-chevron-double-right"></i>
                         <span slot="label">{taskUpcoming.name}</span>
                         <span slot="count">{$tasks.countUpcoming}</span>
                     </SidebarSectionItem>
-                    <SidebarSectionItem on:click={taskToday.beforeNavigate}>
+                    <SidebarSectionItem on:click={() => taskToday.beforeNavigate()}>
                         <i slot="icon" class="bi bi-list-check"></i>
                         <span slot="label">{taskToday.name}</span>
                         <span slot="count">{$tasks.countToday}</span>
                     </SidebarSectionItem>
-                    <SidebarSectionItem on:click={taskCalendar.beforeNavigate}>
+                    <SidebarSectionItem on:click={() => taskCalendar.beforeNavigate()}>
                         <i slot="icon" class="bi bi-calendar3"></i>
                         <span slot="label">{taskCalendar.name}</span>
                     </SidebarSectionItem>
@@ -48,11 +48,11 @@
 
         <div>
             <SidebarSection>
-                <SidebarSectionItem on:click={settings.beforeNavigate}>
+                <SidebarSectionItem on:click={() => settings.beforeNavigate()}>
                     <i slot="icon" class="bi bi-sliders2"></i>
                     <span slot="label">{settings.name}</span>
                 </SidebarSectionItem>
-                <SidebarSectionItem on:click={signout.beforeNavigate}>
+                <SidebarSectionItem on:click={() => signout.beforeNavigate()}>
                     <i slot="icon" class="bi bi-box-arrow-right"></i>
                     <span slot="label">{signout.name}</span>
                 </SidebarSectionItem>
