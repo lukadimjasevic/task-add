@@ -2,7 +2,7 @@
     import { tasks } from "@stores/task";
     import { taskCategories } from "@stores/task-category";
     import { api } from "@api";
-    import type { Task } from "taskadd/task";
+    import type { Task, TaskDeleteDTO } from "taskadd/task";
     import Modal from "@components/common/Modal.svelte";
 
     const findSelectedTasks = (tasks: Task[]): Task[] => {
@@ -18,7 +18,8 @@
 
     const handleDeleteAction = () => {
         tasksToDelete.forEach(async(task: Task) => {
-            const response = await api.task.remove(task.id);
+            const dto: TaskDeleteDTO = { id: task.id };
+            const response = await api.task.remove(dto);
             if (response.statusCode === 200) {
                 const fetchedTasks = await api.task.getAll();
                 if (fetchedTasks.statusCode === 200) {

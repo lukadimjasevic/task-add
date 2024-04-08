@@ -2,6 +2,7 @@
     import { user } from "@stores/user";
     import { tasks } from "@stores/task";
     import { taskCategories } from "@stores/task-category";
+    import { taskStatuses } from "@stores/task-status";
     import { onMount } from "svelte";
     import { api } from "@api";
 
@@ -30,6 +31,13 @@
             return;
         }
         taskCategories.setValues(responseTaskCategories.data, $tasks.tasks);
+        const responseTaskStatuses = await api.task.status.getAll();
+        if (responseTaskStatuses.errorName) {
+            errors.push({ errorName: responseTaskStatuses.errorName, message: responseTaskStatuses.message });
+            isLoaded = true;
+            return;
+        }
+        taskStatuses.setValues(responseTaskStatuses.data);
         isLoaded = true;
         return;
     });

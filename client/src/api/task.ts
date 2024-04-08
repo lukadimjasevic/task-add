@@ -1,4 +1,6 @@
 import { request } from "./request";
+import { status } from "./status";
+import type { TaskGetDTO, TaskCreateDTO, TaskUpdateDTO, TaskDeleteDTO } from "taskadd/task";
 
 const getAll = async() => {
     return await request("/task", {
@@ -6,35 +8,31 @@ const getAll = async() => {
     });
 };
 
-const getOne = async(id: number) => {
-    return await request(`/task/${id}`, {
+const getOne = async(dto: TaskGetDTO) => {
+    return await request(`/task/${dto.id}`, {
         method: "GET",
     });
 }
 
-const create = async(name: string, description: string, deadlineDate: Date) => {
-    const data = { name, description, deadlineDate };
+const create = async(dto: TaskCreateDTO) => {
     return await request("/task", {
         method: "POST",
-        body: JSON.stringify(data),
+        body: JSON.stringify(dto),
     });
 }
 
-const update = async(id: number, name: string, description: string, deadlineDate: Date) => {
-    let data;
-    if (deadlineDate.getTime() < Date.now()) {
-        data = { name, description };
-    } else {
-        data = { name, description, deadlineDate };
+const update = async(dto: TaskUpdateDTO) => {
+    if (dto.deadlineDate) {
+        if (dto.deadlineDate.getTime() < Date.now()) delete dto.deadlineDate;
     }
-    return await request(`/task/${id}`, {
+    return await request(`/task/${dto.id}`, {
         method: "PUT",
-        body: JSON.stringify(data),
+        body: JSON.stringify(dto),
     });
 }
 
-const remove = async(id: number) => {
-    return await request(`/task/${id}`, {
+const remove = async(dto: TaskDeleteDTO) => {
+    return await request(`/task/${dto.id}`, {
         method: "DELETE",
     });
 }
@@ -45,4 +43,5 @@ export const task = {
     create,
     update,
     remove,
+    status,
 };

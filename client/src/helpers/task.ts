@@ -75,6 +75,10 @@ const filterTasksByCategory = (tasks: Task[], category: TaskCategory): Task[] =>
     return tasksByCategory;
 }
 
+const filterTasksBySelected = (tasks: Task[]) => {
+    return tasks.filter((task: Task) => task.selected);
+}
+
 export const task = {
     filterTasksToday,
     filterTasksTomorrow,
@@ -83,4 +87,5 @@ export const task = {
     filterTasksByDate,
     filterTasksByWeek,
     filterTasksByCategory,
+    filterTasksBySelected,
 }

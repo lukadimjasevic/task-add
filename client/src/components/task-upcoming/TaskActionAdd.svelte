@@ -3,9 +3,10 @@
     import { taskCategories } from "@stores/task-category";
     import { api } from "@api";
     import { helpers } from "@helpers";
+    import type { Task, TaskCreateDTO } from "taskadd/task";
     import type { TaskCategory } from "taskadd/task-category";
     import Modal from "@components/common/Modal.svelte";
-    import { FormCard, FormFloating, FormInput, FormTextarea, FormReset, FormSubmit } from "@components/common/forms";
+    import { FormCard, FormFloating, FormInput, FormTextarea, FormSubmit } from "@components/common/forms";
     import CategoriesDropdown from "@components/task-category/CategoriesDropdown.svelte";
     import CategoriesList from "@components/task-category/CategoriesUnlink.svelte";
 
@@ -13,15 +14,21 @@
 
     let showModal: boolean = false;
 
-    let name: string;
-    let description: string;
+    let name: Task["name"];
+    let description: Task["description"];
     let deadlineDate: string = helpers.date.getDateToString(defaultDate);
     let deadlineTime: string = helpers.date.getTimeToString(defaultDate);
+    let deadline: Task["deadlineDate"];
     $: deadline = helpers.date.computeDeadlineDate(deadlineDate, deadlineTime);
     let categories: TaskCategory[] = [];
 
     const handleAdd = async() => {
-        const response = await api.task.create(name, description, deadline);
+        const dto: TaskCreateDTO = {
+            name,
+            description,
+            deadlineDate: deadline,
+        };
+        const response = await api.task.create(dto);
         if (response.statusCode === 201) {
             categories.forEach(async(category: TaskCategory) => {
                 await api.category.link(response.data.id, category.id);

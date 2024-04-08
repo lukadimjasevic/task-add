@@ -3,7 +3,7 @@
     import { taskCategories } from "@stores/task-category";
     import { api } from "@api";
     import { helpers } from "@helpers";
-    import type { Task } from "taskadd/task";
+    import type { Task, TaskUpdateDTO } from "taskadd/task";
     import type { TaskCategory } from "taskadd/task-category";
     import { FormCard, FormFloating, FormInput, FormTextarea, FormSubmit } from "@components/common/forms";
     import Modal from "@components/common/Modal.svelte";
@@ -13,10 +13,11 @@
     export let task: Task;
     export let show: boolean = false;
 
-    let name: string = task.name;
-    let description: string = task.description;
+    let name: Task["name"] = task.name;
+    let description: Task["description"] = task.description;
     let deadlineDate: string = helpers.date.getDateToString(task.deadlineDate);
     let deadlineTime: string = helpers.date.getTimeToString(task.deadlineDate);
+    let deadline: Task["deadlineDate"];
     $: deadline =  helpers.date.computeDeadlineDate(deadlineDate, deadlineTime);
     let categories: TaskCategory[] = task.categories;
     $: categoriesToAdd = filterCategoriesToAdd(categories);
@@ -52,7 +53,13 @@
     }
 
     const handleEdit = async() => {
-        const response = await api.task.update(task.id, name, description, deadline);
+        const dto: TaskUpdateDTO = {
+            id: task.id,
+            name,
+            description,
+            deadlineDate: deadline,
+        };
+        const response = await api.task.update(dto);
         if (response.statusCode === 200) {
             categoriesToAdd.forEach(async(categoryToAdd: TaskCategory) => {
                 await api.category.link(task.id, categoryToAdd.id);

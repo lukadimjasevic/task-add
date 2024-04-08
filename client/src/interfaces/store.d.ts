@@ -3,6 +3,7 @@ declare module "taskadd/store" {
     import type { Task } from "taskadd/task";
     import type { TaskCalendar } from "taskadd/task-calendar";
     import type { ExtendedTaskCategory } from "taskadd/task-category";
+    import type { TaskStatus } from "taskadd/task-status";
 
     export interface CustomStore extends Writable<T> {
         setValues(values: any): void;
@@ -38,5 +39,9 @@ declare module "taskadd/store" {
     export interface TaskCategoryStore extends CustomStore {
         setValues(categories: ExtendedTaskCategory[], tasks: Task[]): void;
         updateCount(tasks: Task[]): void;
+    }
+
+    export interface TaskStatusStore extends CustomStore {
+        setValues(statuses: TaskStatus[]): void;
     }
 }
