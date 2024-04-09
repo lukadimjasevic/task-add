@@ -19,8 +19,6 @@ const createTaskStatuses = (): TaskStatusStore => {
                 dataStatuses.push({
                     name: status.name,
                     color: status.color,
-                    createDate: status.createDate,
-                    updateDate: status.updateDate,
                 });
             });
             set({
