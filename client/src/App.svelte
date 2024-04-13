@@ -5,6 +5,7 @@
     import { pages } from "@pages/pages";
     import { LayoutApp } from "@components/common/layouts";
     import DataFetcher from "@components/common/DataFetcher.svelte";
+    import ToastsContainer from "@components/common/toasts/ToastsContainer.svelte";
   
     const publicPages = pages.filter((page: Page) => !page.protected);
     const protectedPages = pages.filter((page: Page) => page.protected);
@@ -31,3 +32,4 @@
         </Router>
     </LayoutApp>
 {/if}
+<ToastsContainer/>

@@ -24,6 +24,7 @@
             "./src/interfaces/task-category",
             "./src/interfaces/task-status",
             "./src/interfaces/toast",
+            "./src/interfaces/response",
         ],
         "paths": {
             "@api": ["./src/api/index.ts"],

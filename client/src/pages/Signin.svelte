@@ -3,6 +3,7 @@
     import { onMount } from "svelte";
     import { navigate } from "svelte-routing";
     import { api } from "@api";
+    import { helpers } from "@helpers";
     import { home, signup, taskUpcoming } from "@pages/pages";
     import { FormCard, FormFloating, FormInput, FormSubmit } from "@components/common/forms";
     import HomeIntroduction from "@components/common/HomeIntroduction.svelte";
@@ -19,10 +20,10 @@
 
     const handleSignin = async() => {
         const response = await api.auth.signin(email, password);
-        if (response.statusCode === 200) {
+        helpers.response.handleResponse(response, "Sign in", () => {
             auth.setCookie();
             navigate(taskUpcoming.path);
-        }
+        });
     }
 </script>
 

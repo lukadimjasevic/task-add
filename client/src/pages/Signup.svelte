@@ -3,6 +3,7 @@
     import { onMount } from "svelte";
     import { navigate } from "svelte-routing";
     import { api } from "@api";
+    import { helpers } from "@helpers";
     import { signin, home } from "@pages/pages";
     import { FormCard, FormFloating, FormInput, FormSubmit } from "@components/common/forms";
     import HomeIntroduction from "@components/common/HomeIntroduction.svelte";
@@ -21,9 +22,9 @@
 
     const handleSignup = async() => {
         const response = await api.auth.signup(email, username, password, passwordRetype);
-        if (response.statusCode === 201) {
+        helpers.response.handleResponse(response, "Sgin up", () => {
             navigate(signin.path);
-        }
+        });
     };
 </script>
 

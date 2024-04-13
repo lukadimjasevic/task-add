@@ -3,20 +3,19 @@
     import { userOTP } from "@stores/user-otp";
     import { auth } from "@stores/auth";
     import { api } from "@api";
+    import { helpers } from "@helpers";
     import { navigate } from "svelte-routing";
     import { home } from "@pages/pages";
     import Card from "@components/common/Card.svelte";
 
     const handleSignOut = async() => {
         const response = await api.auth.signout();
-        if (response.statusCode === 200) {
+        helpers.response.handleResponse(response, "Sign out", () => {
             user.reset();
             userOTP.reset();
             auth.reset();
             navigate(home.path);
-        }
-
-        return;
+        });
     }
 </script>
 

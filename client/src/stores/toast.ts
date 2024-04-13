@@ -13,7 +13,7 @@ const createToasts = (): ToastStore => {
             type,
             title,
             description,
-            duration: options && options.duration ? options.duration : 0,
+            duration: options && options.duration ? options.duration : 2000,
             ...options,
         }
     }
