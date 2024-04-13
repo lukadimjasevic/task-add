@@ -12,13 +12,15 @@
                 <span>Task management web application that helps you to organize your time</span>
             </div>
             <div class="w-75">
-                <button type="button" class="btn btn-secondary w-100" on:click={signup.beforeNavigate}>
+                <button type="button" class="btn btn-secondary w-100" on:click={() => signup.beforeNavigate()}>
                     Get Started
                 </button>
             </div>
             <div class="w-75 text-center">
                 <span>Already have an account?</span>
-                <button type="button" class="btn border-0" on:click={signin.beforeNavigate}>Sign in</button>
+                <button type="button" class="btn border-0" on:click={() => signin.beforeNavigate()}>
+                    Sign in
+                </button>
             </div>
         </div>
     </Card>
