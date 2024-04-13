@@ -1,6 +1,7 @@
 <script lang="ts">
     import { auth } from "@stores/auth";
     import { Sidebar } from "@components/common/sidebars";
+    import { ToastsContainer } from "@components/common/toasts";
     export let className: string = "";
 </script>
 
@@ -13,6 +14,7 @@
     <div class="w-100">
         <slot/>
     </div>
+    <ToastsContainer/>
 </div>
 
 <style>

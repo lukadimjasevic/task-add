@@ -7,12 +7,21 @@ $secondary: $gray-200;
 $tertiary: $gray-300;
 $quaternary: $gray-400;
 
+$toast-success-primary: $teal-100;
+$toast-success-secondary: $teal-600;
+$toast-error-primary: $red-100;
+$toast-error-secondary: $red-600;
+
 // Merge with existing $theme-colors map
 $theme-colors: map-merge($theme-colors, (
     "primary": $primary,
     "secondary": $secondary,
     "tertiary": $tertiary,
     "quaternary": $quaternary,
+    "toast-success-primary": $toast-success-primary,
+    "toast-success-secondary": $toast-success-secondary,
+    "toast-error-primary": $toast-error-primary,
+    "toast-error-secondary": $toast-error-secondary,
 ));
 
 // Set changes
