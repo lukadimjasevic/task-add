@@ -53,14 +53,15 @@
     }
 
     const handleEdit = async() => {
-        const dto: TaskUpdateDTO = {
-            id: task.id,
-            name,
-            description,
-            deadlineDate: deadline,
-        };
+        const dto: TaskUpdateDTO = { id: task.id, name, description };
+        if (deadline.getTime() > Date.now()) {
+            dto.deadlineDate = deadline;
+        } else {
+            deadlineDate = helpers.date.getDateToString(task.deadlineDate);
+            deadlineTime = helpers.date.getTimeToString(task.deadlineDate);
+        }
         const response = await api.task.update(dto);
-        if (response.statusCode === 200) {
+        helpers.response.handleResponse(response, "Task update", async() => {
             categoriesToAdd.forEach(async(categoryToAdd: TaskCategory) => {
                 await api.category.link(task.id, categoryToAdd.id);
             });
@@ -68,12 +69,10 @@
                 await api.category.unlink(task.id, categoryToRemove.id);
             });
             const fetchedTasks = await api.task.getAll();
-            if (fetchedTasks.statusCode === 200) {
-                show = false;
-                tasks.setValues(fetchedTasks.data);
-                taskCategories.updateCount($tasks.tasks);
-            }
-        }
+            tasks.setValues(fetchedTasks.data);
+            taskCategories.updateCount($tasks.tasks);
+            show = false;
+        });
     }
 
     const updateCategories = (updatedCategories: TaskCategory[]) => categories = updatedCategories;

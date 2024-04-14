@@ -10,7 +10,7 @@ const displayErrors = (errors: ResponseError[]): string => {
     return msg;
 }
 
-const handleResponse = (response: Response, toastTitle: Toast["title"], success: () => void) => {
+const handleResponse = (response: Response, toastTitle: Toast["title"], onSuccess: () => void) => {
     if (response.errorName) {
         if (response.errors) {
             toasts.error(`${toastTitle} failed`, displayErrors(response.errors));
@@ -20,7 +20,7 @@ const handleResponse = (response: Response, toastTitle: Toast["title"], success:
         return;
     }
     toasts.success(toastTitle, response.message);
-    success();
+    onSuccess();
     return;
 }
 

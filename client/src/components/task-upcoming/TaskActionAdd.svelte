@@ -23,23 +23,17 @@
     let categories: TaskCategory[] = [];
 
     const handleAdd = async() => {
-        const dto: TaskCreateDTO = {
-            name,
-            description,
-            deadlineDate: deadline,
-        };
+        const dto: TaskCreateDTO = { name, description, deadlineDate: deadline };
         const response = await api.task.create(dto);
-        if (response.statusCode === 201) {
+        helpers.response.handleResponse(response, "Task add", async() => {
             categories.forEach(async(category: TaskCategory) => {
                 await api.category.link(response.data.id, category.id);
             });
             const fetchedTasks = await api.task.getAll();
-            if (fetchedTasks.statusCode === 200) {
-                showModal = false;
-                tasks.setValues(fetchedTasks.data);
-                taskCategories.updateCount($tasks.tasks);
-            }
-        }
+            tasks.setValues(fetchedTasks.data);
+            taskCategories.updateCount($tasks.tasks);
+            showModal = false;
+        });
     }
 
     const updateCategories = (updatedCategories: TaskCategory[]) => categories = updatedCategories;

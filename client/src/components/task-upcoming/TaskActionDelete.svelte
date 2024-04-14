@@ -2,6 +2,7 @@
     import { tasks } from "@stores/task";
     import { taskCategories } from "@stores/task-category";
     import { api } from "@api";
+    import { helpers } from "@helpers";
     import type { Task, TaskDeleteDTO } from "taskadd/task";
     import Modal from "@components/common/Modal.svelte";
 
@@ -20,14 +21,12 @@
         tasksToDelete.forEach(async(task: Task) => {
             const dto: TaskDeleteDTO = { id: task.id };
             const response = await api.task.remove(dto);
-            if (response.statusCode === 200) {
+            helpers.response.handleResponse(response, "Task delete", async() => {
                 const fetchedTasks = await api.task.getAll();
-                if (fetchedTasks.statusCode === 200) {
-                    show = false;
-                    tasks.setValues(fetchedTasks.data);
-                    taskCategories.updateCount($tasks.tasks);
-                }
-            }
+                tasks.setValues(fetchedTasks.data);
+                taskCategories.updateCount($tasks.tasks);
+                show = false;
+            });
         });
     }
 </script>
