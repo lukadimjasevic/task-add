@@ -46,6 +46,10 @@ router.put("/", upload.single("avatar"), UserValidations.setUpdateRules(), valid
     const controllerUpdate = new UserControllerUpdate(req, res, next);
     controllerUpdate.update();
 });
+router.put("/password", UserValidations.setUpdatePasswordRules(), validate, isAuthenticated, (req: Request, res: Response, next: NextFunction) => {
+    const controllerUpdate = new UserControllerUpdate(req, res, next);
+    controllerUpdate.updatePassword();
+});
 router.delete("/", isAuthenticated, (req: Request, res: Response, next: NextFunction) => {
     const controllerDelete = new UserControllerDelete(req, res, next);
     controllerDelete.delete();

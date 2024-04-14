@@ -13,7 +13,11 @@ export interface UserUpdate {
     avatar?: Express.Multer.File;
     firstname?: string;
     lastname?: string;
-    password?: string;
+}
+
+export interface UserUpdatePassword {
+    passwordOld: string;
+    password: string;
 }
 
 export interface UserTest {

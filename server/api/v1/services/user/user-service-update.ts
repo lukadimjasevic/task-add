@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { BaseService } from "../base-service";
 import { Hash } from "../../helpers/hash";
-import { UserUpdate } from "../../interfaces/user.interface";
+import { UserUpdate, UserUpdatePassword } from "../../interfaces/user.interface";
+import { HttpErrorUnauthorized } from "../../helpers/error";
 import User from "../../../../database/models/user.model";
 
 
@@ -31,10 +32,23 @@ export class UserServiceUpdate extends BaseService {
             user.lastname = data.lastname;
         }
         
-        data.password !== undefined ? user.password = await Hash.create(data.password) : null;
-
         await user.save();
         
         return (await User.findByPk(user.id))!;
+    }
+
+    async updatePassword(): Promise<void> {
+        const user = this.getUser();
+        const data: UserUpdatePassword = this.req.body;
+
+        // Stored password and old password don't match
+        const hashMatch = await Hash.compare(data.passwordOld, user.password);
+        if (!hashMatch) {
+            throw new HttpErrorUnauthorized("Incorrect old password.");
+        }
+
+        user.password = await Hash.create(data.password);;
+        await user.save();
+        return;
     }
 }

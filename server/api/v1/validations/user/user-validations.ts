@@ -42,7 +42,18 @@ export class UserValidations extends UserRules {
             this.ruleAvatar(),
             this.ruleFirstname(),
             this.ruleLastname(),
-            this.rulePassword({ optional: true }),
+        ];
+    }
+
+    /**
+     * Method sets update password rules
+     * @returns Returns a list of update password rules of type ValidationChain
+     */
+    static setUpdatePasswordRules(): ValidationChain[] {
+        return [
+            this.rulePasswordOld(),
+            this.rulePassword(),
+            this.rulePasswordRetype(),
         ];
     }
 
