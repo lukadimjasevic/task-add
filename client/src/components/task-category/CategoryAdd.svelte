@@ -2,6 +2,7 @@
     import { tasks } from "@stores/task";
     import { taskCategories } from "@stores/task-category";
     import { api } from "@api";
+    import { helpers } from "@helpers";
     import Modal from "@components/common/Modal.svelte";
     import { FormCard, FormFloating, FormInput, FormSubmit } from "@components/common/forms";
 
@@ -12,13 +13,11 @@
 
     const handleAdd = async() => {
         const response = await api.category.create(name, color);
-        if (response.statusCode === 201) {
+        helpers.response.handleResponse(response, "Task category add", async() => {
             const fetchedCategories = await api.category.getAll();
-            if (fetchedCategories.statusCode === 200) {
-                showModal = false;
-                taskCategories.setValues(fetchedCategories.data, $tasks.tasks);
-            }
-        }
+            taskCategories.setValues(fetchedCategories.data, $tasks.tasks);
+            showModal = false;
+        });
     }
 
     const resetForm = () => {

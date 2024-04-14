@@ -2,6 +2,7 @@
     import { tasks } from "@stores/task";
     import { taskCategories } from "@stores/task-category";
     import { api } from "@api";
+    import { helpers } from "@helpers";
     import { taskCategory } from "@pages/pages";
     import type { ExtendedTaskCategory } from "taskadd/task-category";
     import Modal from "@components/common/Modal.svelte";
@@ -11,18 +12,14 @@
 
     const handleRemoveCategory = async() => {
         const response = await api.category.remove(category.id);
-        if (response.statusCode === 200) {
+        helpers.response.handleResponse(response, "Task category delete", async() => {
             const fetchedTasks = await api.task.getAll();
-            if (fetchedTasks.statusCode === 200) {
-                tasks.setValues(fetchedTasks.data);
-                const fetchedCategories = await api.category.getAll();
-                if (fetchedCategories.statusCode === 200) {
-                    taskCategories.setValues(fetchedCategories.data, $tasks.tasks);
-                    show = false;
-                    await taskCategory.beforeNavigate({ params: $taskCategories.categories[0].id });
-                }
-            }
-        }
+            const fetchedCategories = await api.category.getAll();
+            tasks.setValues(fetchedTasks.data);
+            taskCategories.setValues(fetchedCategories.data, $tasks.tasks);
+            show = false;
+            await taskCategory.beforeNavigate({ params: $taskCategories.categories[0].id });
+        });
     }
 </script>
 
