@@ -6,7 +6,7 @@
 
 <button
     type="submit"
-    class={"btn btn-primary " + className}
+    class={"btn btn-secondary " + className}
     {disabled}
     {form}>
     <slot/>
