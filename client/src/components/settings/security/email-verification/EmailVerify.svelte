@@ -3,6 +3,7 @@
     import { userOTP } from "@stores/user-otp";
     import { verificationCodeTimer } from "@stores/countdown-timer";
     import { api } from "@api";
+    import { helpers } from "@helpers";
     import { FormCard, FormSubmit } from "@components/common/forms";
     import { ButtonLink } from "@components/common/buttons";
     import Modal from "@components/common/Modal.svelte";
@@ -20,11 +21,11 @@
         }
 
         const response = await api.user.generateVerificationCode();
-        if (response.statusCode === 201) {
+        helpers.response.handleResponse(response, "Email verification", () => {
             const verificationCodeLastDate = new Date(response.data.verificationCodeLastDate);
             user.setVerificationCodeLastDate(verificationCodeLastDate);
             showModal = true;
-        }
+        });
 
         if (!$verificationCodeTimer.isRunning) {
             verificationCodeTimer.countDown(
@@ -37,16 +38,15 @@
 
     const handleValidateCode = async() => {
         const response = await api.user.validateVerificationCode($userOTP.token);
-        if (response.statusCode === 200) {
+        helpers.response.handleResponse(response, "Email verification", () => {
             showModal = false;
             user.setVerified(true);
-        }
-
+        });
         return;
     }
 </script>
 
-<button type="button" class="btn btn-primary" on:click={handleSendCode}>
+<button type="button" class="btn btn-secondary" on:click={handleSendCode}>
     Verify
 </button>
 

@@ -28,13 +28,13 @@ const updatePassword = async(dto: UserUpdatePasswordDTO): Promise<Response> => {
     });
 }
 
-const generateVerificationCode = async() => {
+const generateVerificationCode = async(): Promise<Response> => {
     return await request("/user/verify-generate", {
         method: "POST",
     });
 }
 
-const validateVerificationCode = async(code: string) => {
+const validateVerificationCode = async(code: string): Promise<Response> => {
     const data = { code };
     return await request("/user/verify-validate", {
         method: "POST",

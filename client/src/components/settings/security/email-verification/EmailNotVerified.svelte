@@ -3,8 +3,8 @@
     import { FormSwitch } from "@components/common/forms";
 </script>
 
-<div class="alert alert-info my-3" role="alert">
-    You can simply verify your account by clicking on <span class="badge text-bg-info">Verify Email</span>.
+<div class="alert alert-secondary my-3" role="alert">
+    You can simply verify your account by clicking on <span class="badge text-bg-quaternary">Verify</span>.
     An email with a 6-digit code will be sent to <b>{$user.email}</b>
     and all you need to do is rewrite the given code inside a pop-up window that will show.
 </div>
