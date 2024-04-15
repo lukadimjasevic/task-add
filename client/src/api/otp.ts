@@ -1,13 +1,12 @@
 import { request } from "./request";
-import type { Response } from "taskadd/response";
 
-const generate = async(): Promise<Response> => {
+const generate = async() => {
     return await request("/2fa/generate", {
         method: "POST",
     });
 }
 
-const enable = async(token: string): Promise<Response> => {
+const enable = async(token: string) => {
     const data = { token };
     return await request("/2fa/enable", {
         method: "POST",
@@ -15,13 +14,13 @@ const enable = async(token: string): Promise<Response> => {
     });
 };
 
-const get = async(): Promise<Response> => {
+const get = async() => {
     return await request("/2fa", {
         method: "GET",
     });
 }
 
-const disable = async(): Promise<Response> => {
+const disable = async() => {
     return await request("/2fa", {
         method: "DELETE",
     });

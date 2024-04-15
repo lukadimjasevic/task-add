@@ -1,14 +1,13 @@
 import { request } from "./request";
 import type { UserUpdatePasswordDTO } from "taskadd/user";
-import type { Response } from "taskadd/response";
 
-const get = async(): Promise<Response> => {
+const get = async() => {
     return await request("/user", {
         method: "GET",
     });
 }
 
-const update = async(avatar: File | null, firstname: string, lastname: string): Promise<Response> => {
+const update = async(avatar: File | null, firstname: string, lastname: string) => {
     const formData = new FormData();
     formData.append("avatar", avatar === null ? new File([], "") : avatar);
     formData.append("firstname", firstname === null ? "" : firstname);
@@ -21,26 +20,26 @@ const update = async(avatar: File | null, firstname: string, lastname: string): 
     });
 }
 
-const updatePassword = async(dto: UserUpdatePasswordDTO): Promise<Response> => {
+const updatePassword = async(dto: UserUpdatePasswordDTO) => {
     return await request("/user/password", {
         method: "PUT",
         body: JSON.stringify(dto),
     });
 }
 
-const remove = async(): Promise<Response> => {
+const remove = async() => {
     return await request("/user", {
         method: "DELETE",
     });
 }
 
-const generateVerificationCode = async(): Promise<Response> => {
+const generateVerificationCode = async() => {
     return await request("/user/verify-generate", {
         method: "POST",
     });
 }
 
-const validateVerificationCode = async(code: string): Promise<Response> => {
+const validateVerificationCode = async(code: string) => {
     const data = { code };
     return await request("/user/verify-validate", {
         method: "POST",

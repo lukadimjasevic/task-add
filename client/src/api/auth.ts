@@ -1,7 +1,6 @@
 import { request } from "./request";
-import type { Response } from "taskadd/response";
 
-const signup = async(email: string, username: string, password: string, passwordRetype: string): Promise<Response> => {
+const signup = async(email: string, username: string, password: string, passwordRetype: string) => {
     const data = { email, username, password, passwordRetype };
     return await request("/user/signup", {
         method: "POST",
@@ -9,7 +8,7 @@ const signup = async(email: string, username: string, password: string, password
     });
 };
 
-const signin = async(email: string, password: string): Promise<Response> => {
+const signin = async(email: string, password: string) => {
     const data = { email, password };
     return await request("/user/signin", {
         method: "POST",
@@ -17,7 +16,7 @@ const signin = async(email: string, password: string): Promise<Response> => {
     });
 };
 
-const signout = async(): Promise<Response> => {
+const signout = async() => {
     return await request("/user/signout", {
         method: "POST",
     });
