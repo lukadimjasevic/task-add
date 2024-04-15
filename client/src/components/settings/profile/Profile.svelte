@@ -65,11 +65,11 @@
                     </FormFile>
                 </div>
             </div>
+            <FormSubmit className="col-lg-3">Save profile</FormSubmit>
             <button type="button" class="btn btn-outline-danger col-lg-3" on:click={handleAvatarRemove}>
                 Remove photo
             </button>
             <ProfileDelete/>
-            <FormSubmit className="col-lg-3">Save profile</FormSubmit>
         </FormCard>
     </div>
 </Card>
