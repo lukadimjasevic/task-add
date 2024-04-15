@@ -6,7 +6,9 @@
     "type": "commonjs",
     "scripts": {
         "build": "npx tsc",
-        "start": "node dist/server.js",
+        "start:dev": "NODE_ENV=development node dist/server.js",
+        "start:test": "NODE_ENV=test node dist/server.js",
+        "start:prod": "NODE_ENV=production node dist/server.js",
         "init:config": "npx ts-node database/config/initialize",
         "dev": "NODE_ENV=development nodemon ./server.ts",
         "test": "NODE_ENV=test nodemon ./server.ts",
