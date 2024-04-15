@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 
 dotenv.config();
-const configPath = path.resolve("server/database/config", "config.json");
+const configPath = path.resolve("database/config", "config.json");
 const config = {
     development: {
         url: process.env.DEV_DB_URL, 
