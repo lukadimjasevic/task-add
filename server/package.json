@@ -6,8 +6,8 @@
     "type": "commonjs",
     "scripts": {
         "build": "npx tsc",
-        "start": "node dist/server/server.js",
-        "init:config": "npx ts-node ./database/config/initialize",
+        "start": "node dist/server.js",
+        "init:config": "npx ts-node database/config/initialize",
         "dev": "NODE_ENV=development nodemon ./server.ts",
         "test": "NODE_ENV=test nodemon ./server.ts",
         "prod": "NODE_ENV=production nodemon ./server.ts",
