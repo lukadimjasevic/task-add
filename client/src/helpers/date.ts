@@ -16,8 +16,8 @@ const getDateToString = (date: Date = new Date()): string => {
 }
 
 const getTimeToString = (date: Date): string => {
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
     return `${hours}:${minutes}`;
 }
 
@@ -54,6 +54,14 @@ const getCalendarLabel = (date: Date, selector: TaskCalendar["selector"]): strin
     return "";
 }
 
+const computeDeadlineDate = (date: string, time: string) => {
+    const deadlineDate = new Date(date);
+    const [hours, minutes] = time.split(":");
+    deadlineDate.setHours(parseInt(hours));
+    deadlineDate.setMinutes(parseInt(minutes));
+    return deadlineDate;
+}
+
 export const date = {
     getDefaultDate,
     getDateToString,
@@ -62,4 +70,5 @@ export const date = {
     getHourToString,
     getShortWeekday,
     getCalendarLabel,
+    computeDeadlineDate,
 };

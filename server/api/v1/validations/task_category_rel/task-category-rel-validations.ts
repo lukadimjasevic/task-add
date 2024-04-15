@@ -26,7 +26,8 @@ export class TaskCategoryRelationValidations extends TaskCategoryRelationRules {
      */
     static setDeleteRules(): ValidationChain[] {
         return [
-            this.ruleId(),
+            this.ruleTaskId(),
+            this.ruleCategoryId(),
         ];
     }
 }

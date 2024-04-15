@@ -2,6 +2,7 @@
     import { user } from "@stores/user";
     import { userOTP } from "@stores/user-otp";
     import { api } from "@api";
+    import { helpers } from "@helpers";
     import { FormCard, FormSubmit } from "@components/common/forms";
     import Modal from "@components/common/Modal.svelte";
     import OTPInput from "@components/settings/security/OTPInput.svelte";
@@ -27,14 +28,14 @@
 
     const handleEnableOTP = async() => {
         const response = await api.otp.enable($userOTP.token);
-        if (response.statusCode === 201) {
+        helpers.response.handleResponse(response, "Enable 2FA", () => {
             showModal = false;
             user.setOtpEnabled(true);
-        }
+        });
     }
 </script>
 
-<button type="button" class="btn btn-primary" on:click={handleGenerateOTP}>
+<button type="button" class="btn btn-secondary col-lg-3" on:click={handleGenerateOTP}>
     Enable 2FA
 </button>
 

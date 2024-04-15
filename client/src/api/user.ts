@@ -1,4 +1,5 @@
 import { request } from "./request";
+import type { UserUpdatePasswordDTO } from "taskadd/user";
 
 const get = async() => {
     return await request("/user", {
@@ -19,6 +20,19 @@ const update = async(avatar: File | null, firstname: string, lastname: string) =
     });
 }
 
+const updatePassword = async(dto: UserUpdatePasswordDTO) => {
+    return await request("/user/password", {
+        method: "PUT",
+        body: JSON.stringify(dto),
+    });
+}
+
+const remove = async() => {
+    return await request("/user", {
+        method: "DELETE",
+    });
+}
+
 const generateVerificationCode = async() => {
     return await request("/user/verify-generate", {
         method: "POST",
@@ -36,6 +50,8 @@ const validateVerificationCode = async(code: string) => {
 export const user = {
     get,
     update,
+    updatePassword,
+    remove,
     generateVerificationCode,
     validateVerificationCode,
 };

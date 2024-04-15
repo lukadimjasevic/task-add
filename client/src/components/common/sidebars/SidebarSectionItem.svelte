@@ -1,9 +1,9 @@
 <div>
     <button 
         type="button" 
-        class="btn btn-outline-tertiary border-0 text-dark w-100 text-start d-flex justify-content-between gap-3" 
+        class="btn btn-outline-tertiary border-0 text-dark w-100 text-start d-flex justify-content-between" 
         on:click>
-        <div>
+        <div class="d-flex gap-3">
             <slot name="icon"/>
             <slot name="label"/>
         </div>

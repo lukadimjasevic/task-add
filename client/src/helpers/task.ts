@@ -1,4 +1,5 @@
 import type { Task } from "taskadd/task";
+import type { TaskCategory } from "taskadd/task-category";
 
 const filterTasksToday = (tasks: Task[]) => {
     const todayStart = new Date();
@@ -64,6 +65,20 @@ const filterTasksByWeek = (tasks: Task[], weekStart: Date): Task[] => {
     );
 }
 
+const filterTasksByCategory = (tasks: Task[], category: TaskCategory): Task[] => {
+    const tasksByCategory: Task[] = [];
+    tasks.forEach((task: Task) => {
+        task.categories.forEach((taskCategory: TaskCategory) => {
+            if (taskCategory.id === category.id) tasksByCategory.push(task);
+        });
+    });
+    return tasksByCategory;
+}
+
+const filterTasksBySelected = (tasks: Task[]) => {
+    return tasks.filter((task: Task) => task.selected);
+}
+
 export const task = {
     filterTasksToday,
     filterTasksTomorrow,
@@ -71,4 +86,6 @@ export const task = {
     filterTasksFuture,
     filterTasksByDate,
     filterTasksByWeek,
+    filterTasksByCategory,
+    filterTasksBySelected,
 }

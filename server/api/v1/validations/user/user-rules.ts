@@ -31,15 +31,11 @@ export class UserRules {
      * Rule method for password field inside body request
      * @returns Returns an express-validator ValidationChain
      */
-    static rulePassword(options={ optional: false }): ValidationChain {
-        const rule = body("password")
+    static rulePassword(): ValidationChain {
+        return body("password")
             .isString().withMessage("Password must be a string")
-            .isLength({ min: 8 }).withMessage("Password must be minimum of 8 characters");
-            
-        if (!options.optional) {
-            return rule.notEmpty().withMessage("Password is required");
-        }
-        return rule.optional();
+            .isLength({ min: 8 }).withMessage("Password must be minimum of 8 characters")
+            .notEmpty().withMessage("Password is required");
     }
 
     /**
@@ -50,6 +46,17 @@ export class UserRules {
         return body("passwordRetype")
             .notEmpty().withMessage("Retype password is required")
             .custom((value, { req }) => value === req.body.password).withMessage("The passwords do not match");
+    }
+
+    /**
+     * Rule method for old password field inside body request
+     * @returns Returns an express-validator ValidationChain
+     */
+    static rulePasswordOld(): ValidationChain {
+        return body("passwordOld")
+            .isString().withMessage("Old password must be a string")
+            .isLength({ min: 8 }).withMessage("Old password must be minimum of 8 characters")
+            .notEmpty().withMessage("Old password is required");
     }
 
     /**

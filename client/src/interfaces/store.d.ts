@@ -2,6 +2,9 @@ declare module "taskadd/store" {
     import type { Writable } from "svelte/store";
     import type { Task } from "taskadd/task";
     import type { TaskCalendar } from "taskadd/task-calendar";
+    import type { ExtendedTaskCategory } from "taskadd/task-category";
+    import type { TaskStatus } from "taskadd/task-status";
+    import type { Toast, ToastOptions } from "taskadd/toast";
 
     export interface CustomStore extends Writable<T> {
         setValues(values: any): void;
@@ -32,5 +35,21 @@ declare module "taskadd/store" {
     export interface TaskCalendarStore extends CustomStore {
         setValues(selector: TaskCalendar["selector"]): void;
         toggleDate(offset: number): void;
+    }
+
+    export interface TaskCategoryStore extends CustomStore {
+        setValues(categories: ExtendedTaskCategory[], tasks: Task[]): void;
+        updateCount(tasks: Task[]): void;
+    }
+
+    export interface TaskStatusStore extends CustomStore {
+        setValues(statuses: TaskStatus[]): void;
+    }
+
+    export interface ToastStore extends Writable<T> {
+        add(type: Toast["type"], title: Toast["title"], description: Toast["description"], options: ToastOptions): void;
+        remove(toast: Toast): void;
+        success(title: Toast["title"], description: Toast["description"], options?: ToastOptions): void;
+        error(title: Toast["title"], description: Toast["description"], options?: ToastOptions): void;
     }
 }

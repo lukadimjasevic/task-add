@@ -9,16 +9,18 @@
     <span>Two-Factor Authentication</span>
     <hr class="hr my-2" />
     {#if !$user.verified}
-        <div class="alert alert-info my-3" role="alert">
+        <div class="alert alert-secondary my-3" role="alert">
             <span>To enable Two-Factor Authentication your account
             <b>{$user.email}</b> must be verified first.</span>
         </div>
     {:else}
-        {#if !$user.otpEnabled}
-            <Enable2FA />
-        {:else}
-            <Edit2FA />
-            <Disable2FA />
-        {/if}
+        <div class="d-flex flex-column gap-2 row g-0">
+            {#if !$user.otpEnabled}
+                <Enable2FA />
+            {:else}
+                <Edit2FA />
+                <Disable2FA />
+            {/if}
+        </div>
     {/if}
 </div>

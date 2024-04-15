@@ -1,5 +1,6 @@
 import { user } from "@stores/user";
 import { tasks } from "@stores/task";
+import { taskCategories } from "@stores/task-category";
 import { api } from "@api";
 import { navigate } from "svelte-routing";
 import Home from "@pages/Home.svelte";
@@ -9,8 +10,9 @@ import Signout from "@pages/Signout.svelte";
 import TaskUpcoming from "@pages/TaskUpcoming.svelte";
 import TaskToday from "@pages/TaskToday.svelte";
 import TaskCalendar from "@pages/TaskCalendar.svelte";
+import TaskCategory from "@pages/TaskCategory.svelte";
 import Settings from "./Settings.svelte";
-import type { Page } from "taskadd/page";
+import type { Page, NavigateOptions } from "taskadd/page";
 
 export const home: Page = {
     name: "TaskAdd",
@@ -91,6 +93,22 @@ export const taskCalendar: Page = {
     }
 }
 
+export const taskCategory: Page = {
+    name: "Task Category",
+    path: "/task-category/:categoryId",
+    component: TaskCategory,
+    protected: true,
+    beforeNavigate: async(options: NavigateOptions) => {
+        const responseTasks = await api.task.getAll();
+        tasks.resetSelected();
+        tasks.setValues(responseTasks.data);
+        const responseTaskCategories = await api.category.getAll();
+        taskCategories.setValues(responseTaskCategories.data, responseTasks.data);
+        const route = taskCategory.path.replace(":categoryId", options.params);
+        navigate(route);
+    }
+}
+
 export const settings: Page = {
     name: "Settings",
     path: "/settings",
@@ -111,5 +129,6 @@ export const pages = [
     taskUpcoming,
     taskToday,
     taskCalendar,
+    taskCategory,
     settings,
 ];

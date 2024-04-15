@@ -14,7 +14,11 @@ export class TaskCategoryRelationServiceCreate extends BaseService {
 
     async createRelation(): Promise<TaskTaskCategoryRel> {
         const user = this.getUser();
-        const data: TaskCategoryRelation = this.req.body;
+        const rawData = this.req.query;
+        const data: TaskCategoryRelation = {
+            taskId: parseInt(rawData.taskId as string),
+            categoryId: parseInt(rawData.categoryId as string),
+        }
 
         // Finds requested task
         const task = await Task.findOne({ where: { id: data.taskId, userId: user.id }});

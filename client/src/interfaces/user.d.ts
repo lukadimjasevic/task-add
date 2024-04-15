@@ -10,4 +10,10 @@ declare module "taskadd/user" {
         otpEnabled: boolean | null;
         otpGenerated: boolean | null;
     }
+
+    export interface UserUpdatePasswordDTO {
+        passwordOld: string;
+        password: string;
+        passwordRetype: string;
+    }
 }

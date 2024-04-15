@@ -1,12 +1,17 @@
 <script lang="ts">
-    import { fly } from "svelte/transition"
+    import { fly } from "svelte/transition";
+    import { createEventDispatcher } from "svelte";
     import { ButtonClose } from "@components/common/buttons";
 
     export let show: boolean = false;
     export let className: string = "";
+    export let useFooterButtons: boolean = true;
+
+    const dispatch = createEventDispatcher();
 
     const handleClose = () => {
         show = false;
+        dispatch("close");
     }
 </script>
 
@@ -21,7 +26,9 @@
                 <slot name="body"/>
             </div>
             <div class="custom-modal-footer m-3">
-                <button type="button" class="btn btn-secondary" on:click={handleClose}>Close</button>
+                {#if useFooterButtons}
+                    <button type="button" class="btn btn-secondary" on:click={handleClose}>Close</button>
+                {/if}
                 <slot name="footer"/>
             </div>
         </div>
@@ -31,7 +38,7 @@
 <style>
     .custom-modal {
         position: fixed;
-        z-index: 1;
+        z-index: 2;
         left: 0;
         top: 0;
         width: 100%;

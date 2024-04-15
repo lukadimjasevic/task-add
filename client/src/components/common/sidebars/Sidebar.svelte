@@ -5,6 +5,8 @@
     import { ButtonMenu, ButtonClose } from "@components/common/buttons";
     import { taskUpcoming, taskToday, taskCalendar, settings, signout } from "@pages/pages";
     import { SidebarSection, SidebarSectionItem } from "@components/common/sidebars";
+    import CategoriesSidebarList from "@components/task-category/CategoriesSidebarList.svelte";
+    import CategoryAdd from "@components/task-category/CategoryAdd.svelte";
 </script>
 
 {#if $sidebar}
@@ -19,17 +21,17 @@
                 <hr class="hr" />
                 <SidebarSection>
                     <small slot="label"><b>Tasks</b></small>
-                    <SidebarSectionItem on:click={taskUpcoming.beforeNavigate}>
+                    <SidebarSectionItem on:click={() => taskUpcoming.beforeNavigate()}>
                         <i slot="icon" class="bi bi-chevron-double-right"></i>
                         <span slot="label">{taskUpcoming.name}</span>
                         <span slot="count">{$tasks.countUpcoming}</span>
                     </SidebarSectionItem>
-                    <SidebarSectionItem on:click={taskToday.beforeNavigate}>
+                    <SidebarSectionItem on:click={() => taskToday.beforeNavigate()}>
                         <i slot="icon" class="bi bi-list-check"></i>
                         <span slot="label">{taskToday.name}</span>
                         <span slot="count">{$tasks.countToday}</span>
                     </SidebarSectionItem>
-                    <SidebarSectionItem on:click={taskCalendar.beforeNavigate}>
+                    <SidebarSectionItem on:click={() => taskCalendar.beforeNavigate()}>
                         <i slot="icon" class="bi bi-calendar3"></i>
                         <span slot="label">{taskCalendar.name}</span>
                     </SidebarSectionItem>
@@ -37,10 +39,8 @@
                 <hr class="hr" />
                 <SidebarSection>
                     <small slot="label"><b>Categories</b></small>
-                    <SidebarSectionItem>
-                        <i slot="icon" class="bi bi-plus-lg"></i>
-                        <span slot="label">Add New Category</span>
-                    </SidebarSectionItem>
+                    <CategoriesSidebarList/>
+                    <CategoryAdd/>
                 </SidebarSection>
                 <hr class="hr" />
             </div>
@@ -48,11 +48,11 @@
 
         <div>
             <SidebarSection>
-                <SidebarSectionItem on:click={settings.beforeNavigate}>
+                <SidebarSectionItem on:click={() => settings.beforeNavigate()}>
                     <i slot="icon" class="bi bi-sliders2"></i>
                     <span slot="label">{settings.name}</span>
                 </SidebarSectionItem>
-                <SidebarSectionItem on:click={signout.beforeNavigate}>
+                <SidebarSectionItem on:click={() => signout.beforeNavigate()}>
                     <i slot="icon" class="bi bi-box-arrow-right"></i>
                     <span slot="label">{signout.name}</span>
                 </SidebarSectionItem>

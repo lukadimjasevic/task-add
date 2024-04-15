@@ -1,4 +1,7 @@
 declare module "taskadd/task" {
+    import type { TaskCategory } from "taskadd/task-category";
+    import type { TaskStatus } from "taskadd/task-status";
+
     export interface TasksFrame {
         tasks: Task[];
         countActive: number;
@@ -23,16 +26,26 @@ declare module "taskadd/task" {
         selected: boolean;
     }
 
-    export interface TaskStatus {
-        color: string;
-        name: string;
+    export interface TaskGetDTO {
+        id: Task["id"];
     }
 
-    export interface TaskCategory {
-        color: string;
-        name: string;
-        createDate: Date;
-        updateDate: Date;
+    export interface TaskCreateDTO {
+        name: Task["name"];
+        description: Task["description"];
+        deadlineDate: Task["deadlineDate"];
+    }
+
+    export interface TaskUpdateDTO {
+        id: Task["id"];
+        name?: Task["name"];
+        description?: Task["description"];
+        deadlineDate?: Task["deadlineDate"];
+        status?: TaskStatus["name"];
+    }
+
+    export interface TaskDeleteDTO {
+        id: Task["id"];
     }
 
     export interface TaskList {

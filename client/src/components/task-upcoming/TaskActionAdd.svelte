@@ -1,37 +1,49 @@
 <script lang="ts">
     import { tasks } from "@stores/task";
+    import { taskCategories } from "@stores/task-category";
     import { api } from "@api";
     import { helpers } from "@helpers";
+    import type { Task, TaskCreateDTO } from "taskadd/task";
+    import type { TaskCategory } from "taskadd/task-category";
     import Modal from "@components/common/Modal.svelte";
     import { FormCard, FormFloating, FormInput, FormTextarea, FormSubmit } from "@components/common/forms";
+    import CategoriesDropdown from "@components/task-category/CategoriesDropdown.svelte";
+    import CategoriesList from "@components/task-category/CategoriesUnlink.svelte";
 
     export let defaultDate: Date = new Date(Date.now() + 60 * 1000);
 
-    const computeDeadlineDate = (date: string, time: string) => {
-        const deadlineDate = new Date(date);
-        const [hours, minutes] = time.split(":");
-        deadlineDate.setHours(parseInt(hours));
-        deadlineDate.setMinutes(parseInt(minutes));
-        return deadlineDate;
-    }
-
     let showModal: boolean = false;
 
-    let taskName: string;
-    let taskDescription: string;
-    let taskDeadlineDateStr: string = helpers.date.getDateToString(defaultDate);
-    let taskDeadlineDateTime: string = helpers.date.getTimeToString(defaultDate); 
-    $: taskDeadlineDate = computeDeadlineDate(taskDeadlineDateStr, taskDeadlineDateTime);
+    let name: Task["name"];
+    let description: Task["description"];
+    let deadlineDate: string = helpers.date.getDateToString(defaultDate);
+    let deadlineTime: string = helpers.date.getTimeToString(defaultDate);
+    let deadline: Task["deadlineDate"];
+    $: deadline = helpers.date.computeDeadlineDate(deadlineDate, deadlineTime);
+    let categories: TaskCategory[] = [];
 
     const handleAdd = async() => {
-        const response = await api.task.create(taskName, taskDescription, taskDeadlineDate);
-        if (response.statusCode === 201) {
+        const dto: TaskCreateDTO = { name, description, deadlineDate: deadline };
+        const response = await api.task.create(dto);
+        helpers.response.handleResponse(response, "Task add", async() => {
+            categories.forEach(async(category: TaskCategory) => {
+                await api.category.link(response.data.id, category.id);
+            });
             const fetchedTasks = await api.task.getAll();
-            if (fetchedTasks.statusCode === 200) {
-                showModal = false;
-                tasks.setValues(fetchedTasks.data);
-            }
-        }
+            tasks.setValues(fetchedTasks.data);
+            taskCategories.updateCount($tasks.tasks);
+            showModal = false;
+        });
+    }
+
+    const updateCategories = (updatedCategories: TaskCategory[]) => categories = updatedCategories;
+
+    const resetForm = () => {
+        name = "";
+        description = "";
+        deadlineDate = helpers.date.getDateToString(defaultDate);
+        deadlineTime = helpers.date.getTimeToString(defaultDate);
+        categories = [];
     }
 </script>
 
@@ -42,27 +54,31 @@
     <span>Add New Task</span>
 </button>
 
-<Modal bind:show={showModal}>
+<Modal bind:show={showModal} on:close={resetForm}>
     <span slot="title">Add Task</span>
     <div slot="body" class="row">
         <div class="col-12">
             <FormCard id="formTaskAdd" on:submit={handleAdd} className="d-flex flex-column gap-2">
-                <FormFloating id="taskName">
-                    <FormInput bind:value={taskName} placeholder="Name" required={true} min={4} max={64} />
+                <CategoriesList bind:categories={categories} {updateCategories}/>
+                <FormFloating id="name">
+                    <FormInput bind:value={name} placeholder="Name" required={true} min={4} max={64} />
                     <span slot="label">Name</span>
                 </FormFloating>
-                <FormFloating id="taskDescription">
-                    <FormTextarea bind:value={taskDescription} placeholder="Description" />
+                <FormFloating id="description">
+                    <FormTextarea bind:value={description} placeholder="Description" />
                     <span slot="label">Description</span>
                 </FormFloating>
-                <FormFloating id="taskDeadlineDate">
-                    <FormInput type="date" bind:value={taskDeadlineDateStr} placeholder="Deadline Date" required={true} />
-                    <span slot="label">Deadline Date</span>
-                </FormFloating>
-                <FormFloating id="taskDeadlineTime">
-                    <FormInput type="time" bind:value={taskDeadlineDateTime} placeholder="Deadline Time" required={true} />
-                    <span slot="label">Deadline Time</span>
-                </FormFloating>
+                <div class="row g-0 gap-2">
+                    <FormFloating id="deadlineDate" className="col">
+                        <FormInput type="date" bind:value={deadlineDate} placeholder="Deadline Date" required={true} />
+                        <span slot="label">Deadline Date</span>
+                    </FormFloating>
+                    <FormFloating id="deadlineTime" className="col">
+                        <FormInput type="time" bind:value={deadlineTime} placeholder="Deadline Time" required={true} />
+                        <span slot="label">Deadline Time</span>
+                    </FormFloating>
+                </div>
+                <CategoriesDropdown bind:categoriesUsed={categories} {updateCategories}/>
             </FormCard>
         </div>
     </div>

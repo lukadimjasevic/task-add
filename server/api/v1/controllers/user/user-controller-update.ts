@@ -20,4 +20,14 @@ export class UserControllerUpdate extends BaseController {
             return this.next(error);
         }
     }
+
+    async updatePassword() {
+        try {
+            await this.services.updatePassword();
+            return this.responses.responseOK("Profile password updated successfully");
+        } catch (error: any) {
+            console.log(error);
+            return this.next(error);
+        }
+    }
 }

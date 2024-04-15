@@ -1,7 +1,9 @@
 <script lang="ts">
     import { tasks } from "@stores/task";
+    import { taskCategories } from "@stores/task-category";
     import { api } from "@api";
-    import type { Task } from "taskadd/task";
+    import { helpers } from "@helpers";
+    import type { Task, TaskDeleteDTO } from "taskadd/task";
     import Modal from "@components/common/Modal.svelte";
 
     const findSelectedTasks = (tasks: Task[]): Task[] => {
@@ -17,14 +19,14 @@
 
     const handleDeleteAction = () => {
         tasksToDelete.forEach(async(task: Task) => {
-            const response = await api.task.remove(task.id);
-            if (response.statusCode === 200) {
+            const dto: TaskDeleteDTO = { id: task.id };
+            const response = await api.task.remove(dto);
+            helpers.response.handleResponse(response, "Task delete", async() => {
                 const fetchedTasks = await api.task.getAll();
-                if (fetchedTasks.statusCode === 200) {
-                    show = false;
-                    tasks.setValues(fetchedTasks.data);
-                }
-            }
+                tasks.setValues(fetchedTasks.data);
+                taskCategories.updateCount($tasks.tasks);
+                show = false;
+            });
         });
     }
 </script>

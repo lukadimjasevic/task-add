@@ -1,23 +1,22 @@
 <script lang="ts">
+    import { helpers } from "@helpers";
     import { Dropdown, DropdownInner, DropdownItem } from "@components/common/dropdowns";
     import type { Task } from "taskadd/task";
     import Separator from "@components/common/Separator.svelte";
     import TaskActionEdit from "./TaskActionEdit.svelte";
     import TaskActionDelete from "./TaskActionDelete.svelte";
+    import TaskStatuses from "./TaskStatuses.svelte";
 
     const findSelectedTask = (): Task => {
         return tasksFiltered.find((task: Task) => task.selected)!;
-    }
-
-    const countSelectedFiltered = (filteredTasks: Task[]): number => {
-        return filteredTasks.filter((task: Task) => task.selected).length;
     }
 
     export let tasksFiltered: Task[];
 
     let showEditModal: boolean = false;
     let showDeleteModal: boolean = false;
-    $: countSelected = countSelectedFiltered(tasksFiltered);
+    $: tasksSelected = helpers.task.filterTasksBySelected(tasksFiltered);
+    $: countSelected = tasksSelected.length;
 </script>
 
 {#if countSelected > 0}
@@ -31,9 +30,7 @@
             <DropdownInner>
                 <span slot="label">Mark as</span>
                 <div slot="dropdown-items">
-                    <DropdownItem>Completed</DropdownItem>
-                    <DropdownItem>Active</DropdownItem>
-                    <DropdownItem>Cancelled</DropdownItem>
+                    <TaskStatuses tasksFiltered={tasksSelected} />
                 </div>
             </DropdownInner>
             <Separator/>

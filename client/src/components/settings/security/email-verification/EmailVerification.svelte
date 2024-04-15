@@ -5,7 +5,7 @@
     import EmailVerified from "./EmailVerified.svelte";
 </script>
 
-<div id="verification" class="mb-5">
+<div id="verification">
     <span>Email Verification</span>
     <hr class="hr my-2" />
     {#if !$user.verified}

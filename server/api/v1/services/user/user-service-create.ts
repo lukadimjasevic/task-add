@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { BaseService } from "../base-service";
 import { Hash } from "../../helpers/hash";
 import { SessionUser } from "../../helpers/session";
+import { Mailer } from "../../helpers/mailer";
 import { UserSignup, UserSignin } from "../../interfaces/user.interface";
 import { SessionUserData } from "../../interfaces/types/express-session";
 import { HttpErrorUnauthorized, HttpErrorConflict, HttpErrorNotFound, HttpErrorBadRequest } from "../../helpers/error";
@@ -65,10 +66,16 @@ export class UserServiceCreate extends BaseService {
             }
             return code;
         };
+        const code = generateCode();
 
-        user.verificationCode = generateCode();
+        user.verificationCode = code;
         user.verificationCodeLastDate = new Date();
         await user.save();
+        await Mailer.sendMail({
+            to: user.email,
+            subject: "TaskAdd verification code",
+            text: `Hi ${user.email},\nYour TaskAdd verification code is ${code}`,
+        });
         return user.verificationCodeLastDate;
     }
 

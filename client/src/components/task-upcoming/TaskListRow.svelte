@@ -3,6 +3,7 @@
     import type { Task } from "taskadd/task";
     import { FormCheckbox } from "@components/common/forms";
     import TaskActionEdit from "./TaskActionEdit.svelte";
+    import CategoriesView from "@components/task-category/CategoriesView.svelte";
     
     export let task: Task;
     export let checkedAll: boolean;
@@ -27,9 +28,7 @@
         <span>{task.name}</span>
     </td>
     <td>
-        {#each task.categories as category}
-            <span>{category.name}</span>
-        {/each}
+        <CategoriesView categories={task.categories}/>
     </td>
     <td>
         <i class="bi bi-calendar-x pe-2 h5"></i>
