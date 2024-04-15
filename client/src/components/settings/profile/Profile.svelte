@@ -4,6 +4,7 @@
     import { helpers } from "@helpers";
     import Card from "@components/common/Card.svelte";
     import { FormCard, FormFloating, FormInput, FormFile, FormSubmit } from "@components/common/forms";
+    import ProfileDelete from "@components/settings/profile/ProfileDelete.svelte";
 
     let avatar: File | null = null;
     let avatarUrl: string | null = $user.avatar ? `data:image/jpg;base64,${$user.avatar}` : null;
@@ -67,6 +68,7 @@
             <button type="button" class="btn btn-outline-danger col-lg-3" on:click={handleAvatarRemove}>
                 Remove photo
             </button>
+            <ProfileDelete/>
             <FormSubmit className="col-lg-3">Save profile</FormSubmit>
         </FormCard>
     </div>

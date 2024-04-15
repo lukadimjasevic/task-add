@@ -28,6 +28,12 @@ const updatePassword = async(dto: UserUpdatePasswordDTO): Promise<Response> => {
     });
 }
 
+const remove = async(): Promise<Response> => {
+    return await request("/user", {
+        method: "DELETE",
+    });
+}
+
 const generateVerificationCode = async(): Promise<Response> => {
     return await request("/user/verify-generate", {
         method: "POST",
@@ -46,6 +52,7 @@ export const user = {
     get,
     update,
     updatePassword,
+    remove,
     generateVerificationCode,
     validateVerificationCode,
 };
