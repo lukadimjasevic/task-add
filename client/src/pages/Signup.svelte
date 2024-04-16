@@ -1,5 +1,6 @@
 <script lang="ts">
     import { auth } from "@stores/auth";
+    import { user } from "@stores/user";
     import { onMount } from "svelte";
     import { navigate } from "svelte-routing";
     import { api } from "@api";
@@ -8,6 +9,7 @@
     import { FormCard, FormFloating, FormInput, FormSubmit } from "@components/common/forms";
     import HomeIntroduction from "@components/common/HomeIntroduction.svelte";
     import Card from "@components/common/Card.svelte";
+    import EmailVerify from "@components/common/EmailVerify.svelte";
 
     onMount(() => {
         if ($auth.cookie) {
@@ -19,11 +21,13 @@
     let username: string;
     let password: string;
     let passwordRetype: string;
+    let showVerifyModal: boolean = false;
 
     const handleSignup = async() => {
         const response = await api.auth.signup(email, username, password, passwordRetype);
-        helpers.response.handleResponse(response, "Sgin up", () => {
-            navigate(signin.path);
+        helpers.response.handleResponse(response, "Sign up", () => {
+            user.setValues(response.data);
+            showVerifyModal = true;
         });
     };
 </script>
@@ -64,3 +68,4 @@
         </div>
     </Card>
 </HomeIntroduction>
+<EmailVerify bind:show={showVerifyModal} bind:email bind:password />

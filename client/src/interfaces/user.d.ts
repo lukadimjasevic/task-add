@@ -16,4 +16,13 @@ declare module "taskadd/user" {
         password: string;
         passwordRetype: string;
     }
+
+    export interface UserVerificationGenerateDTO {
+        email: string;
+        password: string;
+    }
+
+    export interface UserVerificationValidateDTO extends UserVerificationGenerateDTO {
+        code: string;
+    }
 }

@@ -1,29 +1,33 @@
 <script lang="ts">
     import { auth } from "@stores/auth";
     import { onMount } from "svelte";
-    import { navigate } from "svelte-routing";
     import { api } from "@api";
     import { helpers } from "@helpers";
     import { home, signup, taskUpcoming } from "@pages/pages";
     import { FormCard, FormFloating, FormInput, FormSubmit } from "@components/common/forms";
     import HomeIntroduction from "@components/common/HomeIntroduction.svelte";
     import Card from "@components/common/Card.svelte";
+    import EmailVerify from "@components/common/EmailVerify.svelte";
 
     onMount(() => {
         if ($auth.cookie) {
-            navigate(home.path);
+            home.beforeNavigate();
         }
     });
 
     let email: string;
     let password: string;
+    let showVerifyModal: boolean = false;
 
     const handleSignin = async() => {
         const response = await api.auth.signin(email, password);
-        helpers.response.handleResponse(response, "Sign in", () => {
+        helpers.response.handleResponse(response, "Sign in", async() => {
             auth.setCookie();
-            navigate(taskUpcoming.path);
+            await taskUpcoming.beforeNavigate();
         });
+        if (response.statusCode === 403) {
+            showVerifyModal = true;
+        }
     }
 </script>
 
@@ -55,3 +59,4 @@
         </div>
     </Card>
 </HomeIntroduction>
+<EmailVerify bind:show={showVerifyModal} bind:email bind:password />
