@@ -15,7 +15,7 @@
 
 <style>
     .toasts-container-wrapper {
-        position: absolute;
+        position: fixed;
         z-index: 5;
         right: 0;
         top: 0;
