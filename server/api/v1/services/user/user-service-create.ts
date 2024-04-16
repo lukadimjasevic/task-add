@@ -5,7 +5,7 @@ import { SessionUser } from "../../helpers/session";
 import { Mailer } from "../../helpers/mailer";
 import { UserSignup, UserSignin, UserGenerateVerification, UserValidateVerification } from "../../interfaces/user.interface";
 import { SessionUserData } from "../../interfaces/types/express-session";
-import { HttpErrorUnauthorized, HttpErrorConflict, HttpErrorNotFound, HttpErrorBadRequest } from "../../helpers/error";
+import { HttpErrorUnauthorized, HttpErrorConflict, HttpErrorForbidden, HttpErrorBadRequest } from "../../helpers/error";
 import User from "../../../../database/models/user.model";
 
 
@@ -20,13 +20,15 @@ export class UserServiceCreate extends BaseService {
         if (users.length) {
             throw new HttpErrorConflict("User already exists. Please provide valid credentials.");
         }
+        const code = this.generateCode();
         await User.create({
             email: data.email,
             username: data.username,
             password: await Hash.create(data.password),
-            verificationCode: this.generateCode(),
+            verificationCode: code,
             verificationCodeLastDate: new Date(),
         });
+        await this.sendVerificationCode(data.email, code);
         const user = await User.findOne({ where: { email: data.email }});
         return user!;
     }
@@ -35,7 +37,7 @@ export class UserServiceCreate extends BaseService {
         const data: UserSignin = this.req.body;
         const user = await this.validateUser(data.email, data.password);
         if (!user.verified) {
-            throw new HttpErrorUnauthorized("Account isn't verified. Please verify your account and try again.");
+            throw new HttpErrorForbidden("Account isn't verified. Please verify your account and try again.");
         }
         const userSession: SessionUserData = {
             id: user.id,
@@ -65,7 +67,6 @@ export class UserServiceCreate extends BaseService {
         }
 
         const code = this.generateCode();
-
         user.verificationCode = code;
         user.verificationCodeLastDate = new Date();
         await user.save();
@@ -103,7 +104,7 @@ export class UserServiceCreate extends BaseService {
     private async validateUser(email: string, password: string): Promise<User> {
         const user = await User.unscoped().findOne({ where: { email }});
         if (!user) {
-            throw new HttpErrorNotFound("Email or password is incorrect. Please provide valid credentials.");
+            throw new HttpErrorUnauthorized("Email or password is incorrect. Please provide valid credentials.");
         }
         const hashMatch = await Hash.compare(password, user.password);
         if (!hashMatch) {
