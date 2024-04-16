@@ -2,7 +2,6 @@ import { Router, Request, Response, NextFunction } from "express";
 import { UserValidations } from "../validations/user";
 import { validate } from "../middlewares/validate.middleware";
 import { isAuthenticated } from "../middlewares/auth.middleware";
-import { isVerified } from "../middlewares/verify.middleware";
 import { 
     UserControllerCreate,
     UserControllerRead,
@@ -30,11 +29,11 @@ router.post("/signout", isAuthenticated, (req: Request, res: Response, next: Nex
     const controllerCreate = new UserControllerCreate(req, res, next);
     controllerCreate.signout();
 });
-router.post("/verify-generate", isAuthenticated, isVerified, (req: Request, res: Response, next: NextFunction) => {
+router.post("/verify-generate", UserValidations.setGenerateVerificationRules(), validate, (req: Request, res: Response, next: NextFunction) => {
     const controllerCreate = new UserControllerCreate(req, res, next);
     controllerCreate.verifyGenerate();
 });
-router.post("/verify-validate", UserValidations.setValidateVerificationRules(), validate, isAuthenticated, isVerified, (req: Request, res: Response, next: NextFunction) => {
+router.post("/verify-validate", UserValidations.setValidateVerificationRules(), validate, (req: Request, res: Response, next: NextFunction) => {
     const controllerCreate = new UserControllerCreate(req, res, next);
     controllerCreate.verifyValidate();
 });

@@ -13,8 +13,8 @@ export class UserControllerCreate extends BaseController {
 
     async signup() {
         try {
-            await this.services.signup();
-            return this.responses.responseCreated("Successfully created a new account");
+            const user = await this.services.signup();
+            return this.responses.responseCreated("Successfully created a new account", { data: user });
         } catch (error: any) {
             console.log(error);
             return this.next(error);

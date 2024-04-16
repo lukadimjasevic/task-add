@@ -9,6 +9,15 @@ export interface UserSignin {
     password: string;
 }
 
+export interface UserGenerateVerification {
+    email: string;
+    password: string;
+}
+
+export interface UserValidateVerification extends UserGenerateVerification {
+    code: string;
+}
+
 export interface UserUpdate { 
     avatar?: Express.Multer.File;
     firstname?: string;
