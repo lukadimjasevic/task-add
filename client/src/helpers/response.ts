@@ -1,19 +1,21 @@
 import { toasts } from "@stores/toast";
-import type { Response, ResponseError } from "taskadd/response";
+import type { Response } from "taskadd/response";
 import type { Toast } from "taskadd/toast";
 
-const displayErrors = (errors: ResponseError[]): string => {
+const displayErrors = (errors: any[]): string => {
     let msg = "";
-    errors.forEach((error: ResponseError) => {
-        msg += error.msg + ". ";
+    errors.forEach((error) => {
+        if (error.msg) {
+            msg += error.msg + ". ";
+        }
     });
     return msg;
 }
 
 const handleResponse = (response: Response, toastTitle: Toast["title"], onSuccess: () => void) => {
     if (response.errorName) {
-        if (response.errors) {
-            toasts.error(`${toastTitle} failed`, displayErrors(response.errors));
+        if (Array.isArray(response.details)) {
+            toasts.error(`${toastTitle} failed`, displayErrors(response.details));
             return;
         }
         toasts.error(`${toastTitle} failed`, response.message);

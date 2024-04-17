@@ -7,7 +7,8 @@
     import { FormCard, FormFloating, FormInput, FormSubmit } from "@components/common/forms";
     import HomeIntroduction from "@components/common/HomeIntroduction.svelte";
     import Card from "@components/common/Card.svelte";
-    import EmailVerify from "@components/common/EmailVerify.svelte";
+    import VerifyEmail from "@components/common/VerifyEmail.svelte";
+    import Verify2FA from "@components/common/Verify2FA.svelte";
 
     onMount(() => {
         if ($auth.cookie) {
@@ -18,6 +19,7 @@
     let email: string;
     let password: string;
     let showVerifyModal: boolean = false;
+    let show2FAModal: boolean = false;
 
     const handleSignin = async() => {
         const response = await api.auth.signin(email, password);
@@ -26,7 +28,14 @@
             await taskUpcoming.beforeNavigate();
         });
         if (response.statusCode === 403) {
-            showVerifyModal = true;
+            if (response.details.notVerified) {
+                showVerifyModal = true;
+                return;
+            }
+            if (response.details.otpEnabled) {
+                show2FAModal = true;
+                return;
+            }
         }
     }
 </script>
@@ -59,4 +68,5 @@
         </div>
     </Card>
 </HomeIntroduction>
-<EmailVerify bind:show={showVerifyModal} bind:email bind:password />
+<VerifyEmail bind:show={showVerifyModal} bind:email bind:password />
+<Verify2FA bind:show={show2FAModal} bind:email bind:password />

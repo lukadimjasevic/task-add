@@ -9,7 +9,7 @@
     import { FormCard, FormFloating, FormInput, FormSubmit } from "@components/common/forms";
     import HomeIntroduction from "@components/common/HomeIntroduction.svelte";
     import Card from "@components/common/Card.svelte";
-    import EmailVerify from "@components/common/EmailVerify.svelte";
+    import VerifyEmail from "@components/common/VerifyEmail.svelte";
 
     onMount(() => {
         if ($auth.cookie) {
@@ -68,4 +68,4 @@
         </div>
     </Card>
 </HomeIntroduction>
-<EmailVerify bind:show={showVerifyModal} bind:email bind:password />
+<VerifyEmail bind:show={showVerifyModal} bind:email bind:password />

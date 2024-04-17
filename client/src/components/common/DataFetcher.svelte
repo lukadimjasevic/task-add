@@ -8,13 +8,8 @@
     import { onMount } from "svelte";
     import { api } from "@api";
     import { home } from "@pages/pages";
-    import type { Response } from "taskadd/response";
 
     let isLoaded: boolean = false;
-    let errors: {
-        errorName: Response["errorName"],
-        message: Response["message"]
-    }[] = [];
 
     onMount(async() => {
         let isError: boolean = false;
