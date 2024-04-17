@@ -4,6 +4,7 @@
     import { api } from "@api";
     import { helpers } from "@helpers";
     import { home, signup, taskUpcoming } from "@pages/pages";
+    import { ButtonLink } from "@components/common/buttons";
     import { FormCard, FormFloating, FormInput, FormSubmit } from "@components/common/forms";
     import HomeIntroduction from "@components/common/HomeIntroduction.svelte";
     import Card from "@components/common/Card.svelte";
@@ -61,9 +62,11 @@
             <div class="w-75">
                 <FormSubmit form="formSignin" className="btn-secondary w-100">Sign in</FormSubmit>
             </div>
-            <div class="w-75 text-center">
+            <div class="w-75 text-center d-flex align-items-center justify-content-center">
                 <span>Don't have an account?</span>
-                <button type="button" class="btn border-0" on:click={() => signup.beforeNavigate()}>Sign up</button>
+                <ButtonLink on:click={() => signup.beforeNavigate()}>
+                    Sign up
+                </ButtonLink>
             </div>
         </div>
     </Card>

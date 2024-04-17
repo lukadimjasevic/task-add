@@ -1,5 +1,6 @@
 <script lang="ts">
     import { signup, signin } from "@pages/pages";
+    import { ButtonLink } from "@components/common/buttons";
     import HomeIntroduction from "@components/common/HomeIntroduction.svelte";
     import Card from "@components/common/Card.svelte";
 </script>
@@ -12,15 +13,15 @@
                 <span>Task management web application that helps you to organize your time</span>
             </div>
             <div class="w-75">
-                <button type="button" class="btn btn-secondary w-100" on:click={() => signup.beforeNavigate()}>
+                <button type="button" class="btn btn-secondary w-100" on:click={() => signin.beforeNavigate()}>
                     Get Started
                 </button>
             </div>
-            <div class="w-75 text-center">
-                <span>Already have an account?</span>
-                <button type="button" class="btn border-0" on:click={() => signin.beforeNavigate()}>
-                    Sign in
-                </button>
+            <div class="w-75 text-center d-flex align-items-center justify-content-center">
+                <span>Don't have an account?</span>
+                <ButtonLink on:click={() => signup.beforeNavigate()}>
+                    Sign up
+                </ButtonLink>
             </div>
         </div>
     </Card>
