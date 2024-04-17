@@ -5,7 +5,7 @@
 
     export let show: boolean = false;
     export let className: string = "";
-    export let useFooterButtons: boolean = true;
+    export let useCloseButtons: boolean = true;
 
     const dispatch = createEventDispatcher();
 
@@ -20,13 +20,15 @@
         <div class="custom-modal-content bg-light col-md-8 col-lg-5 border rounded p-0">
             <div class="custom-modal-header border-bottom m-3 pb-2">
                 <h1 class="custom-modal-header fs-5 m-0"><slot name="title"/></h1>
-                <ButtonClose on:click={handleClose} className="btn-close-black" />
+                {#if useCloseButtons}
+                    <ButtonClose on:click={handleClose} className="btn-close-black" />
+                {/if}
             </div>
             <div class="custom-modal-body mx-3">
                 <slot name="body"/>
             </div>
             <div class="custom-modal-footer m-3">
-                {#if useFooterButtons}
+                {#if useCloseButtons}
                     <button type="button" class="btn btn-secondary" on:click={handleClose}>Close</button>
                 {/if}
                 <slot name="footer"/>

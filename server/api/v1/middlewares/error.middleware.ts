@@ -5,7 +5,7 @@ interface ErrorHandlerResponse {
     errorName: string;
     statusCode: number;
     message: string;
-    errors?: object;
+    details?: object;
 }
 
 export const errorHandler = (error: any, req: Request, res: Response, next: NextFunction) => {
@@ -22,6 +22,6 @@ export const errorHandler = (error: any, req: Request, res: Response, next: Next
         statusCode: error.statusCode,
         message: error.message,
     };
-    error.errors ? response.errors = error.errors : null;
+    error.details ? response.details = error.details : null;
     return res.status(error.statusCode).json(response);
 };

@@ -58,11 +58,24 @@ export class UserValidations extends UserRules {
     }
 
     /**
+     * Method sets verification generate rules
+     * @returns Returns a list of verification generate rules of type ValidationChain
+     */
+    static setGenerateVerificationRules(): ValidationChain[] {
+        return [
+            this.ruleEmail(),
+            this.rulePassword(),
+        ];
+    }
+
+    /**
      * Method sets verification validation rules
      * @returns Returns a list of verification validation rules of type ValidationChain
      */
     static setValidateVerificationRules(): ValidationChain[] {
         return [
+            this.ruleEmail(),
+            this.rulePassword(),
             this.ruleVerificationCode(),
         ];
     }

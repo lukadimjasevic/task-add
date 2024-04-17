@@ -3,4 +3,10 @@ declare module "taskadd/user-otp" {
         qrcode: string | null;
         token: string | null;
     }
+
+    export interface UserOTPVerifyDTO {
+        email: string;
+        password: string;
+        token: string;
+    }
 }

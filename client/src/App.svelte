@@ -6,7 +6,8 @@
     import { LayoutApp } from "@components/common/layouts";
     import DataFetcher from "@components/common/DataFetcher.svelte";
     import ToastsContainer from "@components/common/toasts/ToastsContainer.svelte";
-  
+    import NotFound from "@pages/NotFound.svelte";
+
     const publicPages = pages.filter((page: Page) => !page.protected);
     const protectedPages = pages.filter((page: Page) => page.protected);
 
@@ -20,6 +21,7 @@
                 {#each protectedPages as page}
                     <Route path={page.path} component={page.component}/>
                 {/each}
+                <Route path="/*" component={NotFound} />
             </Router>
         </LayoutApp>
     </DataFetcher>
@@ -29,6 +31,7 @@
             {#each publicPages as page}
                 <Route path={page.path} component={page.component} />
             {/each}
+            <Route path="/*" component={NotFound} />
         </Router>
     </LayoutApp>
 {/if}

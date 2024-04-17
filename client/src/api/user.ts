@@ -1,5 +1,5 @@
 import { request } from "./request";
-import type { UserUpdatePasswordDTO } from "taskadd/user";
+import type { UserUpdatePasswordDTO, UserVerificationGenerateDTO, UserVerificationValidateDTO } from "taskadd/user";
 
 const get = async() => {
     return await request("/user", {
@@ -33,17 +33,17 @@ const remove = async() => {
     });
 }
 
-const generateVerificationCode = async() => {
+const generateVerificationCode = async(dto: UserVerificationGenerateDTO) => {
     return await request("/user/verify-generate", {
         method: "POST",
+        body: JSON.stringify(dto),
     });
 }
 
-const validateVerificationCode = async(code: string) => {
-    const data = { code };
+const validateVerificationCode = async(dto: UserVerificationValidateDTO) => {
     return await request("/user/verify-validate", {
         method: "POST",
-        body: JSON.stringify(data),
+        body: JSON.stringify(dto),
     });
 }
 

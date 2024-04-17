@@ -4,11 +4,6 @@ export interface UserSignup {
     password: string;
 }
 
-export interface UserSignin {
-    email: string;
-    password: string;
-}
-
 export interface UserUpdate { 
     avatar?: Express.Multer.File;
     firstname?: string;

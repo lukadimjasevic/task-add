@@ -43,7 +43,7 @@
     <span slot="title">Enable 2FA</span>
     <div slot="body" class="row">
         <div class="col-12">
-            <span>Scan this QR code with your authenticator application and enter the code below</span><br/>
+            <span>Scan this QR code with your authenticator application and enter the six digit code below</span><br/>
         </div>
         <div class="col-12 text-center">
             <img src={$userOTP.qrcode} alt="Auth QR Code"/>

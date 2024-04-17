@@ -1,29 +1,42 @@
 <script lang="ts">
     import { auth } from "@stores/auth";
     import { onMount } from "svelte";
-    import { navigate } from "svelte-routing";
     import { api } from "@api";
     import { helpers } from "@helpers";
     import { home, signup, taskUpcoming } from "@pages/pages";
     import { FormCard, FormFloating, FormInput, FormSubmit } from "@components/common/forms";
     import HomeIntroduction from "@components/common/HomeIntroduction.svelte";
     import Card from "@components/common/Card.svelte";
+    import VerifyEmail from "@components/common/VerifyEmail.svelte";
+    import Verify2FA from "@components/common/Verify2FA.svelte";
 
     onMount(() => {
         if ($auth.cookie) {
-            navigate(home.path);
+            home.beforeNavigate();
         }
     });
 
     let email: string;
     let password: string;
+    let showVerifyModal: boolean = false;
+    let show2FAModal: boolean = false;
 
     const handleSignin = async() => {
         const response = await api.auth.signin(email, password);
-        helpers.response.handleResponse(response, "Sign in", () => {
+        helpers.response.handleResponse(response, "Sign in", async() => {
             auth.setCookie();
-            navigate(taskUpcoming.path);
+            await taskUpcoming.beforeNavigate();
         });
+        if (response.statusCode === 403) {
+            if (response.details.notVerified) {
+                showVerifyModal = true;
+                return;
+            }
+            if (response.details.otpEnabled) {
+                show2FAModal = true;
+                return;
+            }
+        }
     }
 </script>
 
@@ -55,3 +68,5 @@
         </div>
     </Card>
 </HomeIntroduction>
+<VerifyEmail bind:show={showVerifyModal} bind:email bind:password />
+<Verify2FA bind:show={show2FAModal} bind:email bind:password />

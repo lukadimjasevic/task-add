@@ -3,11 +3,7 @@ declare module "taskadd/response" {
         statusCode: number;
         message: string;
         errorName?: string;
-        errors?: ResponseError[];
+        details?: any[] | any;
         data?: any;
-    }
-
-    export interface ResponseError {
-        msg: string;
     }
 }

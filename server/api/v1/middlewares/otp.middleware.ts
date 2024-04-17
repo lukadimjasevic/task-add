@@ -5,9 +5,6 @@ import UserOtp from "../../../database/models/user_otp.model";
 
 export const checkOTPNotGenerated = async(req: Request, res: Response, next: NextFunction) => {
     const user: User = res.locals.user;
-    if (!user.verified) {
-        return next(new HttpErrorBadRequest("Account must be verified to enable 2FA"));
-    }
     if (user.otpGenerated) {
         return next(new HttpErrorBadRequest("Account has already generated OTP"));
     }
@@ -16,9 +13,6 @@ export const checkOTPNotGenerated = async(req: Request, res: Response, next: Nex
 
 export const checkOTPGenerated = async(req: Request, res: Response, next: NextFunction) => {
     const user: User = res.locals.user;
-    if (!user.verified) {
-        return next(new HttpErrorBadRequest("Account must be verified to enable 2FA"));
-    }
     if (!user.otpGenerated) {
         return next(new HttpErrorBadRequest("Account must have OTP generated"));
     }
@@ -29,9 +23,6 @@ export const checkOTPGenerated = async(req: Request, res: Response, next: NextFu
 
 export const checkOTPNotEnabled = async(req: Request, res: Response, next: NextFunction) => {
     const user: User = res.locals.user;
-    if (!user.verified) {
-        return next(new HttpErrorBadRequest("Account must be verified to enable 2FA"));
-    }
     if (!user.otpGenerated) {
         return next(new HttpErrorBadRequest("You have to generate OTP to enable 2FA"));
     }
@@ -45,9 +36,6 @@ export const checkOTPNotEnabled = async(req: Request, res: Response, next: NextF
 
 export const checkOTPEnabled = async(req: Request, res: Response, next: NextFunction) => {
     const user: User = res.locals.user;
-    if (!user.verified) {
-        return next(new HttpErrorBadRequest("Account must be verified and have 2FA enabled"));
-    }
     if (!user.otpEnabled) {
         return next(new HttpErrorBadRequest("Account must have 2FA enabled"));
     }
