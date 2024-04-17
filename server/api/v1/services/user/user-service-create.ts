@@ -3,9 +3,9 @@ import { BaseService } from "../base-service";
 import { Hash } from "../../helpers/hash";
 import { SessionUser } from "../../helpers/session";
 import { Mailer } from "../../helpers/mailer";
-import { UserSignup, UserSignin, UserGenerateVerification, UserValidateVerification } from "../../interfaces/user.interface";
+import { UserSignup } from "../../interfaces/user.interface";
 import { SessionUserData } from "../../interfaces/types/express-session";
-import { HttpErrorUnauthorized, HttpErrorConflict, HttpErrorForbidden, HttpErrorBadRequest } from "../../helpers/error";
+import { HttpErrorConflict, HttpErrorForbidden, HttpErrorBadRequest } from "../../helpers/error";
 import User from "../../../../database/models/user.model";
 
 
@@ -34,11 +34,22 @@ export class UserServiceCreate extends BaseService {
     }
 
     async signin(): Promise<SessionUserData> {
-        const data: UserSignin = this.req.body;
-        const user = await this.validateUser(data.email, data.password);
+        const user = this.getUser();
+
+        // Chec if user is verified
         if (!user.verified) {
-            throw new HttpErrorForbidden("Account isn't verified. Please verify your account and try again.");
+            throw new HttpErrorForbidden("Account isn't verified. Please verify your account and try again.", {
+                notVerified: true,
+            });
         }
+
+        // Check if otp is enabled
+        if (user.otpEnabled) {
+            throw new HttpErrorForbidden("Account has enabled 2FA. Please enter and verify a 6-digit code.", {
+                otpEnabled: true,
+            });
+        }
+
         const userSession: SessionUserData = {
             id: user.id,
             email: user.email,
@@ -53,8 +64,7 @@ export class UserServiceCreate extends BaseService {
     }
 
     async generateVerificationCode(): Promise<Date> {
-        const data: UserGenerateVerification = this.req.body;
-        const user = await this.validateUser(data.email, data.password);
+        const user = this.getUser();
         const millisToNextCode = 1000 * 60; // 60 seconds
 
         // Check if user is already verified
@@ -75,8 +85,8 @@ export class UserServiceCreate extends BaseService {
     }
 
     async validateVerificationCode(): Promise<void> {
-        const data: UserValidateVerification = this.req.body;
-        const user = await this.validateUser(data.email, data.password);
+        const user = this.getUser();
+        const code = this.req.body.code;
         const millisToDeleteCode = 1000 * 60 * 10; // 10 minutes
 
         // Check if user is already verified
@@ -91,7 +101,7 @@ export class UserServiceCreate extends BaseService {
             throw new HttpErrorBadRequest("Verification code expired, please generate a new one");
         }
 
-        if (user.verificationCode !== data.code) {
+        if (user.verificationCode !== code) {
             throw new HttpErrorBadRequest("Verification codes do not match");   
         }
 
@@ -99,18 +109,6 @@ export class UserServiceCreate extends BaseService {
         user.verificationCode = null;
         user.verificationCodeLastDate = null;
         await user.save();
-    }
-
-    private async validateUser(email: string, password: string): Promise<User> {
-        const user = await User.unscoped().findOne({ where: { email }});
-        if (!user) {
-            throw new HttpErrorUnauthorized("Email or password is incorrect. Please provide valid credentials.");
-        }
-        const hashMatch = await Hash.compare(password, user.password);
-        if (!hashMatch) {
-            throw new HttpErrorUnauthorized("Email or password is incorrect. Please provide valid credentials.");
-        }
-        return user;
     }
 
     private generateCode(): string {

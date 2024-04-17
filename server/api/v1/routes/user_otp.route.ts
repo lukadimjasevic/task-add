@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { UserOtpValidations } from "../validations/user_otp";
-import { validate } from "../middlewares/validate.middleware";
+import { validate, validateUserSignin } from "../middlewares/validate.middleware";
 import { isAuthenticated } from "../middlewares/auth.middleware";
 import { checkOTPNotGenerated, checkOTPGenerated, checkOTPNotEnabled, checkOTPEnabled } from "../middlewares/otp.middleware";
 import {
@@ -15,11 +15,11 @@ router.post("/generate", isAuthenticated, checkOTPNotGenerated, (req: Request, r
     const controllerCreate = new UserOtpControllerCreate(req, res, next);
     controllerCreate.generateOTP();
 });
-router.post("/enable", UserOtpValidations.setValidateVerificationRules(), validate, isAuthenticated, checkOTPNotEnabled, (req: Request, res: Response, next: NextFunction) => {
+router.post("/enable", UserOtpValidations.setEnableVerificationRules(), validate, isAuthenticated, checkOTPNotEnabled, (req: Request, res: Response, next: NextFunction) => {
     const controllerCreate = new UserOtpControllerCreate(req, res, next);
     controllerCreate.enable2FA();
 });
-router.post("/verify", UserOtpValidations.setValidateVerificationRules(), validate, isAuthenticated, checkOTPEnabled, (req: Request, res: Response, next: NextFunction) => {
+router.post("/verify", UserOtpValidations.setVerifyVerificationRules(), validate, validateUserSignin, checkOTPEnabled, (req: Request, res: Response, next: NextFunction) => {
     const controllerCreate = new UserOtpControllerCreate(req, res, next);
     controllerCreate.verify2FA();
 });

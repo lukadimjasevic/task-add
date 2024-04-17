@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { OTPSecret, OTPAuthTOTP } from "../../helpers/otp";
 import { BaseService } from "../base-service";
+import { SessionUser } from "../../helpers/session";
+import { SessionUserData } from "../../interfaces/types/express-session";
 import UserOtp from "../../../../database/models/user_otp.model";
 import { HttpErrorUnauthorized } from "../../helpers/error";
 
@@ -56,7 +58,7 @@ export class UserOtpServiceCreate extends BaseService {
         return;
     }
 
-    async verify2FA(): Promise<void> {
+    async verify2FA(): Promise<SessionUserData> {
         const user = this.getUser();
         const userOtp: UserOtp = this.res.locals.userOtp;
         const token: string = this.req.body.token;
@@ -70,6 +72,13 @@ export class UserOtpServiceCreate extends BaseService {
         if (delta === null) {
             throw new HttpErrorUnauthorized("Authentication failed");
         }
-        return;
+        
+        const userSession: SessionUserData = {
+            id: user.id,
+            email: user.email,
+            username: user.username,
+        };
+        SessionUser.save(this.req, userSession);
+        return userSession;  
     }
 }

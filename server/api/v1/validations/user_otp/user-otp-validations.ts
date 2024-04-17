@@ -1,5 +1,6 @@
 import { ValidationChain } from "express-validator";
 import { UserOtpRules } from "./user-otp-rules";
+import { UserRules } from "../user/user-rules";
 
 
 export class UserOtpValidations extends UserOtpRules {
@@ -10,12 +11,24 @@ export class UserOtpValidations extends UserOtpRules {
     /*-------------------------- Set Rules Methods ---------------------------*/
 
     /**
-     * Method sets verification validation rules
-     * @returns Returns a list of verification validation rules of type ValidationChain
+     * Method sets enable verification rules
+     * @returns Returns a list of enable verification rules of type ValidationChain
      */
-    static setValidateVerificationRules(): ValidationChain[] {
+    static setEnableVerificationRules(): ValidationChain[] {
         return [
             this.ruleToken(),
+        ];
+    }
+
+    /**
+     * Method sets verify verification rules
+     * @returns Returns a list of verify verification rules of type ValidationChain
+     */
+    static setVerifyVerificationRules(): ValidationChain[] {
+        return [
+            this.ruleToken(),
+            UserRules.ruleEmail(),
+            UserRules.rulePassword(),
         ];
     }
 }
