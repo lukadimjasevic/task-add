@@ -43,7 +43,12 @@ export class Server {
         }));
         this.app.use(express.json());
         this.app.use(session({
-            cookie: { httpOnly: false, maxAge: 1000 * 60 * 60 * 24 },
+            cookie: {
+                httpOnly: process.env.COOKIE_HTTP_ONLY! === "false" ? false : true,
+                maxAge: parseInt(process.env.COOKIE_MAX_AGE!),
+                sameSite: process.env.COOKIE_SAMESITE as boolean | "lax" | "none" | "strict" | undefined,
+                secure: process.env.COOKIE_SECURE === "false" ? false : true,
+            },
             secret: process.env.SESSION_SECRET!,
             store: new SessionStoreSequelize(),
             resave: false,
