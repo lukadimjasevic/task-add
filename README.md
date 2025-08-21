@@ -2,8 +2,6 @@
 
 **Task management web application that helps you to organize your time.**
 
----
-
 ## Overview
 
 Minimalistic, yet powerful web app built for managing personal tasks effectively and efficiently.  
@@ -15,8 +13,6 @@ In today's world, the need for time organization is becoming increasingly import
 
 This project was primarily approached due to educational and personal interests. Educational interests are directed toward expanding the knowledge and skills needed to realize this work. The personal interest in choosing this topic stems from the experience and difficulties in task management, and thus, digital tools would enable easier and higher-quality work organization.
 
----
-
 ## Technologies
 
 - **Svelte** – modern front-end framework for building fast and reactive user interfaces with minimal boilerplate.  
@@ -25,30 +21,164 @@ This project was primarily approached due to educational and personal interests.
 - **Bootstrap** – front-end CSS framework used for responsive design and prebuilt UI components. 
 - **Node.js & npm** – used as the runtime environment and package manager for installing dependencies and running scripts.
 
----
+## Features
+
+- 👤 **User Management**
+  - User registration and login
+  - Session handling with authentication
+  - Two-Factor Authentication (2FA) support for enhanced security
+
+- ✅ **Task Management**
+  - Create, update, and delete tasks
+  - Assign tasks to categories
+  - Track progress with task statuses
+
+- 🏷️ **Task Categories**
+  - Create and manage task categories
+  - Link tasks to multiple categories using category relations
+  - Organize tasks for better productivity
+
+- 📊 **Task Statuses**
+  - Manage custom statuses for tasks
+  - Filter and track tasks by their status
+
+- 🔗 **Task-Category Relations**
+  - Flexible relation system to connect tasks with categories
+  - Support for many-to-many relationships between tasks and categories
+
+- 🔐 **Security**
+  - Two-Factor Authentication (2FA) via one-time passwords
+  - Secure password handling with hashing
+  - Input validation for API requests
 
 ## Installation & Local Setup
 
 ```bash
 # Clone the repository
 git clone https://github.com/lukadimjasevic/task-add.git
+```
 
-# Navigate into project folder
-cd task-add
+## Frontend Setup (client)
+```bash
+# Navigate into client folder
+cd task-add/client
 
 # Install dependencies
 npm install
+```
 
-# Run the development server
+## Backend Setup (server)
+```bash
+# Navigate into server folder
+cd task-add/server
+
+# Install dependencies
+npm install
+```
+
+## Database Setup
+
+The server uses **Sequelize** as ORM with migration and seed scripts.
+
+### 1. Initialize Configuration
+Make sure your database connection is configured.  
+You can run the initialization script if needed:
+
+```bash
+npm run init:config
+```
+
+### 2. Run Migrations
+
+Create all database tables:
+
+```bash
+# Development
+npm run migrate:dev
+
+# Test
+npm run migrate:test
+
+# Production
+npm run migrate:prod
+```
+
+### 3. Seed the Database
+
+Insert initial data:
+
+```bash
+# Development
+npm run seed:dev
+
+# Test
+npm run seed:test
+
+# Production
+npm run seed:prod
+```
+
+### 4. Reset the Database (if needed)
+
+Drop all tables, re-run migrations, and reseed data:
+
+```bash
+# Development
+npm run reset:dev
+
+# Test
+npm run reset:test
+
+# Production
+npm run reset:prod
+```
+
+### Notes
+
+- Use `migrate:undo:*` to rollback all migrations.  
+- Use `seed:undo:*` to remove seeded data.  
+- Ensure your database server is running before executing migrations or seeds.  
+- Check your `.env` file for correct database connection settings (e.g., host, port, user, password, database name).  
+
+## Run the Development Server
+
+To start the project in development mode, you need to run both the **server** (backend) and the **client** (frontend).
+
+### 1. Start the Backend (server)
+
+```bash
+cd server
 npm run dev
 ```
 
----
+Backend will run on: 
 
-## Features
+```bash
+# PORT is defined in .env file
+http://localhost:PORT
+```
 
-- ➕ Add new tasks quickly  
-- ✏️ Edit existing tasks  
-- ✅ Mark tasks as completed  
-- 🗑️ Delete tasks when no longer needed  
-- 📱 Responsive design with Bootstrap for desktop and mobile use
+### 2. Start the Frontend (client)
+
+Open a new terminal and run:
+
+```bash
+cd client
+npm run dev
+```
+
+The frontend will be available at:
+
+```bash
+http://localhost:8081
+```
+
+### 3. Access the Application
+
+Open your browser and navigate to:
+
+```bash
+http://localhost:8081
+```
+
+The client will communicate with the server API running on http://localhost:PORT
