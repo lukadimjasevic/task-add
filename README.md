@@ -154,7 +154,8 @@ npm run dev
 Backend will run on: 
 
 ```bash
-http://localhost:PORT (PORT is defined in .env file)
+# PORT is defined in .env file
+http://localhost:PORT
 ```
 
 ### 2. Start the Frontend (client)
