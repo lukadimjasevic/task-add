@@ -27,24 +27,6 @@ This project was primarily approached due to educational and personal interests.
 
 ---
 
-## Installation & Local Setup
-
-```bash
-# Clone the repository
-git clone https://github.com/lukadimjasevic/task-add.git
-
-# Navigate into project folder
-cd task-add
-
-# Install dependencies
-npm install
-
-# Run the development server
-npm run dev
-```
-
----
-
 ## Features
 
 - ➕ Add new tasks quickly  
@@ -52,3 +34,143 @@ npm run dev
 - ✅ Mark tasks as completed  
 - 🗑️ Delete tasks when no longer needed  
 - 📱 Responsive design with Bootstrap for desktop and mobile use
+
+---
+
+## Installation & Local Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/lukadimjasevic/task-add.git
+```
+
+## Frontend Setup (client)
+```bash
+# Navigate into client folder
+cd task-add/client
+
+# Install dependencies
+npm install
+```
+
+## Backend Setup (server)
+```bash
+# Navigate into server folder
+cd task-add/server
+
+# Install dependencies
+npm install
+```
+
+## Database Setup
+
+The server uses **Sequelize** as ORM with migration and seed scripts.
+
+### 1. Initialize Configuration
+Make sure your database connection is configured.  
+You can run the initialization script if needed:
+
+```bash
+npm run init:config
+```
+
+### 2. Run Migrations
+
+Create all database tables:
+
+```bash
+# Development
+npm run migrate:dev
+
+
+# Test
+npm run migrate:test
+
+# Production
+npm run migrate:prod
+```
+
+### 3. Seed the Database
+
+Insert initial data:
+
+```bash
+# Development
+npm run seed:dev
+
+# Test
+npm run seed:test
+
+# Production
+npm run seed:prod
+```
+
+### 4. Reset the Database (if needed)
+
+Drop all tables, re-run migrations, and reseed data:
+
+```bash
+# Development
+npm run reset:dev
+
+# Test
+npm run reset:test
+
+# Production
+npm run reset:prod
+```
+
+### Notes
+
+- Use `migrate:undo:*` to rollback all migrations.  
+- Use `seed:undo:*` to remove seeded data.  
+- Ensure your database server is running before executing migrations or seeds.  
+- Check your `.env` file for correct database connection settings (e.g., host, port, user, password, database name).  
+
+---
+
+## Run the Development Server
+
+To start the project in development mode, you need to run both the **server** (backend) and the **client** (frontend).
+
+### 1. Start the Backend (server)
+
+```bash
+cd server
+npm install
+npm run dev
+```
+
+Backend will run on: 
+
+```bash
+http://localhost:PORT (PORT is defined in .env file)
+```
+
+---
+
+### 2. Start the Frontend (client)
+
+Open a new terminal and run:
+
+```bash
+cd client
+npm install
+npm run dev
+```
+
+The frontend will be available at:
+
+```bash
+http://localhost:8081
+```
+
+### 3. Access the Application
+
+Open your browser and navigate to:
+
+```bash
+http://localhost:8081
+```
+
+The client will communicate with the server API running on http://localhost:PORT
