@@ -15,8 +15,6 @@ In today's world, the need for time organization is becoming increasingly import
 
 This project was primarily approached due to educational and personal interests. Educational interests are directed toward expanding the knowledge and skills needed to realize this work. The personal interest in choosing this topic stems from the experience and difficulties in task management, and thus, digital tools would enable easier and higher-quality work organization.
 
----
-
 ## Technologies
 
 - **Svelte** – modern front-end framework for building fast and reactive user interfaces with minimal boilerplate.  
@@ -25,8 +23,6 @@ This project was primarily approached due to educational and personal interests.
 - **Bootstrap** – front-end CSS framework used for responsive design and prebuilt UI components. 
 - **Node.js & npm** – used as the runtime environment and package manager for installing dependencies and running scripts.
 
----
-
 ## Features
 
 - ➕ Add new tasks quickly  
@@ -34,8 +30,6 @@ This project was primarily approached due to educational and personal interests.
 - ✅ Mark tasks as completed  
 - 🗑️ Delete tasks when no longer needed  
 - 📱 Responsive design with Bootstrap for desktop and mobile use
-
----
 
 ## Installation & Local Setup
 
@@ -127,8 +121,6 @@ npm run reset:prod
 - Ensure your database server is running before executing migrations or seeds.  
 - Check your `.env` file for correct database connection settings (e.g., host, port, user, password, database name).  
 
----
-
 ## Run the Development Server
 
 To start the project in development mode, you need to run both the **server** (backend) and the **client** (frontend).
@@ -146,8 +138,6 @@ Backend will run on:
 ```bash
 http://localhost:PORT (PORT is defined in .env file)
 ```
-
----
 
 ### 2. Start the Frontend (client)
 
