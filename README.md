@@ -96,7 +96,6 @@ Create all database tables:
 # Development
 npm run migrate:dev
 
-
 # Test
 npm run migrate:test
 
