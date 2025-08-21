@@ -3,14 +3,11 @@ import express, { Application } from "express";
 import session from "express-session";
 import Database from "./database";
 import { SessionStoreSequelize } from "./api/v1/helpers/session";
-import userRouter from "./api/v1/routes/user.route";
-import taskStatusRouter from "./api/v1/routes/task_status.route";
-import taskCategoryRouter from "./api/v1/routes/task_category.route";
-import taskRouter from "./api/v1/routes/task.route";
-import taskCategoryRelationRouter from "./api/v1/routes/task_category_rel.route";
-import userOtp from "./api/v1/routes/user_otp.route";
+import router from "./api/v1/routes/routes";
 import { errorHandler } from "./api/v1/middlewares/error.middleware";
 import cors from "cors";
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from "./docs/swagger.json";
 
 dotenv.config();
 
@@ -24,12 +21,8 @@ export class Server {
     }
 
     private _loadRoutes() {
-        this.app.use("/api/v1/user", userRouter);
-        this.app.use("/api/v1/task-status", taskStatusRouter);
-        this.app.use("/api/v1/task-category", taskCategoryRouter);
-        this.app.use("/api/v1/task", taskRouter);
-        this.app.use("/api/v1/task-category-relation", taskCategoryRelationRouter);
-        this.app.use("/api/v1/2fa", userOtp);
+        this.app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+        this.app.use("/", router);
     }
 
     start() {
