@@ -23,11 +23,33 @@ This project was primarily approached due to educational and personal interests.
 
 ## Features
 
-- ➕ Add new tasks quickly  
-- ✏️ Edit existing tasks  
-- ✅ Mark tasks as completed  
-- 🗑️ Delete tasks when no longer needed  
-- 📱 Responsive design with Bootstrap for desktop and mobile use
+- 👤 **User Management**
+  - User registration and login
+  - Session handling with authentication
+  - Two-Factor Authentication (2FA) support for enhanced security
+
+- ✅ **Task Management**
+  - Create, update, and delete tasks
+  - Assign tasks to categories
+  - Track progress with task statuses
+
+- 🏷️ **Task Categories**
+  - Create and manage task categories
+  - Link tasks to multiple categories using category relations
+  - Organize tasks for better productivity
+
+- 📊 **Task Statuses**
+  - Manage custom statuses for tasks
+  - Filter and track tasks by their status
+
+- 🔗 **Task-Category Relations**
+  - Flexible relation system to connect tasks with categories
+  - Support for many-to-many relationships between tasks and categories
+
+- 🔐 **Security**
+  - Two-Factor Authentication (2FA) via one-time passwords
+  - Secure password handling with hashing
+  - Input validation for API requests
 
 ## Installation & Local Setup
 
