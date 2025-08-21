@@ -2,8 +2,6 @@
 
 **Task management web application that helps you to organize your time.**
 
----
-
 ## Overview
 
 Minimalistic, yet powerful web app built for managing personal tasks effectively and efficiently.  
