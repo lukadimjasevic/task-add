@@ -148,7 +148,6 @@ To start the project in development mode, you need to run both the **server** (b
 
 ```bash
 cd server
-npm install
 npm run dev
 ```
 
@@ -164,7 +163,6 @@ Open a new terminal and run:
 
 ```bash
 cd client
-npm install
 npm run dev
 ```
 
